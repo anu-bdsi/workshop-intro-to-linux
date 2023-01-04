@@ -45,7 +45,9 @@ This command lets you move between directories.
 
 ```pwd``` will return your current working directory which is ```/home/u1122333/new-folder```. 
 
-To go back to the previous directory we can use either ```cd /home/u1122333``` or ```cd ..``` command. ```..``` here means parent directory, and ```.``` means current directory. 
+To go back to the previous directory we can use either ```cd /home/u1122333``` or ```cd ..``` command. 
+
+```..``` here means parent directory, and ```.``` means current directory. 
 
 # Creating and Editing Files 
 
@@ -61,6 +63,35 @@ Curly brackets here is an array builder.
 
 ## ```nano``` - A Text Editor 
 
+```nano``` is like any other text editor in your Windows or Mac laptop but to use arrows to navigate through texts. 
+
+__SIDE NOTE__: you can use right click to copy texts and another right click to paste in Terminal or Command Prompt. 
+
+Try ```nano notebook0.txt``` and paste the following texts in and press ```ctrl + x``` and type ```yes``` and press ```enter``` to save the file. 
+
+```
+I taste a liquor never brewed – 
+From Tankards scooped in Pearl – 
+Not all the Frankfort Berries
+Yield such an Alcohol!
+
+Inebriate of air – am I – 
+And Debauchee of Dew – 
+Reeling – thro' endless summer days – 
+From inns of molten Blue – 
+
+When "Landlords" turn the drunken Bee
+Out of the Foxglove's door – 
+When Butterflies – renounce their "drams" – 
+I shall but drink the more!
+
+Till Seraphs swing their snowy Hats – 
+And Saints – to windows run – 
+To see the little Tippler
+Leaning against the – Sun!
+```
+
+On the bottom side of the ```nano``` interface there are notes of the shortcuts to help you use the text editor. 
 
 
 
