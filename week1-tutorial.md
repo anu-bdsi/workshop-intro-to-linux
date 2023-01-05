@@ -118,6 +118,24 @@ Some files can be very long and we wouldn't want to print out everything on the 
 
 ## ```head``` and ```tail``` - Print out the Head or Tail of the File 
 
+This two commands print out the first/last 10 lines of the file. 
+
+Use ```-n``` to choose how many lines you would like to display, for example ```head -n 5 numSeq.txt``` to see the first 5 lines of file ```numSeq.txt```. 
+
+## ```more``` and ```less``` - Step through a File 
+
+```more``` allows you to go through a file page by page, use ```space``` to move to the next page. Hit ```q``` to quit.
+
+```more``` does not allow you to go back to a previous page, but ```less``` does. 
+
+```less``` has more functions. 
+* Hit ```space``` or ```d``` to go down one page
+* ```u``` to go up one page
+* ```g``` plus number let you jump to a certain line
+* up and down arrows let you go up or down one line 
+* ```q``` to quit 
+
+# Moving, Copying, Deleting, Renaming Files and Directories 
 
 
 # References
