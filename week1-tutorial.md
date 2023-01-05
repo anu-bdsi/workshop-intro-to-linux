@@ -51,23 +51,11 @@ To go back to the previous directory we can use either ```cd /home/u1122333``` o
 
 # Creating and Editing Files 
 
-Make sure you are in the directory ```new-folder``` before starting the following excercise. 
-
-## ```touch``` - To Create an Empty File 
-
-Try ```touch notebook0.txt``` and use ```ls``` to see the file you just created. 
-
-Try ```touch notebook{0..9}.txt``` and ```ls``` to see what you have. 
-
-Curly brackets here is an array builder. 
-
 ## ```nano``` - A Text Editor 
 
 ```nano``` is like any other text editor in your Windows or Mac laptop but to use arrows to navigate through texts. 
 
-__SIDE NOTE__: you can use right click to copy texts and another right click to paste in Terminal or Command Prompt. 
-
-Try ```nano notebook0.txt``` and paste the following texts in and press ```ctrl + x``` and type ```yes``` and press ```enter``` to save the file. 
+Try ```nano poem-0.txt``` and paste the following texts in and press ```ctrl + x``` and type ```yes``` and press ```enter``` to save the file. 
 
 ```
 I taste a liquor never brewed – 
@@ -91,12 +79,48 @@ To see the little Tippler
 Leaning against the – Sun!
 ```
 
-On the bottom side of the ```nano``` interface there are notes of the shortcuts to help you use the text editor. 
+On the bottom of the ```nano``` interface there are notes of shortcuts to help you use the text editor. 
 
+__SIDE NOTE__: you can use right click to copy texts and another right click to paste in Terminal/Command Prompt.
+
+## ```vim``` - Another Text Editor 
+
+```vim``` is another text editor in Linux, it has different ways to edit and save files.
+
+```vim poem-1.txt``` to create a file and go into the ```vim``` interface. Press ```i``` to start the insert mode, and copy and paste the following poem to the file. 
+
+```
+The readers of the Boston Evening Transcript
+Sway in the wind like a field of ripe corn.
+
+When evening quickens faintly in the street,
+Wakening the appetites of life in some
+And to others bringing the Boston Evening Transcript,
+I mount the steps and ring the bell, turning
+Wearily, as one would turn to nod good-bye to Rochefoucauld,
+If the street were time and he at the end of the street,
+And I say, "Cousin Harriet, here is the Boston Evening Transcript.
+```
+
+Press ```esc``` to exit the insert mode, then type ```:wq``` and hit ```enter``` to save the file and exit the editor. If you want to quit without saving, type ```:q``` and hit ```enter```. 
+
+# Viewing File Contents 
+
+First try ```seq 1 1 100 > numSeq.txt``` to create a file named ```numSeq.txt``` contains numbers from 1 to 100. 
+
+## ```cat``` - Concatenate and Print Files 
+
+```cat filename``` prints out everything in the file on the screen. 
+
+Try print out the two poems we saved. 
+
+Some files can be very long and we wouldn't want to print out everything on the screen. In this case, we can use other commands to inspect the content of the file. 
+
+## ```head``` and ```tail``` - Print out the Head or Tail of the File 
 
 
 
 # References
 
 * Andrew Severin - [Introduction to Unix](https://bioinformaticsworkbook.org/Appendix/Unix/unix-basics-1.html#gsc.tab=0) 
-* Linux.com - [All about {curly braces} in Bash](https://www.linux.com/topic/desktop/all-about-curly-braces-bash/)
+* GeeksforGeeks - [Getting Started with Vim Editor in Linux](https://www.geeksforgeeks.org/getting-started-with-vim-editor-in-linux/) 
