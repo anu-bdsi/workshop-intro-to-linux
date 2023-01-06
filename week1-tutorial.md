@@ -1,4 +1,4 @@
-# Connect to Dayhoff
+# Connecting to Dayhoff
 
 * Connecting to the ANU intranet through GlobalProtect VPN. 
 * For Windows users, open Command Prompt. For Mac users, open Terminal. 
@@ -200,6 +200,8 @@ To rename files, simply do:
 mv old-filename new-filename 
 ```
 
+Try to rename the file ```GG.txt``` to ```FF.txt```. 
+
 ## ```cp``` - Copy
 
 ```sh
@@ -216,7 +218,100 @@ To copy a directory, add the parameter ```-r```:
 cp -r numbers numbers-copy
 ```
 
+Try the copy ```letters``` directory. 
+
+# Other Useful Information of Linux 
+
+## The General Syntax of a Shell Command 
+
+A ```space``` is needed between when typing the command, option, and argument. Sometimes a command can have more than one option and more than one argument. 
+
+![shell-syntax](https://swcarpentry.github.io/shell-novice/fig/shell_command_syntax.svg) 
+
+## Get Help with a Command
+
+If there is a new command that you are not familiar with, you can always use ```--help``` option to get help. 
+
+Such as:
+
+```sh
+ls --help 
+```
+
+```ls``` is probably the most used command in Linux, there are some useful options allowing us to see more information about the files. Try the commands below. 
+
+```sh
+ls -l   # list with long format - show permissions. 
+ls -a	# list all files including hidden files starting with '.'.
+ls -la  # list all files with long format 
+ls -lh	# this command will show you the file sizes in human readable format.
+```
+
+## How to read the file information
+
+![file-information](https://remy.parkland.edu/~smauney/csc128/fig_permissions.jpg) 
+
+## Absolute vs Relative Path 
+
+The absolute path is always the same no matter which directory you're in. 
+
+The relative path is different based on the current working directory you're in. 
+
+__NOTE__: ```..``` means the parent directory and ```.``` means the current directory. 
+
+For example, now we're in the folder ```/home/mary```. The absolute path to ```robert``` is ```/home/robert```, and the relative path to ```robert``` is ```../robert```. 
+
+![directory-diagram](https://cdn-wordpress-info.futurelearn.com/info/wp-content/uploads/a2794f8f-b0c1-468d-89c6-bcf29d2d6517-1.png) 
+
+### Questions
+
+* What is the absolute path to ```man```? 
+* What is the relative path to ```man``` from ```/usr/lib```? 
+* What is the relative path to ```man``` from ```/usr/local/lib```? 
+
+## Shortcuts
+
+* ```tab``` key to complete file and directory names
+* ```↑``` key to get the previous command, and the previous command of the previous command
+* ```ctrl + c``` to kill process
+* ```clear``` command to clear terminal
+* ```exit``` command to exit from the current shell 
+
+## Wild Card
+
+```*``` is a wild card, it matches zero or more characters. 
+
+Let's create some empty files first.
+
+```sh
+touch note0.txt note1.txt note2.txt notebook.txt 
+```
+
+* ```ls *.txt``` lists every file ends with ```.txt```. 
+* ```ls note*``` lists every file starts with ```note```.
+
+```?``` is also a wild card, it matches one character. 
+
+* Try ```ls note?.txt``` and ```ls note*.txt``` to see the difference. 
+
+# Homework 
+
+Do some research on below questions to get a better understanding of the Linux operating system. 
+
+* What is Linux?
+* What is Unix?
+* What are the differences and relationships between Linux and Unix?
+* What are the differences and relationships between Linux and Windows/MacOS?
+* What is Shell?
+* What is Bash? 
+* What are the differences and relationships between Shell and Bash? 
+* Why people use Linux and what are the advantages? 
+* What types of computer use Linux as operating systems? 
+* What are the popular Linux distributions on the market? 
+* Why do we need to learn Linux as a biologist? 
+
 # References
 
 * Andrew Severin - [Introduction to Unix](https://bioinformaticsworkbook.org/Appendix/Unix/unix-basics-1.html#gsc.tab=0) 
 * GeeksforGeeks - [Getting Started with Vim Editor in Linux](https://www.geeksforgeeks.org/getting-started-with-vim-editor-in-linux/) 
+* Software Carpentry - [The Unix Shell](https://swcarpentry.github.io/shell-novice/) 
