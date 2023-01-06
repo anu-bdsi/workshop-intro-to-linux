@@ -251,6 +251,8 @@ ls -lh	# this command will show you the file sizes in human readable format.
 
 ![file-information](https://camo.githubusercontent.com/9fcde9faba729c5d2658204ef8df30a1fe714b7297cf4f0e7c4e8389da0d5a0e/68747470733a2f2f692e737461636b2e696d6775722e636f6d2f49763553522e706e67) 
 
+![file-permissions](https://linuxcommand.org/images/file_permissions.png) 
+
 ## Absolute vs Relative Path 
 
 The absolute path is always the same no matter which directory you're in. 
