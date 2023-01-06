@@ -11,7 +11,7 @@
 
 Because there is no graphic user interface in command line, we can imaging the directories as trees to help navigating through. In Linux, the path always start with root ```/```. 
 
-![example](https://docs.oracle.com/cd/E19253-01/806-7612/images/Files.fig154.epsi.gif) 
+![image](https://docs.oracle.com/cd/E19253-01/806-7612/images/Files.fig154.epsi.gif) 
 
 ## ```pwd``` - Path of Working Directory 
 
@@ -106,7 +106,13 @@ Press ```esc``` to exit the insert mode, then type ```:wq``` and hit ```enter```
 
 # Viewing File Contents 
 
-First try ```seq 1 1 100 > numSeq.txt``` to create a file named ```numSeq.txt``` contains numbers from 1 to 100. 
+First try 
+
+```sh 
+seq 1 1 100 > numSeq.txt
+``` 
+
+to create a file named ```numSeq.txt``` contains numbers from 1 to 100. 
 
 ## ```cat``` - Concatenate and Print Files 
 
@@ -118,7 +124,7 @@ Some files can be very long and we wouldn't want to print out everything on the 
 
 ## ```head``` and ```tail``` - Print out the Head or Tail of the File 
 
-This two commands print out the first/last 10 lines of the file. 
+These two commands print out the first/last 10 lines of the file. 
 
 Use ```-n``` to choose how many lines you would like to display, for example ```head -n 5 numSeq.txt``` to see the first 5 lines of file ```numSeq.txt```. 
 
@@ -137,6 +143,78 @@ Use ```-n``` to choose how many lines you would like to display, for example ```
 
 # Moving, Copying, Deleting, Renaming Files and Directories 
 
+## ```touch``` - To Create Empty Files 
+
+Try commands below. 
+
+```sh 
+touch AA.txt
+touch BB.txt
+touch CC.txt
+touch 1.txt
+touch 2.txt
+touch 3.txt 
+```
+
+And use ```ls``` to see what files do you have. 
+
+It can also be written in this way:
+
+```sh
+touch DD.txt EE.txt GG.txt 4.txt 5.txt 6.txt 
+```
+
+Try ```ls``` to see the result. 
+
+## ```rmdir``` - Remove Directory 
+
+Can only delete empty directory. 
+
+We have mentioned how to create new directory before, the command ```mkdir```. Please try creating a new directory and delete it. Remember to use ```ls``` to check between steps. 
+
+Now, create another new directory ```deleteMe``` and create a new text file ```deleteMe.txt``` in it. And then try to delete it. What happens? __HINT__: use ```touch```, ```nano```, or ```vim``` to create a new file. 
+
+If a folder is not empty, we can use ```rm``` command to delete it. 
+
+## ```rm``` - Remove Files and Directories 
+
+__NOTE__: be careful deleting files in Linux because there is no Bin like Windows or Mac to restore files. 
+
+```rm filename``` to remove files. Try to remove the 2 poems we created before. 
+
+```rm -r directoryName``` to remove directory with files in it. Try to remove the folder ```deleteMe```. 
+
+## ```mv``` - Move Files and Rename Files 
+
+Try create two new directories called ```numbers``` and ```letters```, and move the txt files into each directory according to their names. 
+
+You can move multiple files to a directory at once, such as:
+
+```sh
+mv 1.txt 2.txt 3.txt numbers
+```
+
+To rename files, simply do: 
+
+```sh
+mv old-filename new-filename 
+```
+
+## ```cp``` - Copy
+
+```sh
+cp filename copied-filename 
+```
+
+Unlike Windows and Mac, Linux does not automatically give your copied file a name if there is already a file with the same name. Making sure to name the copied file correctly. 
+
+Try to copy the file ```numSeq.txt``` to a new file called ```num1-100.txt```. 
+
+To copy a directory, add the parameter ```-r```: 
+
+```sh
+cp -r numbers numbers-copy
+```
 
 # References
 
