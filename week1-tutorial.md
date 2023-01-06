@@ -249,7 +249,7 @@ ls -lh	# this command will show you the file sizes in human readable format.
 
 ## How to read the file information
 
-![file-information](https://remy.parkland.edu/~smauney/csc128/fig_permissions.jpg) 
+![file-information](https://camo.githubusercontent.com/9fcde9faba729c5d2658204ef8df30a1fe714b7297cf4f0e7c4e8389da0d5a0e/68747470733a2f2f692e737461636b2e696d6775722e636f6d2f49763553522e706e67) 
 
 ## Absolute vs Relative Path 
 
