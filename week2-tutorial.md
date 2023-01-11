@@ -137,11 +137,106 @@ If you would like to ignore the case of the text when finding matches, try
 grep -i "biology" introToBiology.txt 
 ```
 
+Some other useful parameters:
 
+```sh 
+grep -v  # invert matching, select non-matching lines
+grep -c  # print only the count of matching lines
+grep -n  # prefix the output with line number 
+```
 
+### ```history``` - Get the History of Recently Used Commands 
 
+This command gives you the history of the commands you have used.
 
+It is convenient to search commands from history and copy paste to reuse. 
 
-## References 
+```sh
+history | grep introToBiology
+history | grep introToBiology | tail -n 10
+```
+
+### ```sed``` - Stream Editor 
+
+This command can perform functions on file like searching, find and replace, insertion or deletion. The most common use of SED command in UNIX is for substitution or for find and replace. By using SED you can edit files without opening them, which is much quicker than first opening that file in VI Editor and then changing it. SED command supports regular expression which allows it to perform complex pattern matching.
+
+First, let's create a file for better practice, copy and paste the following to a new file named ```unix-linux.txt```
+
+```
+unix is great os. unix is opensource. unix is free os.
+learn operating system.
+unix linux which one you choose.
+unix is easy to learn. unix is a multiuser os. learn unix. unix is powerful.
+```
+
+The syntax of ```sed``` is 
+
+```sh
+sed 'OPERATION/REGEXP/REPLACEMENT/FLAGS' FILENAME 
+```
+
+To find and replace text, use 
+
+```sh
+sed 's/unix/linux/g' unix-linux.txt 
+sed 's/unix/linux/g' unix-linux.txt > newfile.txt # write output to a new file 
+```
+
+To delete a particular line in a file, e.g. the second line. Use 
+
+```sh
+sed '2d' unix-linux.txt
+```
+
+To delete the pattern matching line
+
+```sh 
+sed '/pattern/d' filename.txt # syntax 
+sed '/unix/d' unix-linux.txt
+```
+
+## Downloading and Transfering Data 
+
+### ```wget``` - Download from the Web 
+
+You can downloan files from the internet using ```wget``` and http/https/ftp addresses. 
+
+For example, try
+
+```sh
+wget https://www.gutenberg.org/cache/epub/1513/pg1513.txt # ebook Romeo and Juliet 
+wget https://zenodo.org/record/3736457/files/1_control_psbA3_A_2019_minq7.fastq # a sample fastq file 
+```
+
+### ```scp``` - Secure Copy 
+
+You can transfer files from remote machine to local machine using ```scp```. 
+
+On your local machine, open Terminal or Command Prompt. Use the code below to download file from Dayhoff to your local machine.
+
+```sh
+cd Downloads 
+scp u1122333@dayhoff.rsb.anu.edu.au:~/intro-to-linux/romeo-juliet.txt . 
+```
+
+If you don't know the hostname of your remote server, you can use ```hostname``` command to find out. 
+
+### ```rsync``` - Remote Sync 
+
+```scp``` can only download files but ```rsync``` can download folders including everything in it. Unfortunately ```rsync``` is not available in Windows Command Prompt. 
+
+Try 
+
+```sh
+cd Downloads 
+rsync -a ssh u1122333@dayhoff.rsb.anu.edu.au:~/intro-to-linux .
+```
+
+Please note do not put ```/``` behind the folder name, otherwise it will only download 
+
+## References
+
 * Andrew Severin - [Introduction to Unix](https://bioinformaticsworkbook.org/Appendix/Unix/unix-basics-1.html#gsc.tab=0) 
 * Wikipedia - [Biology](https://en.wikipedia.org/wiki/Biology) 
+* GeeksforGeeks - [Sed Command in Linux/Unix with Examples](https://www.geeksforgeeks.org/sed-command-in-linux-unix-with-examples/) 
+* Zenodo - [Sample FASTQ Files](https://zenodo.org/record/3736457#.Y74p_XZByUk) 
