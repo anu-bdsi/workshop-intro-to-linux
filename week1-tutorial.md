@@ -1,6 +1,4 @@
-# Week 1
-
-## Connecting to Dayhoff
+# Connecting to Dayhoff
 
 * Connecting to the ANU intranet through GlobalProtect VPN. 
 * For Windows users, open Command Prompt. For Mac users, open Terminal. 
@@ -9,13 +7,13 @@
 * The password is the same as your uni account password. 
 * If you successfully logged into Dayhoff, you will see a welcome message. 
 
-## Navigating through Directories 
+# Navigating through Directories 
 
 Because there is no graphic user interface in command line, we can imaging the directories as trees to help navigating through. In Linux, the path always start with root ```/```. 
 
 ![image](https://docs.oracle.com/cd/E19253-01/806-7612/images/Files.fig154.epsi.gif) 
 
-### ```pwd``` - Path of Working Directory 
+## ```pwd``` - Path of Working Directory 
 
 This command tells you where you are. 
 
@@ -23,7 +21,7 @@ When you logged into a Linux system, the default location you will be is your ho
 
 For example, ```/home/u1122333```.
 
-### ```ls``` - Listing 
+## ```ls``` - Listing 
 
 This command lists all files and directories under your current directory. 
 
@@ -31,7 +29,7 @@ For now, ```ls``` returns nothing because we are new users and don't have anythi
 
 We can also put the path to a certain directory behind ```ls``` to inspect the contents of the directory such as ```ls /home```. 
 
-### ```mkdir``` - Make Directory 
+## ```mkdir``` - Make Directory 
 
 This command lets you create a new directory.
 
@@ -39,7 +37,7 @@ This command lets you create a new directory.
 
 ```mkdir /home/u1122333/new-folder``` to create a new directory under ```/home/u1122333``` regardless of where you are. 
 
-### ```cd``` - Change Directory 
+## ```cd``` - Change Directory 
 
 This command lets you move between directories. 
 
@@ -51,9 +49,9 @@ To go back to the previous directory we can use either ```cd /home/u1122333``` o
 
 ```..``` here means parent directory, and ```.``` means current directory. 
 
-## Creating and Editing Files 
+# Creating and Editing Files 
 
-### ```nano``` - A Text Editor 
+## ```nano``` - A Text Editor 
 
 ```nano``` is like any other text editor in your Windows or Mac laptop but to use arrows to navigate through texts. 
 
@@ -85,7 +83,7 @@ On the bottom of the ```nano``` interface there are notes of shortcuts to help y
 
 __SIDE NOTE__: you can use right click to copy texts and another right click to paste in Terminal/Command Prompt.
 
-### ```vim``` - Another Text Editor 
+## ```vim``` - Another Text Editor 
 
 ```vim``` is another text editor in Linux, it has different ways to edit and save files.
 
@@ -106,7 +104,7 @@ And I say, "Cousin Harriet, here is the Boston Evening Transcript.
 
 Press ```esc``` to exit the insert mode, then type ```:wq``` and hit ```enter``` to save the file and exit the editor. If you want to quit without saving, type ```:q``` and hit ```enter```. 
 
-## Viewing File Contents 
+# Viewing File Contents 
 
 First try 
 
@@ -116,7 +114,7 @@ seq 1 1 100 > numSeq.txt
 
 to create a file named ```numSeq.txt``` contains numbers from 1 to 100. 
 
-### ```cat``` - Concatenate and Print Files 
+## ```cat``` - Concatenate and Print Files 
 
 ```cat filename``` prints out everything in the file on the screen. 
 
@@ -124,13 +122,13 @@ Try print out the two poems we saved.
 
 Some files can be very long and we wouldn't want to print out everything on the screen. In this case, we can use other commands to inspect the content of the file. 
 
-### ```head``` and ```tail``` - Print out the Head or Tail of the File 
+## ```head``` and ```tail``` - Print out the Head or Tail of the File 
 
 These two commands print out the first/last 10 lines of the file. 
 
 Use ```-n``` to choose how many lines you would like to display, for example ```head -n 5 numSeq.txt``` to see the first 5 lines of file ```numSeq.txt```. 
 
-### ```more``` and ```less``` - Step through a File 
+## ```more``` and ```less``` - Step through a File 
 
 ```more``` allows you to go through a file page by page, use ```space``` to move to the next page. Hit ```q``` to quit.
 
@@ -143,9 +141,9 @@ Use ```-n``` to choose how many lines you would like to display, for example ```
 * up and down arrows let you go up or down one line 
 * ```q``` to quit 
 
-## Moving, Copying, Deleting, Renaming Files and Directories 
+# Moving, Copying, Deleting, Renaming Files and Directories 
 
-### ```touch``` - To Create Empty Files 
+## ```touch``` - To Create Empty Files 
 
 Try commands below. 
 
@@ -168,7 +166,7 @@ touch DD.txt EE.txt GG.txt 4.txt 5.txt 6.txt
 
 Try ```ls``` to see the result. 
 
-### ```rmdir``` - Remove Directory 
+## ```rmdir``` - Remove Directory 
 
 Can only delete empty directory. 
 
@@ -178,7 +176,7 @@ Now, create another new directory ```deleteMe``` and create a new text file ```d
 
 If a folder is not empty, we can use ```rm``` command to delete it. 
 
-### ```rm``` - Remove Files and Directories 
+## ```rm``` - Remove Files and Directories 
 
 __NOTE__: be careful deleting files in Linux because there is no Bin like Windows or Mac to restore files. 
 
@@ -186,7 +184,7 @@ __NOTE__: be careful deleting files in Linux because there is no Bin like Window
 
 ```rm -r directoryName``` to remove directory with files in it. Try to remove the folder ```deleteMe```. 
 
-### ```mv``` - Move Files and Rename Files 
+## ```mv``` - Move Files and Rename Files 
 
 Try create two new directories called ```numbers``` and ```letters```, and move the txt files into each directory according to their names. 
 
@@ -204,7 +202,7 @@ mv old-filename new-filename
 
 Try to rename the file ```GG.txt``` to ```FF.txt```. 
 
-### ```cp``` - Copy
+## ```cp``` - Copy
 
 ```sh
 cp filename copied-filename 
@@ -222,15 +220,15 @@ cp -r numbers numbers-copy
 
 Try the copy ```letters``` directory. 
 
-## Other Useful Information of Linux 
+# Other Useful Information of Linux 
 
-### The General Syntax of a Shell Command 
+## The General Syntax of a Shell Command 
 
 A ```space``` is needed between when typing the command, option, and argument. Sometimes a command can have more than one option and more than one argument. 
 
 ![shell-syntax](https://swcarpentry.github.io/shell-novice/fig/shell_command_syntax.svg) 
 
-### Get Help with a Command
+## Get Help with a Command
 
 If there is a new command that you are not familiar with, you can always use ```--help``` option to get help. 
 
@@ -249,13 +247,13 @@ ls -la  # list all files with long format
 ls -lh	# this command will show you the file sizes in human readable format.
 ```
 
-### How to read the file information
+## How to read the file information
 
 ![file-information](https://camo.githubusercontent.com/9fcde9faba729c5d2658204ef8df30a1fe714b7297cf4f0e7c4e8389da0d5a0e/68747470733a2f2f692e737461636b2e696d6775722e636f6d2f49763553522e706e67) 
 
 ![file-permissions](https://linuxcommand.org/images/file_permissions.png) 
 
-### Absolute vs Relative Path 
+## Absolute vs Relative Path 
 
 The absolute path is always the same no matter which directory you're in. 
 
@@ -267,13 +265,13 @@ For example, now we're in the folder ```/home/mary```. The absolute path to ```r
 
 ![directory-diagram](https://cdn-wordpress-info.futurelearn.com/info/wp-content/uploads/a2794f8f-b0c1-468d-89c6-bcf29d2d6517-1.png) 
 
-#### Questions
+### Questions
 
 * What is the absolute path to ```man```? 
 * What is the relative path to ```man``` from ```/usr/lib```? 
 * What is the relative path to ```man``` from ```/usr/local/lib```? 
 
-### Shortcuts
+## Shortcuts
 
 * ```tab``` key to complete file and directory names
 * ```↑``` key to get the previous command, and the previous command of the previous command
@@ -281,7 +279,7 @@ For example, now we're in the folder ```/home/mary```. The absolute path to ```r
 * ```clear``` command to clear terminal
 * ```exit``` command to exit from the current shell 
 
-### Wild Card
+## Wild Card
 
 ```*``` is a wild card, it matches zero or more characters. 
 
@@ -298,7 +296,7 @@ touch note0.txt note1.txt note2.txt notebook.txt
 
 * Try ```ls note?.txt``` and ```ls note*.txt```, and see what's the difference?  
 
-## Homework 
+# Homework 
 
 Do some research on below questions to get a better understanding of the Linux operating system. 
 
@@ -314,7 +312,7 @@ Do some research on below questions to get a better understanding of the Linux o
 * What are the popular Linux distributions on the market? 
 * Why do we need to learn Linux as a biologist? 
 
-## References
+# References
 
 * Andrew Severin - [Introduction to Unix](https://bioinformaticsworkbook.org/Appendix/Unix/unix-basics-1.html#gsc.tab=0) 
 * GeeksforGeeks - [Getting Started with Vim Editor in Linux](https://www.geeksforgeeks.org/getting-started-with-vim-editor-in-linux/) 

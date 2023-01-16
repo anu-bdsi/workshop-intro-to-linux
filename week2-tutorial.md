@@ -1,14 +1,12 @@
-# Week 2
+# Counting, Sorting, and Redirecting Output 
 
-## Counting, Sorting, and Redirecting Output 
-
-### Redirect
+## Redirect
 
 * ```cmd < file``` Use file as input
 * ```cmd > file``` Write output to file
 * ```cmd >> file``` Append output to file 
 
-### ```wc``` - Word Count
+## ```wc``` - Word Count
 
 This command will give you the number of lines, words, and characters in a file. 
 
@@ -16,7 +14,7 @@ Try ```wc numSeq.txt```.
 
 ```wc``` has options for showing only the number of lines ```wc -l```, the number of words ```wc -w```, or the number of characters ```wc -c```. 
 
-### ```tr``` - Translate 
+## ```tr``` - Translate 
 
 This command can take any individual character and replace it with another character. 
 
@@ -24,7 +22,7 @@ It is a little different than other commands as it requires standard output as t
 
 Try ```tr '\n' ',' < numSeq.txt```, it means translating new line character ```\n``` to comma ```,``` taking input from file ```numSeq.txt```. 
 
-### ```|``` - Pipe Redirect
+## ```|``` - Pipe Redirect
 
 It can pass the output of one command to another command.
 
@@ -32,7 +30,7 @@ For example ```cat numSeq.txt | tr '\n' ','``` gets the same output as ```tr '\n
 
 It passes the output of ```cat numSeq.txt``` as input to the command ```tr '\n' ','```. 
 
-### ```shuf``` - Shuffle 
+## ```shuf``` - Shuffle 
 
 Generate random permutations of lines of the file supplied. 
 
@@ -42,7 +40,7 @@ Try shuffle ```numSeq.txt``` another time and append the output to the file ```n
 
 Check if our new file ```numSeqRandom.txt``` has 200 lines by using ```wc -l```. 
 
-### ```sort``` - Sort a File by Lines 
+## ```sort``` - Sort a File by Lines 
 
 We can use this command to sort the shuffled ```numSeqRandom.txt``` file. 
 
@@ -52,7 +50,7 @@ Unfortunately it didn't sort numerically as we expected but alphabetically. To s
 
 Now try ```shuf -n numSeqRandom.txt | head``` see what results you got. 
 
-### ```uniq``` - Remove Duplicates of Adjacent Lines (presorted) 
+## ```uniq``` - Remove Duplicates of Adjacent Lines (presorted) 
 
 This command will remove duplicates only if the files are sorted first. 
 
@@ -80,7 +78,7 @@ What results have we got?
 
 Try ```sort -n numSeqRandom.txt | uniq -c | head```. 
 
-### Exercise
+## Exercise
 
 Create a new file and paste the following into it, name it as ```introToBiology.txt```. 
 
@@ -109,9 +107,9 @@ cat introToBiology.txt | tr ' ' '\n' | sort | uniq -c | sort -n | tail -n 5
 
 Try run the above command line step by step for better understanding.
 
-## Find and Replace 
+# Find and Replace 
 
-### ```grep``` - Global Regular Expression Print 
+## ```grep``` - Global Regular Expression Print 
 
 This command will find things you specified in a document. 
 
@@ -145,7 +143,7 @@ grep -c  # print only the count of matching lines
 grep -n  # prefix the output with line number 
 ```
 
-### ```history``` - Get the History of Recently Used Commands 
+## ```history``` - Get the History of Recently Used Commands 
 
 This command gives you the history of the commands you have used.
 
@@ -156,7 +154,7 @@ history | grep introToBiology
 history | grep introToBiology | tail -n 10
 ```
 
-### ```sed``` - Stream Editor 
+## ```sed``` - Stream Editor 
 
 This command can perform functions on file like searching, find and replace, insertion or deletion. The most common use of SED command in UNIX is for substitution or for find and replace. By using SED you can edit files without opening them, which is much quicker than first opening that file in VI Editor and then changing it. SED command supports regular expression which allows it to perform complex pattern matching.
 
@@ -195,9 +193,9 @@ sed '/pattern/d' filename.txt # syntax
 sed '/unix/d' unix-linux.txt
 ```
 
-## Downloading and Transfering Data 
+# Downloading and Transfering Data 
 
-### ```wget``` - Download from the Web 
+## ```wget``` - Download from the Web 
 
 You can downloan files from the internet using ```wget``` and http/https/ftp addresses. 
 
@@ -208,7 +206,7 @@ wget https://www.gutenberg.org/cache/epub/1513/pg1513.txt # ebook Romeo and Juli
 wget https://zenodo.org/record/3736457/files/1_control_psbA3_A_2019_minq7.fastq # a sample fastq file 
 ```
 
-### ```scp``` - Secure Copy 
+## ```scp``` - Secure Copy 
 
 You can transfer files from remote machine to local machine using ```scp```. 
 
@@ -221,7 +219,7 @@ scp u1122333@dayhoff.rsb.anu.edu.au:~/intro-to-linux/romeo-juliet.txt .
 
 If you don't know the hostname of your remote server, you can use ```hostname``` command to find out. 
 
-### ```rsync``` - Remote Sync 
+## ```rsync``` - Remote Sync 
 
 ```scp``` can only download files but ```rsync``` can download folders including everything in it. Unfortunately ```rsync``` is not available in Windows Command Prompt. 
 
@@ -234,12 +232,12 @@ rsync -a ssh u1122333@dayhoff.rsb.anu.edu.au:~/intro-to-linux .
 
 __Please Note:__ do not put ```/``` behind the folder name, otherwise it will download everything in it without the main folder.
 
-## Statements and Loops
+# Statements and Loops
 
 A loop is a powerful programming tool that enables you to execute a set of commands repeatedly. 
 
 
-### ```if``` Statement 
+## ```if``` Statement 
 
 The syntax of ```if``` statement:
 
@@ -264,7 +262,7 @@ then
 fi 
 ```
 
-### ```if``` ... ```else``` statement 
+## ```if``` ... ```else``` statement 
 
 The syntax of the ```if``` ... ```else``` statement
 
@@ -291,7 +289,7 @@ else
 fi 
 ```
 
-### ```if``` ... ```elif``` ... ```else``` Statement
+## ```if``` ... ```elif``` ... ```else``` Statement
 
 The syntax:
 
@@ -324,7 +322,7 @@ else
 fi 
 ```
 
-### Some Notes on Coding Conditions 
+## Some Notes on Coding Conditions 
 
 * Ensure white spaces between brackets and the comparison statement, for example the following code will not work, bash will report an error about a missing ```]```
 
@@ -340,7 +338,7 @@ if [[ $x -ge $y ]] && [[ $x -ge $z ]] # -ge means greater than or equal to
 fi 
 ```
 
-### ```for``` Loop 
+## ```for``` Loop 
 
 The syntax:
 
@@ -380,7 +378,7 @@ do
 done 
 ```
 
-### Conditional exit with ```break```
+## Conditional exit with ```break```
 
 You can take early exit using the ```break``` statement inside for loops, if a condition has been met the for loop will be abandoned. 
 
@@ -426,7 +424,7 @@ done
 ``` 
 
 
-## References
+# References
 
 * Andrew Severin - [Introduction to Unix](https://bioinformaticsworkbook.org/Appendix/Unix/unix-basics-1.html#gsc.tab=0) 
 * Wikipedia - [Biology](https://en.wikipedia.org/wiki/Biology) 
