@@ -225,14 +225,206 @@ If you don't know the hostname of your remote server, you can use ```hostname```
 
 ```scp``` can only download files but ```rsync``` can download folders including everything in it. Unfortunately ```rsync``` is not available in Windows Command Prompt. 
 
-Try 
+Open your Terminal and try 
 
 ```sh
 cd Downloads 
 rsync -a ssh u1122333@dayhoff.rsb.anu.edu.au:~/intro-to-linux .
 ```
 
-Please note do not put ```/``` behind the folder name, otherwise it will only download 
+__Please Note:__ do not put ```/``` behind the folder name, otherwise it will download everything in it without the main folder.
+
+## Statements and Loops
+
+A loop is a powerful programming tool that enables you to execute a set of commands repeatedly. 
+
+
+### ```if``` Statement 
+
+The syntax of ```if``` statement:
+
+```sh
+if a-condition
+then
+    commands 
+fi 
+```
+
+__EXAMPLE__: The following script will prompt you to input a number and then it checks whether the given number is even. 
+
+Please create a new file called ```if.sh``` and input the script.
+
+```sh
+echo -n "Enter Number: "
+read x
+
+if [ $((x%2)) == 0 ]
+then
+    echo "Number is Even"
+fi 
+```
+
+### ```if``` ... ```else``` statement 
+
+The syntax of the ```if``` ... ```else``` statement
+
+```sh
+if a-condition 
+then
+    commands1
+else
+    commands2
+fi
+```
+
+__EXAMPLE__: Let's extend the last example to check if the given number is even or odd. 
+
+```sh
+echo -n "Enter Number: "
+read x
+
+if [ $((x%2)) == 0 ]
+then
+    echo "Number is Even"
+else
+    echo "Number is Odd"
+fi 
+```
+
+### ```if``` ... ```elif``` ... ```else``` Statement
+
+The syntax:
+
+```sh
+if condition1
+then
+    commands1
+elif condition2
+then
+    commands2
+else
+    commands3
+fi
+```
+
+__EXAMPLE__: We can augment the last example to add the addition to check for zero. 
+
+```sh
+echo -n "Enter Number: "
+read x 
+
+if [ $x == 0 ]
+then 
+    echo "Number is zero"
+elif [ $((x%2)) == 0 ]
+then 
+    echo "Number is even"
+else 
+    echo "Number is odd"
+fi 
+```
+
+### Some Notes on Coding Conditions 
+
+* Ensure white spaces between brackets and the comparison statement, for example the following code will not work, bash will report an error about a missing ```]```
+
+```sh
+if [$x==0] # wrong
+if [ $x == 0 ] # correct 
+```
+* To use many conditions in one statement, use logical operators such as logical AND ```&&``` and logical OR ```||```, for example
+
+```sh
+if [[ $x -ge $y ]] && [[ $x -ge $z ]] # -ge means greater than or equal to
+    echo "x is the greatest"
+fi 
+```
+
+### ```for``` Loop 
+
+The syntax:
+
+```sh
+for variable in a-list-of-things
+do
+    command1
+    command2
+    ...
+done 
+```
+
+A example:
+
+```sh
+for i in 1 2 3 4 5
+do
+    echo "Welcome $i times"
+done 
+```
+
+Use sequence builder with for loop:
+
+```sh
+for i in {1..5}
+do 
+    echo "Welcome $i times"
+done 
+```
+
+You can also set up increment value in sequence builder:
+
+```sh
+for i in {0..10..2}
+do 
+    echo "Welcome $i times"
+done 
+```
+
+### Conditional exit with ```break```
+
+You can take early exit using the ```break``` statement inside for loops, if a condition has been met the for loop will be abandoned. 
+
+The general syntax for using ```break``` inside the for loop would be:
+
+```sh
+for i in a-list-of-things
+do 
+    command1
+    command2
+    if [ a-condition ]
+    then
+        break
+    fi 
+    command3
+    command4
+done 
+```
+
+__EXAMPLE__: Go through all the files stored in the /etc folder, and abandon the loop when the file /etc/resolv.conf is found. 
+
+```sh
+for file in /etc/*
+do 
+    if [ "${file}" == "/etc/resolv.conf" ]
+    then
+        countNameservers=$(grep -c nameserver /etc/resolv.conf)
+        echo "Total ${countNameservers} nameserver defined in ${file}"
+        break
+    fi
+done 
+```
+
+```sh 
+for i in {1..5}
+do 
+    echo $i
+    if [ $i == 4 ]
+    then
+        break
+    fi 
+done
+``` 
+
 
 ## References
 
@@ -240,3 +432,8 @@ Please note do not put ```/``` behind the folder name, otherwise it will only do
 * Wikipedia - [Biology](https://en.wikipedia.org/wiki/Biology) 
 * GeeksforGeeks - [Sed Command in Linux/Unix with Examples](https://www.geeksforgeeks.org/sed-command-in-linux-unix-with-examples/) 
 * Zenodo - [Sample FASTQ Files](https://zenodo.org/record/3736457#.Y74p_XZByUk) 
+* Software Carpentry - [The Unix Shell](https://swcarpentry.github.io/shell-novice/)
+* tutorialspoint - [Unix/Linux Shell Loop Types](https://www.tutorialspoint.com/unix/unix-shell-loops.htm#)
+* nixCraft - [Bash For Loop Examples](https://www.cyberciti.biz/faq/bash-for-loop/) 
+* GeeksforGeeks - [Bash Scripting - If Statement](https://www.geeksforgeeks.org/bash-scripting-if-statement/) 
+* GeeksforGeeks - [Bash Scripting - For Loop](https://www.geeksforgeeks.org/bash-scripting-for-loop/) 
