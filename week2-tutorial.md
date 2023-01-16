@@ -340,89 +340,62 @@ fi
 
 ## ```for``` Loop 
 
-The syntax:
+### Simple For Loop 
 
 ```sh
-for variable in a-list-of-things
-do
-    command1
-    command2
-    ...
-done 
-```
-
-A example:
-
-```sh
-for i in 1 2 3 4 5
-do
-    echo "Welcome $i times"
-done 
-```
-
-Use sequence builder with for loop:
-
-```sh
-for i in {1..5}
-do 
-    echo "Welcome $i times"
-done 
-```
-
-You can also set up increment value in sequence builder:
-
-```sh
-for i in {0..10..2}
-do 
-    echo "Welcome $i times"
-done 
-```
-
-## Conditional exit with ```break```
-
-You can take early exit using the ```break``` statement inside for loops, if a condition has been met the for loop will be abandoned. 
-
-The general syntax for using ```break``` inside the for loop would be:
-
-```sh
-for i in a-list-of-things
-do 
-    command1
-    command2
-    if [ a-condition ]
-    then
-        break
-    fi 
-    command3
-    command4
-done 
-```
-
-__EXAMPLE__: Go through all the files stored in the /etc folder, and abandon the loop when the file /etc/resolv.conf is found. 
-
-```sh
-for file in /etc/*
-do 
-    if [ "${file}" == "/etc/resolv.conf" ]
-    then
-        countNameservers=$(grep -c nameserver /etc/resolv.conf)
-        echo "Total ${countNameservers} nameserver defined in ${file}"
-        break
-    fi
-done 
-```
-
-```sh 
-for i in {1..5}
+for i in a b c
 do 
     echo $i
-    if [ $i == 4 ]
-    then
-        break
-    fi 
-done
-``` 
+done 
+```
 
+The above code will iterate over the specified elements after the ```in``` keyword one by one. The elements can be numbers, strings, or other forms of data. 
+
+### Range-based For Loop
+
+In this type of for loop, we can specify the number to start, to stop, and to increment at every iteration. 
+
+The syntax looks like this:
+
+```sh
+for i in {1..5} # sequence builder {}
+do 
+    echo $i
+done 
+```
+
+We can also add increment:
+
+```sh
+for i in {1..5..2} # increse by two 
+do 
+    echo $i
+done 
+```
+
+### Array Iteration For Loop
+
+We can iterate over arrays conveniently in bash using for loops with a specific syntax. In Bash, the "@" symbol is used as a shorthand for referencing elements of an array. 
+
+For example, when you have an array called fruits:
+
+```sh
+fruits=("apple" "banana" "cherry")
+```
+
+You can reference all elements of the array by using "@" like this:
+
+```sh
+for i in "${fruits[@]}"
+do 
+    echo $i
+done 
+```
+
+# Homework
+
+* Learn how to use ```if``` statement with ```break/continue```
+* Learn ```until``` loop and ```while``` loop
 
 # References
 
@@ -435,3 +408,4 @@ done
 * nixCraft - [Bash For Loop Examples](https://www.cyberciti.biz/faq/bash-for-loop/) 
 * GeeksforGeeks - [Bash Scripting - If Statement](https://www.geeksforgeeks.org/bash-scripting-if-statement/) 
 * GeeksforGeeks - [Bash Scripting - For Loop](https://www.geeksforgeeks.org/bash-scripting-for-loop/) 
+* OpenAI - [ChatGPT](https://chat.openai.com/chat)
