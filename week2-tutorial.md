@@ -392,6 +392,77 @@ do
 done 
 ```
 
+## ```break``` and ```continue``` Keywords
+
+Both "break" and "continue" are used to transfer control of the program to another part of the program. It is used within loops to alter the flow of the loop and terminate the loop or skip the current iteration. 
+
+### ```break``` 
+
+The break statement is used to terminate the loop and can be used within a while, for, until, and select loops. 
+
+```sh
+for i in {1..5}
+do 
+    if (( $i == 3))
+    then
+        break
+    fi 
+    echo $i 
+done 
+```
+
+It can be seen that when the value of i is 3, the loop execution is terminated and hence i is only printed up to 2.
+
+### ```continue``` 
+
+Continue is a command which is used to skip the remaining command inside the loop for the current iteration in for, while, and until loop. 
+
+```sh
+for i in {1..5}
+do 
+    if (( $i == 3))
+    then 
+        continue
+    fi 
+    echo $i
+done 
+```
+
+__Please note:__ if you use break and continue in a nested loop (a loop inside a loop), it will only skip the innermost loop.
+
+For example:
+
+```sh
+for i in {1..3}
+do 
+    for j in {1..3}
+    do 
+        if (( $j == 2 ))
+        then
+            continue 
+        fi 
+        echo $i, $j
+    done
+done 
+```
+
+The output would be:
+
+```
+1 1
+1 3
+2 1
+2 3
+3 1
+3 3
+```
+
+As you can see, when ```j``` is equal to 2, the ```continue``` command is executed, and the current iteration of the inner loop is skipped. However, the outer loop still continues to execute and the next iteration of the outer loop starts.
+
+It means that the ```continue``` command only skips the current iteration of the innermost loop, but the other loops (outer loops) continue to execute.
+
+It's important to note that if you want to exit the inner loop, you should use the ```break``` command instead of ```continue```. If you want to exit all the loops, you should use the ```break``` command in all the loops.
+
 # Homework
 
 * Learn how to use ```if``` statement with ```break/continue```
@@ -409,3 +480,4 @@ done
 * GeeksforGeeks - [Bash Scripting - If Statement](https://www.geeksforgeeks.org/bash-scripting-if-statement/) 
 * GeeksforGeeks - [Bash Scripting - For Loop](https://www.geeksforgeeks.org/bash-scripting-for-loop/) 
 * OpenAI - [ChatGPT](https://chat.openai.com/chat)
+* GeeksforGeeks - [Break and Continue Keywords in Linux with Examples](https://www.geeksforgeeks.org/break-and-continue-keywords-in-linux-with-examples/) 
