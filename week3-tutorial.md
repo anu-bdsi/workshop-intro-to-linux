@@ -143,7 +143,7 @@ Here are the quality value characters in left-to-right increasing order of quali
 !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ 
 ```
 
-The numerical value assigned to each of these characters depends on the sequencing platform that generated the reads. The sequencing machine used to generate our data uses the standard Sanger quality PHRED score encoding, using Illumina version 1.8 onwards. Each character is assigned a quality score between 0 and 41 as shown in the chart below. 
+__Note:__ Different sequencing machines use different encoding system, sometimes a ```#``` may not means a poor quality base call. 
 
 We can view the first complete read in one of the files our dataset by using ```head``` to look at the first four lines.
 
@@ -262,13 +262,144 @@ mkdir -p /mnt/c/Users/u1122333/Desktop/fastqc_html
 Now we can download the HTML files from the remote computer using ```scp```.
 
 ```sh
-scp u1122333@dayhoff.rsb.anu.edu.au:~/intro_to_linux/results/fastqc_untrimmed_reads/*.hmtl /mnt/c/Users/u1122333/Desktop/fastqc_html 
+scp u1122333@dayhoff.rsb.anu.edu.au:~/intro_to_linux/results/fastqc_untrimmed_reads/*.html /mnt/c/Users/u1122333/Desktop/fastqc_html 
 ```
+
+__Note:__ if you're using a MacOS machine, it is likely that a ```no matches found``` will be displayed. The reason for this is that the wildcard ```*``` is not correctly interpreted. To fix this problem the wildcard needs to be escaped with a ```\```:
+
+```sh
+scp u1122333@dayhoff.rsb.anu.edu.au:~/intro_to_linux/results/fastqc_untrimmed_reads/\*.html /mnt/c/Users/u1122333/Desktop/fastqc_html 
+```
+
+Alternatively, you can also change the shell to bash by running ```chsh -s /bin/bash```. 
+
+You should see a status output like this after running the ```scp``` command:
+
+```
+SRR2584863_1_fastqc.html                      100%  626KB   4.0MB/s   00:00    
+SRR2584863_2_fastqc.html                      100%  632KB   4.8MB/s   00:00     
+SRR2584866_1_fastqc.html                      100%  631KB   5.2MB/s   00:00     
+SRR2584866_2_fastqc.html                      100%  626KB   4.5MB/s   00:00     
+SRR2589044_1_fastqc.html                      100%  626KB   5.1MB/s   00:00     
+SRR2589044_2_fastqc.html                      100%  627KB   5.5MB/s   00:00
+```
+
+Now we can go to our new directory and open the 6 HTML files. 
+
+### Decoding Other FastQC Outputs 
+
+We have now looked at quite a few "Per base sequence quality" FastQC graphs, but there are nine other graphs that we have not talked about yet. Please see the FastQC [documentation](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/) for detailed explanation of each graph. 
+
+### Working with the FastQC Text Output 
+
+Now let's look at the other output files. Go back to the terminal that connected to Dayhoff and make sure you are in the results directory. 
+
+```sh
+cd ~/intro_to_linux/results/fastqc_untrimmed_reads/
+ls 
+```
+
+Output:
+
+```
+SRR2584863_1_fastqc.html  SRR2584866_1_fastqc.html  SRR2589044_1_fastqc.html
+SRR2584863_1_fastqc.zip   SRR2584866_1_fastqc.zip   SRR2589044_1_fastqc.zip
+SRR2584863_2_fastqc.html  SRR2584866_2_fastqc.html  SRR2589044_2_fastqc.html
+SRR2584863_2_fastqc.zip   SRR2584866_2_fastqc.zip   SRR2589044_2_fastqc.zip 
+```
+
+The ```.zip``` files contain multiple different types of output files for a single input FASTQ file. Let extract them first to see what are these files. We will use the command ```unzip``` to do it, ```unzip``` cannot take multiple input files at once so we'll use a for loop to iterate through the list. 
+
+```sh
+for filename in *.zip
+do 
+    unzip $filename 
+done 
+```
+
+The ```unzip``` program is decompressing the ```.zip``` files and creating a new directory (with subdirectories) for each of our samples, to store all of the different output that is produced by FastQC. There are a lot of files here. The one we are going to focus on is the ```summary.txt``` file.
+
+Let's see what files are present within one of these output directories. 
+
+```sh
+ls SRR2584863_1_fastqc/
+```
+
+Use ```less``` to preview the ```summary.txt``` file for this sample:
+
+```sh
+less SRR2584863_1_fastqc/summary.txt 
+```
+
+You will get something look like this:
+
+```
+PASS    Basic Statistics        SRR2584863_1.fastq
+PASS    Per base sequence quality       SRR2584863_1.fastq
+PASS    Per tile sequence quality       SRR2584863_1.fastq
+PASS    Per sequence quality scores     SRR2584863_1.fastq
+WARN    Per base sequence content       SRR2584863_1.fastq
+WARN    Per sequence GC content SRR2584863_1.fastq
+PASS    Per base N content      SRR2584863_1.fastq
+PASS    Sequence Length Distribution    SRR2584863_1.fastq
+PASS    Sequence Duplication Levels     SRR2584863_1.fastq
+PASS    Overrepresented sequences       SRR2584863_1.fastq
+WARN    Adapter Content SRR2584863_1.fastq
+```
+
+The summary gives us a list of tests that FastQC ran, and tells us wether this sample passes, failed, or is borderline (```WARN```). 
+
+### Documenting the work 
+
+We can make a record of the results we obtained for all of the samples by concatenating all of the ```summary.txt``` files into a single file using the ```cat``` command, and name it as ```fastqc_summaries.txt``` and move it to the ```~/intro_to_linux/docs``` directory. 
+
+```sh
+mkdir ~/intro_to_linux/docs
+cat */summary.txt > ~/intro_to_linux/docs/fastqc_summaries.txt 
+```
+
+__Exercise:__ Which sample failed at least one of FastQC's quality test? What test did those samples fail? 
+
+We can get the list of all failed tests using ```grep```:
+
+```sh
+cd ~/intro_to_linux/docs
+grep FAIL fastqc_summaries.txt 
+```
+
+## Trimming and Filtering 
+
+### Cleaning Reads
+
+Previously, we checked the quality of our samples using a tool called FastQC. We looked at graphs that showed the quality of each base in the samples, and found out which samples failed certain quality checks. Just because some samples failed some checks, it doesn't mean we should get rid of them. It's normal for some checks to fail and it might not be a problem for what we want to do with the samples. For our next step, we will remove some of the low quality sequences to lower the chance of getting false results due to errors in the sequencing. 
+
+We will use a program called ```Trimmomatic``` to filter poor quality reads and trim poor quality bases from our samples. 
+
+### Trimmomatic Options
+
+Trimmomatic has a variety of options to trim your reads. If we run the following command, we can see some of our options. 
+
+```sh
+trimmomatic
+```
+
+Which will give you the following output:
+
+```
+Usage:
+       PE [-version] [-threads <threads>] [-phred33|-phred64] [-trimlog <trimLogFile>] [-summary <statsSummaryFile>] [-quiet] [-validatePairs] [-basein <inputBase> | <inputFile1> <inputFile2>] [-baseout <outputBase> | <outputFile1P> <outputFile1U> <outputFile2P> <outputFile2U>] <trimmer1>...
+   or:
+       SE [-version] [-threads <threads>] [-phred33|-phred64] [-trimlog <trimLogFile>] [-summary <statsSummaryFile>] [-quiet] <inputFile> <outputFile> <trimmer1>...
+   or:
+       -version
+```
+
+This output shows us that we must first specify whether we have paired end (PE) or single end (SE) reads. Next, we specify what flag we would like to run. For example, you can specify threads to indicate the number of processors on your computer that you want Trimmomatic to use. In most cases using multiple threads (processors) can help to run the trimming faster. These flags are not necessary, but they can give you more control over the command. The flags are followed by positional arguments, meaning the order in which you specify them is important. In paired end mode, Trimmomatic expects the two input files, and then the names of the output files. These files are described below. While, in single end mode, Trimmomatic will expect 1 file as input, after which you can enter the optional settings and lastly the name of the output file.
 
 
 # Homework
 
-* To understand the fastqc results. 
+* To understand the fastqc results ???
 
 # References 
 
