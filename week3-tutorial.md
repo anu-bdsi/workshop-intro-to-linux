@@ -405,6 +405,108 @@ To use it, you first need to specify whether you're using paired end (PE) or sin
 | \<outputFile2P> | Output file that contains surviving pairs from the ```_2``` file. |
 | \<outputFile2U> | Output file that contains orphaned reads from the ```_2``` file. | 
 
+The last thing trimmomatic expects to see is the trimming parameters:
+
+| Step | Meaning |
+| ---- | ------- |
+| ```ILLUMINACLIP``` | Perform adapter removal. |
+| ```SLIDINGWINDOW``` | Perform sliding window trimming, cutting once the average quality within the window falls below a threshold. | 
+| ```LEADING``` | Cut bases off the start of a read, if below a threshold quality. |
+| ```TRAILING``` | Cut bases off the end of a read, if below a threshold quality. |
+| ```CROP``` | Cut the read to a specified length |
+| ```HEADCROP``` | Cut the specified number of bases from the start of the read. | 
+| ```MINLEN``` | Drop an entire read if it is below a specified length. |
+| ```TOPHRED33``` | Convert quality scores to Phred-33. |
+| ```TOPHRED64``` | Convert quality scores to Phred-64. |
+
+We will only use a few options and trimming steps in our analysis, it is important to understand the steps you use to clean your data. For more information, see [the Trimmomatic manual](http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf). 
+
+A complete Trimmomatic command example will look like the following code: 
+
+```sh
+trimmomatic PE -threads 4 SRR_1056_1.fastq SRR_1056_2.fastq \
+            SRR_1056_1.trimmed.fastq SRR_1056_1un.trimmed.fastq \
+            SRR_1056_2.trimmed.fastq SRR_1056_2un.trimmed.fastq \
+            ILLUMINACLIP:SRR_adapters.fa SLIDINGWINDOW:4:20 
+```
+
+__Note:__ When writing a very long code, we can use ```\``` to separate long codes to different lines so it is easier to read. 
+
+## Running Trimmomatic 
+
+Let's start running Trimmomatic on our data. First, let's navigate to the ```untrimmed_fastq``` folder. 
+
+```sh
+cd ~/intro_to_linux/data/untrimmed_fastq
+```
+
+Our data are pair-ended data, we can see it from the name of our data. In the reports of FastQC, we can see that the Nextera adapters are present in our samples. The adpater sequences came in with the installation of the software so we can copy them from the installation path to our folder or we can use it directly from the installation folder by using the full path. 
+
+For now, we will copy the adapter sequence to our ```untrimmed_fastq``` folder to use it. 
+
+```sh
+cp ~/.conda/pkgs/trimmomatic-0.38-1/share/trimmomatic-0.38-1/adapters/NexteraPE-PE.fa .
+```
+
+The code we are going to run for Trimmomatic as follow, it may take a few minutes to run: 
+
+```sh
+trimmomatic PE SRR2589044_1.fastq.gz SRR2589044_2.fastq.gz \
+                SRR2589044_1.trim.fastq.gz SRR2589044_1un.trim.fastq.gz \
+                SRR2589044_2.trim.fastq.gz SRR2589044_2un.trim.fastq.gz \
+                SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15
+```
+
+We are using the option ```SLIDINGWINDOW:4:20``` for our data, it means the size of the sliding window is 4 bases long and any windows that has a score lower than 20 will be removes from the read. And the option ```MINLEN:25```, it means after the sliding window step, if the total length of the read are shorter than 25 bases will be removed. Additionally, we use the option ```ILLUMINACLIP:NexteraPE-PE.fa:2:40:15```, it tells the software how to handle sequences that match with adapter sequence but we won't cover how it works in this course, we just use it as a default setting. For more information, you can see [the Trimmomatic manual](http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf). 
+
+
+The correct output should look like this:
+
+```
+TrimmomaticPE: Started with arguments:
+ SRR2589044_1.fastq.gz SRR2589044_2.fastq.gz SRR2589044_1.trim.fastq.gz SRR2589044_1un.trim.fastq.gz SRR2589044_2.trim.fastq.gz SRR2589044_2un.trim.fastq.gz SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Read Pairs: 1107090 Both Surviving: 885220 (79.96%) Forward Only Surviving: 216472 (19.55%) Reverse Only Surviving: 2850 (0.26%) Dropped: 2548 (0.23%)
+TrimmomaticPE: Completed successfully 
+```
+
+__Exercise:__ What percent of reads did we remove from out sample? and what percent did we keep for both pairs? 
+
+From the results we got, you may have noticed that Trimmomatic has automatically detected the encoding method of our data, but it is always good to double check if it is correct. 
+
+We can check our output files by using ```ls SRR2589044*```, the correct output should look like this:
+
+```
+SRR2589044_1.fastq.gz       SRR2589044_1un.trim.fastq.gz  SRR2589044_2.trim.fastq.gz
+SRR2589044_1.trim.fastq.gz  SRR2589044_2.fastq.gz         SRR2589044_2un.trim.fastq.gz
+```
+
+The output files are also FASTQ files but it should be smaller than the original file since we have removed some reads. We can confirm this by running ```ls -lh SRR2589044*```. The correct output should look like this:
+
+```
+-rw-rw-r-- 1 u1122333 domain users 124M Jan 15  2016 SRR2589044_1.fastq.gz
+-rw-rw-r-- 1 u1122333 domain users  94M Jan 24 15:22 SRR2589044_1.trim.fastq.gz
+-rw-rw-r-- 1 u1122333 domain users  18M Jan 24 15:22 SRR2589044_1un.trim.fastq.gz
+-rw-rw-r-- 1 u1122333 domain users 128M Jan 15  2016 SRR2589044_2.fastq.gz
+-rw-rw-r-- 1 u1122333 domain users  91M Jan 24 15:22 SRR2589044_2.trim.fastq.gz
+-rw-rw-r-- 1 u1122333 domain users 271K Jan 24 15:22 SRR2589044_2un.trim.fastq.gz
+```
+
+Now, we have successfully run Trimmomatic on one of our files. However, Trimmomatic can only work on one sample at a time so we have to use ```for``` loop to iterate the command over our files. 
+
+We have unzipped one of the files before, let's zip it again so all of our files have universal names. 
+
+```sh
+gzip SRR2584863_1.fastq 
+```
+
+
 
 # Homework
 
