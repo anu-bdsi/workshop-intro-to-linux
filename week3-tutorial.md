@@ -506,11 +506,38 @@ We have unzipped one of the files before, let's zip it again so all of our files
 gzip SRR2584863_1.fastq 
 ```
 
+The ```for``` loop to run Trimmomatic on all samples:
 
+```sh
+for infile in *_1.fastq.gz 
+do 
+    base=$(basename ${infile} _1.fastq.gz)
+    trimmomatic PE ${infile} ${base}_2.fastq.gz \
+                    ${base}_1.trim.fastq.gz ${base}_1un.trim.fastq.gz \
+                    ${base}_2.trim.fastq.gz ${base}_2un.trim.fastq.gz \
+                    SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15
+done 
+```
+
+__Exercise:__ What does the command ```basename``` do? 
+
+It may take more than a few minutes to run, once it finishes running, take a look at your folder. You should get output files for each of our samples. 
+
+__Exercise:__ We trimmed our fastq files with Nextera adapters, but there are other adapters that are commonly used. What other adapter files came with Trimmomatic? 
+
+Now, let's move all the trimmed files to a new folder ```trimmed_fastq```.
+
+```sh
+mkdir ~/intro_to_linux/data/trimmed_fastq
+cd ~/intro_to_linux/data/untrimmed_fastq
+mv *.trim.* ../trimmed_fastq
+cd ../trimmed_fastq
+ls 
+```
 
 # Homework
 
-* To understand the fastqc results ???
+* Run FastQC on trimmed fastq files, and see if the results got better? 
 
 # References 
 
