@@ -126,7 +126,7 @@ The data comes in a compressed format, which is why there is a ```.gz``` at the 
 gunzip SRR2584863_1.fastq.gz
 ```
 
-## Quality Control 
+# Quality Control 
 
 To assess the quality of our sequence reads. 
 
