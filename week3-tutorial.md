@@ -88,9 +88,9 @@ The data we are going to use is part of a long-term evolution experiment led by 
 
 The experiment was designed to assess adaptation in E. coli. A population was propagated for more than 40,000 generations in a glucose-limited minimal medium (in most conditions glucose is the best carbon source for E. coli, providing faster growth than other sugars). This medium was supplemented with citrate, which E. coli cannot metabolize in the aerobic conditions of the experiment. Sequencing of the populations at regular time points revealed that spontaneous citrate-using variant (Cit+) appeared between 31,000 and 31,500 generations, causing an increase in population size and diversity. In addition, this experiment showed hypermutability in certain regions. Hypermutability is important and can help accelerate adaptation to novel environments, but also can be selected against in well-adapted populations.
 
-## Assessing Read Quality 
+# Assessing Read Quality 
 
-### Bioinformatic Workflows 
+## Bioinformatic Workflows 
 
 When working with high-throughput sequencing data, the raw reads you get off of the sequencer will need to pass through a number of different tools in order to generate your final desired output. 
 
@@ -106,7 +106,7 @@ An example of the workflow we will be using for our variant calling analysis is 
 
 These workflows in bioinformatics adopt a plug-and-play approach in that the output of one tool can be easily used as input to another tool without any extensive configuration. Having standards for data formats is what makes this feasible. Standards ensure that data is stored in a way that is generally accepted and agreed upon within the community. The tools that are used to analyze data at different stages of the workflow are therefore built under the assumption that the data will be provided in a specific format.
 
-### Downloading the Data
+## Downloading the Data
 
 We are studying a population of *Escherichia coli* (designated Ara-3), which were propagated for more than 50,000 generations in a glucose-limited minimal medium. We will be working with three samples from this experiment, one from 5,000 generations, one from 15,000 generations, and one from 50,000 generations. The population changed substantially during the course of the experiment, and we will be exploring how with our variant calling workflow.
 
@@ -126,11 +126,11 @@ The data comes in a compressed format, which is why there is a ```.gz``` at the 
 gunzip SRR2584863_1.fastq.gz
 ```
 
-### Quality Control 
+## Quality Control 
 
 To assess the quality of our sequence reads. 
 
-#### How to Read the FASTQ Format File 
+## How to Read the FASTQ Format File 
 
 * Line 1 - Always begins with an '@' and then information about the read.
 * Line 2 - The actual DNA sequence.
@@ -161,7 +161,7 @@ fastqc -h
 
 If you get the help manual it means the ```fastqc``` has been successfully installed, if you get an error message it means it has not been installed. 
 
-### Assessing Quality using FastQC 
+## Assessing Quality using FastQC 
 
 In real life, you will not be assessing the quality of your reads by visually inspecting your FASTQ files. Rather, you will be using a software program to assess read quality and filter out poor quality reads. We will first use a program called FastQC to visualize the quality of our reads. Later in our workflow, we will use another program to filter out poor quality reads.
 
@@ -179,7 +179,7 @@ Now let’s take a look at a quality plot on the other end of the spectrum.
 
 Here, we see positions within the read in which the boxes span a much wider range. Also, quality scores drop quite low into the “bad” range, particularly on the tail end of the reads. The FastQC tool produces several other diagnostic plots to assess sample quality, in addition to the one plotted above.
 
-### Running FastQC
+## Running FastQC
 
 We will now assess the quality of the reads that we downloaded. First, make sure you are still in the ```untrimmed_fastq``` directory.
 
@@ -247,7 +247,7 @@ Now we can navigate into this results directory and do some closer inspection of
 cd ~/intro_to_linux/results/fastqc_untrimmed_reads/ 
 ```
 
-### Viewing the FastQC Results 
+## Viewing the FastQC Results 
 
 To view the HTML files, first we need to download it to our local computer because we can't view the HTML files in out Linux system. 
 
@@ -286,11 +286,11 @@ SRR2589044_2_fastqc.html                      100%  627KB   5.5MB/s   00:00
 
 Now we can go to our new directory and open the 6 HTML files. 
 
-### Decoding Other FastQC Outputs 
+## Decoding Other FastQC Outputs 
 
 We have now looked at quite a few "Per base sequence quality" FastQC graphs, but there are nine other graphs that we have not talked about yet. Please see the FastQC [documentation](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/) for detailed explanation of each graph. 
 
-### Working with the FastQC Text Output 
+## Working with the FastQC Text Output 
 
 Now let's look at the other output files. Go back to the terminal that connected to Dayhoff and make sure you are in the results directory. 
 
@@ -349,7 +349,7 @@ WARN    Adapter Content SRR2584863_1.fastq
 
 The summary gives us a list of tests that FastQC ran, and tells us wether this sample passes, failed, or is borderline (```WARN```). 
 
-### Documenting the work 
+## Documenting the work 
 
 We can make a record of the results we obtained for all of the samples by concatenating all of the ```summary.txt``` files into a single file using the ```cat``` command, and name it as ```fastqc_summaries.txt``` and move it to the ```~/intro_to_linux/docs``` directory. 
 
@@ -367,15 +367,15 @@ cd ~/intro_to_linux/docs
 grep FAIL fastqc_summaries.txt 
 ```
 
-## Trimming and Filtering 
+# Trimming and Filtering 
 
-### Cleaning Reads
+## Cleaning Reads
 
 Previously, we checked the quality of our samples using a tool called FastQC. We looked at graphs that showed the quality of each base in the samples, and found out which samples failed certain quality checks. Just because some samples failed some checks, it doesn't mean we should get rid of them. It's normal for some checks to fail and it might not be a problem for what we want to do with the samples. For our next step, we will remove some of the low quality sequences to lower the chance of getting false results due to errors in the sequencing. 
 
 We will use a program called ```Trimmomatic``` to filter poor quality reads and trim poor quality bases from our samples. 
 
-### Trimmomatic Options
+## Trimmomatic Options
 
 Trimmomatic has a variety of options to trim your reads. If we run the following command, we can see some of our options. 
 
@@ -432,7 +432,7 @@ trimmomatic PE -threads 4 SRR_1056_1.fastq SRR_1056_2.fastq \
 
 __Note:__ When writing a very long code, we can use ```\``` to separate long codes to different lines so it is easier to read. 
 
-## Running Trimmomatic 
+# Running Trimmomatic 
 
 Let's start running Trimmomatic on our data. First, let's navigate to the ```untrimmed_fastq``` folder. 
 
