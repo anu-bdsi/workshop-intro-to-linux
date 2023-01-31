@@ -935,9 +935,30 @@ do
 done 
 ```
 
+Save and exit, now you can run the workflow by:
+
+```sh
+bash variant_calling.sh 
+```
+
+EXERCISE: The samples we just did variant calling on are part of the long-term evolution. The ```SRR2589044``` sample was from generation 5000, ```SRR2584863``` was from generation 15000, and ```SRR2584866``` was from generation 50000. How did the number of mutations change in the sample over time? 
+
+```sh
+for file in ~/intro_to_linux/results/vcf/*_final_variants.vcf 
+do 
+    echo ${file}
+    grep -v "#" ${file} | wc -l
+done 
+```
+
+For SRR2589044 from generation 5000 there were 10 mutations, for SRR2584863 from generation 15000 there were 25 mutations, and SRR2584866 from generation 766 mutations. 
+
+EXERCISE: If you have time, try run the workflow on full-sized trimmed FASTQ file. Does the variants change for each sample? 
+
 # Homework
 
 * Run FastQC on trimmed fastq files, and see if the results got better? 
+* Add comments on the two shell scripts we ran in today's exercise. 
 
 # References 
 
