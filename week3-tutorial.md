@@ -1,5 +1,7 @@
 # Use conda environment for projects 
 
+It is important we use conda to build the environment for each project because different project requires difference software with different versions. A conda environment can store all the dependent software for a project so it doesn't mixed up with others. 
+
 ## Install miniconda 
 
 As we have miniconda installed on Dayhoff, so we don't have to install it. If you would like to install it on your own machine, google how to do it or ask ChatGPT. 
@@ -19,8 +21,6 @@ conda config --add channels conda-forge
 This will add the Bioconda channel as well as the conda-forge channel to your conda configuration. Once this is done, you should be able to install packages from the Bioconda channel using the conda install command. 
 
 ## Create a conda environment for your project
-
-It is important we use conda to build the environment for each project because different project requires difference software with different versions. A conda environment can store all the dependent software for a project so it doesn't mixed up with others. 
 
 Use the following code to create a new conda environment for your first genomics project.
 
@@ -80,7 +80,6 @@ conda install -c bioconda bcftools=1.8
 conda install -c conda-forge openjdk # when using fastqc 
 conda install openssl=1.0 # when using bcftools
 ```
-
 
 ## The Data 
 
@@ -811,13 +810,130 @@ The Broad Institute's [VCF Guide](https://gatk.broadinstitute.org/hc/en-us/artic
 
 EXERCISE: Use the ```grep``` and ```wc``` commands to assess how many variants are in the vcf file?
 
+```sh
+grep -v "#" results/vcf/SRR2584866_final_variants.vcf | wc -l 
+```
 
+The correct output should be ```766```, there are 766 variants in this file. 
 
-## Assess the alignment (visualisation) 
+## Assess the alignment (visualisation) ???
 
-## Viewing with IGV 
+## Viewing with IGV ???
 
+# Automating a Variant Calling Workflow 
 
+## What is a shell script?
+
+A shell script is a program written in the shell programming language for Unix-based operating systems, which automates commands and tasks. It is interpreted by the shell and can contain shell commands, functions, variables, and control structures.
+
+With shell scripts, we can put all the steps for variant calling into a single script and run it all at once. We don't have to type commands in each step and wait for the program to finish for the next step. 
+
+In this lesson, we will use two shell scripts for the variant calling workflow. One for FastQC analysis, and the other one for the remaining steps.  
+
+### Creating Variables 
+
+Within the Bash shell, you can create variables at any time. To create a variable, you can use the assignment operator ```=``` to assign values to a name. Such as ```lucky_number=5```, you assigned ```5``` to the name ```lucky_number```. To check the current defination of a variable, you can use ```echo $lucky_number```. 
+
+## Analysing quality with FastQC 
+
+First, let's create a new direcotory ```scripts``` to store our scripts, and a file ```read_qc.sh``` for the FastQC analysis. 
+
+```sh
+mkdir -p ~/intro_to_linux/scripts 
+cd ~/intro_to_linux/scripts 
+touch read_qc.sh 
+```
+
+We can use ```nano``` to open our file and edit it. 
+
+```sh
+nano read_qc.sh
+```
+
+After you're in the ```nano``` interface, input the following code into your script:
+
+```sh
+#!/bin/bash
+
+set -e 
+cd ~/intro_to_linux/data/untrimmed_fastq 
+
+echo "Running FastQC ..." 
+fastqc *.fastq* 
+
+mkdir -p ~/intro_to_linux/results/fastqc_untrimmed_reads 
+
+echo "Saving FastQC results ..." 
+mv *.zip ~/intro_to_linux/results/fastqc_untrimmed_reads 
+mv *.html ~/intro_to_linux/results/fastqc_untrimmed_reads 
+
+cd ~/intro_to_linux/results/fastqc_untrimmed_reads 
+
+echo "Unzipping ..."
+for file in *.zip
+do
+    unzip $file 
+done 
+
+echo "Saving summary ..."
+cat */summary.txt > ~/intro_to_linux/docs/fastqc_summaries.txt 
+```
+
+Save and exit ```nano```. 
+
+Now, we can run our script file by:
+
+```sh 
+bash read_qc.sh 
+```
+
+In the process of running, FastQC will ask if you want to replace some files. That's because we have run the FastQC before, so we have the results already. Go ahead and press ```A``` + ```enter``` each time it occurs. 
+
+## Automating the rest of our variant calling workflow 
+
+Create a new file called ```variant_calling.sh```:
+
+```sh
+nano variant_calling.sh 
+```
+
+and input the following codes:
+
+```sh
+#!/bin/bash 
+
+set -e
+cd ~/intro_to_linux/results
+
+genome=~/intro_to_linux/data/ref_genome/ecoli_rel606.fasta 
+bwa index $genome 
+
+mkdir -p sam bam bcf vcf 
+
+for fq1 in ~/intro_to_linux/data/trimmed_fastq_small/*_1.trim.sub.fastq 
+do 
+    echo "Working with file $fq1"
+    base=$(basename $fq1 _1.trim.sub.fastq) 
+    echo "base name is $base" 
+
+    fq1=~/intro_to_linux/data/trimmed_fastq_small/${base}_1.trim.sub.fastq 
+    fq2=~/intro_to_linux/data/trimmed_fastq_small/${base}_2.trim.sub.fastq 
+    sam=~/intro_to_linux/results/sam/${base}.aligned.sam
+    bam=~/intro_to_linux/results/bam/${base}.aligned.bam
+    sorted_bam=~/intro_to_linux/results/bam/${base}.aligned.sorted.bam 
+    raw_bcf=~/intro_to_linux/results/bcf/${base}_raw.bcf 
+    variants=~/intro_to_linux/results/vcf/${base}_variants.vcf 
+    final_variants=~/intro_to_linux/results/vcf/${base}_final_variants.vcf 
+
+    bwa mem $genome $fq1 $fq2 > $sam
+    samtools view -S -b $sam > $bam 
+    samtools sort -o $sorted_bam $bam 
+    samtools index $sorted_bam 
+    bcftools mpileup -O b -o $raw_bcf -f $genome $sorted_bam 
+    bcftools call --ploidy 1 -m -v -o $variants $raw_bcf 
+    vcfutils.pl varFilter $variants > $final_variants 
+done 
+```
 
 # Homework
 
