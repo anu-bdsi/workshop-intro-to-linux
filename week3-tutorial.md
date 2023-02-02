@@ -729,7 +729,7 @@ bcftools mpileup -O b \
 * ```-f``` tells bcftools the path to the reference genome
 * the last file is the input file 
 
-NOTE: there might be an error saying: 
+__Note:__: there might be an error saying: 
 
 ```
 bcftools: error while loading shared libraries: libcrypto.so.1.0.0: cannot open shared object file: No such file or directory
@@ -808,7 +808,7 @@ For our file, the metrics presented are GT:PL.
 
 The Broad Institute's [VCF Guide](https://gatk.broadinstitute.org/hc/en-us/articles/360035531692-VCF-Variant-Call-Format) is an excellent place to learn more about the VCF file format. 
 
-EXERCISE: Use the ```grep``` and ```wc``` commands to assess how many variants are in the vcf file?
+__Exercise:__ Use the ```grep``` and ```wc``` commands to assess how many variants are in the vcf file?
 
 ```sh
 grep -v "#" results/vcf/SRR2584866_final_variants.vcf | wc -l 
@@ -941,7 +941,7 @@ Save and exit, now you can run the workflow by:
 bash variant_calling.sh 
 ```
 
-EXERCISE: The samples we just did variant calling on are part of the long-term evolution. The ```SRR2589044``` sample was from generation 5000, ```SRR2584863``` was from generation 15000, and ```SRR2584866``` was from generation 50000. How did the number of mutations change in the sample over time? 
+__Exercise:__ The samples we just did variant calling on are part of the long-term evolution. The ```SRR2589044``` sample was from generation 5000, ```SRR2584863``` was from generation 15000, and ```SRR2584866``` was from generation 50000. How did the number of mutations change in the sample over time? 
 
 ```sh
 for file in ~/intro_to_linux/results/vcf/*_final_variants.vcf 
@@ -951,14 +951,13 @@ do
 done 
 ```
 
-For SRR2589044 from generation 5000 there were 10 mutations, for SRR2584863 from generation 15000 there were 25 mutations, and SRR2584866 from generation 766 mutations. 
-
-EXERCISE: If you have time, try run the workflow on full-sized trimmed FASTQ file. Does the variants change for each sample? 
+For ```SRR2589044``` from generation 5000 there were 10 mutations, for ```SRR2584863``` from generation 15000 there were 25 mutations, and ```SRR2584866``` from generation 766 mutations.  
 
 # Homework
 
 * Run FastQC on trimmed fastq files, and see if the results got better? 
 * Add comments on the two shell scripts we ran in today's exercise. 
+* Run the variant calling workflow on the full-sized trimmed fastq file, and see if the number of variants has changed?
 
 # References 
 

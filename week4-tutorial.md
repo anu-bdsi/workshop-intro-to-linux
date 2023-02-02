@@ -1,0 +1,114 @@
+# Use SLURM to run your jobs on RSB IT infrastructure  
+
+Slurm is an open source, fault-tolerant, and highly scalable cluster management and job scheduling system for large and small Linux clusters. It allows users to allocate resources for their jobs rather than taking up whatever resources available. It also let you run jobs in the background rather than looking at the screen all the time. 
+
+## Data storage locations 
+
+There are three nodes on Dayhoff: ```dayhoff```, ```wright```, and ```fisher```. 
+
+If you run ```pwd``` in your home directory, you'll probably see something like ```/home/UID```. But in reality, that's only the path from your home node. For cluster-wide shared data namespace, we have to add ```/mnt/data/(server)``` before the path we get from ```pwd```. 
+
+## Writing a ```sbatch``` file
+
+A few things to remember when submitting a SLURM job on the cluster:
+
+* All medium to large processes or workloads need to be run via SLURM, not directly on the command line. If the job was run directly it will be terminated after a short time. 
+* With a multinode cluster all the tools you need to use must be installed on all the nodes, and all the file paths need to use the cluster-wide shared data namespace with ```/mnt/data/(server)``` at front. 
+* You can limit your job only running on one cluster if you don't want to set up your environment on all nodes. In ```sbatch``` and ```srun```, you can use ```--exclude=fisher, wright``` to remove the nodes you don't want to use. 
+* The cluster has only one partition ```standard``` for using right now, but it will have more options in the future for urgent and GPU-intensive workloads. 
+* When using multiple cores for a job, first you need to make sure the software you are using supports multi-core processing. Secondly, make sure you specifies the number of cores you want in the codes to run the software as well in the ```sbatch``` file. Sometimes SLURM and software cannot communicate very well so they don't know information from each other. 
+
+A example of what a ```sbatch``` script looks like:
+
+```sh
+#!/bin/bash 
+#SBATCH --job-name=JobX
+#SBATCH --output=/mnt/data/(server)/home/uxxxxx/../%j.%x.out
+#SBATCH --error=/mnt/data/(server)/home/uxxxxx/.../%j.%x.err
+#SBATCH --partition=Standard
+#SBATCH --exclude=wright,fisher 
+#SBATCH --time=120:00:00    # 5 days then stop job if not complete
+#SBATCH --mem-per-cpu=7000  # 7GB per cpu (rather than per node)
+#SBATCH --nodes=2	    # use 2 nodes
+#SBATCH --ntasks=Y	    # don't let more than Y tasks run at once
+#SBATCH --mem=230G	    # reserve 230GB RAM per node (rather than per cpu)
+#SBATCH --cpus-per-task=15  # reserve 15 cpus/threads per task
+#SBATCH --ntasks-per-node=Z # only allow z tasks per node
+#SBATCH --mail-user uxxxxxxx@anu.edu.au # mail user on job state changes
+#SBATCH --mail-type TIME_LIMIT,FAIL		# state changes
+
+srun my_script_1.sh & # each srun means one task 
+srun -Nx -ny --exclusive my_script_A.sh -input a & # -N means --nodes, -n means --ntasks 
+srun -Nx -ny --exclusive my_script_A.sh -input b &
+..
+..
+srun -Nx -ny --exclusive my_script_B.sh &
+wait
+```
+
+It has more options you can use to reserve the resources and manage the job, for more information you can see the [slurm documentation](https://slurm.schedmd.com/overview.html). 
+
+## Parallel Processing 
+
+In the sbatch script above, each srun means a task and it will run parallel with each other. 
+
+In the variant calling workflow, we used 3 different samples, we can write a script to make the 3 samples run in parallel to save some time. 
+
+Remember in the step of aligning reads to referece genome we only used the subset data, now let's try align the full-sized data to the reference genome using parallel processing. 
+
+Create a file named ```run_bwa.sh``` in the directory ```scripts```, and input the following codes. 
+
+```sh
+#!/bin/bash
+
+#SBATCH --job-name=alignment
+#SBATCH --output=/mnt/data/dayhoff/home/u1133824/intro_to_linux/alignment.out
+#SBATCH --error=/mnt/data/dayhoff/home/u1133824/intro_to_linux/alignment.err
+#SBATCH --partition=Standard
+#SBATCH --exclude=wright,fisher
+#SBATCH --time=5:00:00
+#SBATCH --mem-per-cpu=1000
+#SBATCH --nodes=1
+#SBATCH --ntasks=3
+#SBATCH --cpus-per-task=2
+#SBATCH --ntasks-per-node=3
+#SBATCH --mail-user=u1133824@anu.edu.au
+#SBATCH --mail-type=ALL
+
+source /opt/conda/bin/activate intro-to-linux 
+
+srun --exclusive --ntasks=1 bwa mem -t 2 \
+            /mnt/data/dayhoff/home/u1133824/intro_to_linux/data/ref_genome/ecoli_rel606.fasta \
+            /mnt/data/dayhoff/home/u1133824/intro_to_linux/data/trimmed_fastq/SRR2584863_1.trim.fastq \
+            /mnt/data/dayhoff/home/u1133824/intro_to_linux/data/trimmed_fastq/SRR2584863_2.trim.fastq \
+            > /mnt/data/dayhoff/home/u1133824/intro_to_linux/results/sam/SRR2584863.full.aligned.sam &
+
+srun --exclusive --ntasks=1 bwa mem -t 2 \
+            /mnt/data/dayhoff/home/u1133824/intro_to_linux/data/ref_genome/ecoli_rel606.fasta \
+            /mnt/data/dayhoff/home/u1133824/intro_to_linux/data/trimmed_fastq/SRR2584866_1.trim.fastq \
+            /mnt/data/dayhoff/home/u1133824/intro_to_linux/data/trimmed_fastq/SRR2584866_2.trim.fastq \
+            > /mnt/data/dayhoff/home/u1133824/intro_to_linux/results/sam/SRR2584866.full.aligned.sam &
+
+srun --exclusive --ntasks=1 bwa mem -t 2 \
+            /mnt/data/dayhoff/home/u1133824/intro_to_linux/data/ref_genome/ecoli_rel606.fasta \
+            /mnt/data/dayhoff/home/u1133824/intro_to_linux/data/trimmed_fastq/SRR2589044_1.trim.fastq \
+            /mnt/data/dayhoff/home/u1133824/intro_to_linux/data/trimmed_fastq/SRR2589044_2.trim.fastq \
+            > /mnt/data/dayhoff/home/u1133824/intro_to_linux/results/sam/SRR2589044.full.aligned.sam &
+
+wait
+```
+
+Save ane exit, run ```sbatch run_bwa.sh``` to submit the job. You'll see a job ID prompted on your screen. It means the job has been submitted. Then, you can run ```squeue``` to check your job status. 
+
+Another useful command to check how much resources have been used for your job is:
+
+```sh
+sacct --format=JobID,JobName,State,Start,End,CPUTime,MaxRSS,NodeList,ExitCode --jobs=JOB_ID 
+```
+
+# References 
+
+* slurm workload manager - [Documentation](https://slurm.schedmd.com/documentation.html) 
+* RSB IT Infrastructure Wiki - [RSB bioinformatics server user guide](https://infrawiki.rsb.anu.edu.au/doku.php?id=rsb_it:infrastructure:userdoco:studentservers#running_workloads_and_processes_on_the_servers)
+* RONIN - [A simple slurm guide for beginners](https://blog.ronin.cloud/slurm-intro/)
+* stack overflow - [parallel but different Slurm job step invocations not working](https://stackoverflow.com/questions/35498763/parallel-but-different-slurm-srun-job-step-invocations-not-working) 
