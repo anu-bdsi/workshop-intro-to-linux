@@ -62,8 +62,8 @@ Create a file named ```run_bwa.sh``` in the directory ```scripts```, and input t
 #!/bin/bash
 
 #SBATCH --job-name=alignment
-#SBATCH --output=/mnt/data/dayhoff/home/u1133824/intro_to_linux/alignment.out
-#SBATCH --error=/mnt/data/dayhoff/home/u1133824/intro_to_linux/alignment.err
+#SBATCH --output=/mnt/data/dayhoff/home/u_id/intro_to_linux/alignment.out
+#SBATCH --error=/mnt/data/dayhoff/home/u_id/intro_to_linux/alignment.err
 #SBATCH --partition=Standard
 #SBATCH --exclude=wright,fisher
 #SBATCH --time=5:00:00
@@ -72,28 +72,28 @@ Create a file named ```run_bwa.sh``` in the directory ```scripts```, and input t
 #SBATCH --ntasks=3
 #SBATCH --cpus-per-task=2
 #SBATCH --ntasks-per-node=3
-#SBATCH --mail-user=u1133824@anu.edu.au
+#SBATCH --mail-user=email_address
 #SBATCH --mail-type=ALL
 
 source /opt/conda/bin/activate intro-to-linux 
 
 srun --exclusive --ntasks=1 bwa mem -t 2 \
-            /mnt/data/dayhoff/home/u1133824/intro_to_linux/data/ref_genome/ecoli_rel606.fasta \
-            /mnt/data/dayhoff/home/u1133824/intro_to_linux/data/trimmed_fastq/SRR2584863_1.trim.fastq \
-            /mnt/data/dayhoff/home/u1133824/intro_to_linux/data/trimmed_fastq/SRR2584863_2.trim.fastq \
-            > /mnt/data/dayhoff/home/u1133824/intro_to_linux/results/sam/SRR2584863.full.aligned.sam &
+            /mnt/data/dayhoff/home/u_id/intro_to_linux/data/ref_genome/ecoli_rel606.fasta \
+            /mnt/data/dayhoff/home/u_id/intro_to_linux/data/trimmed_fastq/SRR2584863_1.trim.fastq \
+            /mnt/data/dayhoff/home/u_id/intro_to_linux/data/trimmed_fastq/SRR2584863_2.trim.fastq \
+            > /mnt/data/dayhoff/home/u_id/intro_to_linux/results/sam/SRR2584863.full.aligned.sam &
 
 srun --exclusive --ntasks=1 bwa mem -t 2 \
-            /mnt/data/dayhoff/home/u1133824/intro_to_linux/data/ref_genome/ecoli_rel606.fasta \
-            /mnt/data/dayhoff/home/u1133824/intro_to_linux/data/trimmed_fastq/SRR2584866_1.trim.fastq \
-            /mnt/data/dayhoff/home/u1133824/intro_to_linux/data/trimmed_fastq/SRR2584866_2.trim.fastq \
-            > /mnt/data/dayhoff/home/u1133824/intro_to_linux/results/sam/SRR2584866.full.aligned.sam &
+            /mnt/data/dayhoff/home/u_id/intro_to_linux/data/ref_genome/ecoli_rel606.fasta \
+            /mnt/data/dayhoff/home/u_id/intro_to_linux/data/trimmed_fastq/SRR2584866_1.trim.fastq \
+            /mnt/data/dayhoff/home/u_id/intro_to_linux/data/trimmed_fastq/SRR2584866_2.trim.fastq \
+            > /mnt/data/dayhoff/home/u_id/intro_to_linux/results/sam/SRR2584866.full.aligned.sam &
 
 srun --exclusive --ntasks=1 bwa mem -t 2 \
-            /mnt/data/dayhoff/home/u1133824/intro_to_linux/data/ref_genome/ecoli_rel606.fasta \
-            /mnt/data/dayhoff/home/u1133824/intro_to_linux/data/trimmed_fastq/SRR2589044_1.trim.fastq \
-            /mnt/data/dayhoff/home/u1133824/intro_to_linux/data/trimmed_fastq/SRR2589044_2.trim.fastq \
-            > /mnt/data/dayhoff/home/u1133824/intro_to_linux/results/sam/SRR2589044.full.aligned.sam &
+            /mnt/data/dayhoff/home/u_id/intro_to_linux/data/ref_genome/ecoli_rel606.fasta \
+            /mnt/data/dayhoff/home/u_id/intro_to_linux/data/trimmed_fastq/SRR2589044_1.trim.fastq \
+            /mnt/data/dayhoff/home/u_id/intro_to_linux/data/trimmed_fastq/SRR2589044_2.trim.fastq \
+            > /mnt/data/dayhoff/home/u_id/intro_to_linux/results/sam/SRR2589044.full.aligned.sam &
 
 wait
 ```
