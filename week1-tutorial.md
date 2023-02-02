@@ -2,7 +2,7 @@
 
 * Connecting to the ANU intranet through GlobalProtect VPN. 
 * For Windows users, open Command Prompt. For Mac users, open Terminal. 
-* Typing in ```ssh u1122333@dayhoff.rsb.anu.edu.au``` and press ```enter```. 
+* Typing in ```ssh u_id@dayhoff.rsb.anu.edu.au``` and press ```enter```. 
 * Typing in ```yes``` if you've been asked to authenticate the connection. 
 * The password is the same as your uni account password. 
 * If you successfully logged into Dayhoff, you will see a welcome message. 
@@ -19,7 +19,7 @@ This command tells you where you are.
 
 When you logged into a Linux system, the default location you will be is your home directory ```~```. But there is no directory called ```~```, it is equivalent to the path to your home directory which you can get by using the command ```pwd```. 
 
-For example, ```/home/u1122333```.
+For example, ```/home/u_id```.
 
 ## ```ls``` - Listing 
 
@@ -35,7 +35,7 @@ This command lets you create a new directory.
 
 ```mkdir new-folder``` to create a new directory called ```new-folder``` under your working directory.
 
-```mkdir /home/u1122333/new-folder``` to create a new directory under ```/home/u1122333``` regardless of where you are. 
+```mkdir /home/u_id/new-folder``` to create a new directory under ```/home/u_id``` regardless of where you are. 
 
 ## ```cd``` - Change Directory 
 
@@ -43,9 +43,9 @@ This command lets you move between directories.
 
 ```cd new-folder``` to go into the new directory you just created. 
 
-```pwd``` will return your current working directory which is ```/home/u1122333/new-folder```. 
+```pwd``` will return your current working directory which is ```/home/u_id/new-folder```. 
 
-To go back to the previous directory we can use either ```cd /home/u1122333``` or ```cd ..``` command. 
+To go back to the previous directory we can use either ```cd /home/u_id``` or ```cd ..``` command. 
 
 ```..``` here means parent directory, and ```.``` means current directory. 
 
