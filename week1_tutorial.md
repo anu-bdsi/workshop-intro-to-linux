@@ -13,15 +13,24 @@
 
 Before we start to learn any command, let's talk about the interface of the Linux operating system. The interface is just a window with texts displaying. The actual place where we communicate with the computer is a line with some information at the front and a ```$``` sign, after the ```$``` sign is where we can type things in. It is something like this:
 
-![linux-interface](C:\Users\u1133824\Desktop\rsb-training\intro-to-linux\image\linux-interface.png) 
+![linux-interface](https://ubuntucommunity.s3.dualstack.us-east-2.amazonaws.com/original/2X/b/ba76cbf3dc8dc2cc94d26dd61c7aad3cedcd5102.png)
 
-A ```space``` is needed between when typing the command, option, and argument. Sometimes a command can have more than one option and more than one argument. 
+The texts before the ```@``` sign is usually the user name, and behind the ```@``` is the server name. The texts after the ```:``` sign and before the ```$``` sign is the directory you are in. In the above image, it is ```~``` which means the home directory of the user. We will talk about it later in the course as well. 
 
-![shell-syntax](https://swcarpentry.github.io/shell-novice/fig/shell_command_syntax.svg) 
+When we type a command, there are some rules to follow. Please see the following image for what a standard command looks like:
+
+![shell-syntax](https://swcarpentry.github.io/shell-novice/fig/shell_command_syntax.svg)
+
+* The ```$``` is called prompt.
+* Following the prompt the first thing we should type in is a command, here this command ```ls``` means to list all the files/directories. 
+* After the command, sometimes an option/flag follows it to add some other functions for the command, here ```-F``` option means to modify the output of command ```ls``` by adding some symbols after the file/directory names to show what type of the file is. It might be confusing, but don't worry, as we go along with the course, you'll understand more. 
+* The last thing is called an argument, it means the thing/place where we want our command to perform on. 
+
+Options and arguments are optional, for a command it is not necessary to have an option or argument. Some commands can be used just by itself. It is also possible for a command to have more than one option and one argument. A ```space``` is needed between when typing the command, option, and argument.
 
 ## File Path on a Linux Machine 
 
-Because there is no graphic user interface in command line, we can imaging the directories as trees to help navigating through. In Linux, the path always start with root ```/```. 
+Because there is no graphic user interface in command line, we can imagine the directories as trees to help navigating through. In Linux, the path always start with root ```/```. 
 
 ![image](https://cdn-wordpress-info.futurelearn.com/info/wp-content/uploads/a2794f8f-b0c1-468d-89c6-bcf29d2d6517-1.png) 
 
@@ -29,15 +38,22 @@ Because there is no graphic user interface in command line, we can imaging the d
 
 This command tells you where you are. 
 
-When you logged into a Linux system, the default location you will be is your home directory ```~```. But there is no directory called ```~```, it is equivalent to the path to your home directory which you can get by using the command ```pwd```. 
+When you logged into a Linux system, the default location you will be is your home directory. It is usually showed as a ```~``` sign before your command prompt, the ```~``` is equivalent to the path to your home directory. 
 
-The expected result would be ```/home/u_id```. 
+Let's try use the command ```pwd``` to get where we are. The expected result would be ```/home/u_id```. 
 
 ## ```ls``` - Listing 
 
-This command lists all files and directories under your current directory. 
+This command lists all the things in your current directory. 
 
-For now, ```ls``` returns nothing because we are new users and don't have anything under our home directory. We can also put the path to a certain directory behind ```ls``` to inspect the contents of the directory such as ```ls /home```. 
+For now, ```ls``` returns nothing because we are new users and don't have anything in our home directory. We can also put the path to a certain directory behind ```ls``` to inspect the contents of the directory such as ```ls /```, ```ls /home```, or ```ls /usr```. 
+
+```ls``` has many useful options to inspect our files with more details, I'll list some below and we'll be practicing it during the course:
+
+* ```ls -l``` list with long format - show permissions
+
+-----------------------------------------------------------
+------------------------------------------------
 
 ## ```cd``` - Change Directory 
 
@@ -51,11 +67,39 @@ If you want to go to the last directory (or parent directory) of your current di
 
 This command lets you create a new directory.
 
-Let's create a new directory under our home directory as the working directory of this short course. I would name it intro_to_linux, you can name it whatever you want but it will be easier when following this tutorial. ```mkdir 
+Let's create a new directory in our home directory, the new directory will be the main directory we're working in for this course. Let's name it as ```intro_to_linux```. 
 
-```mkdir /home/u_id/new-folder``` to create a new directory under ```/home/u_id``` regardless of where you are. 
+```sh
+cd ~ # go to our home directory 
+mkdir intro_to_linux # and make a new directory in your current directory 
+```
+
+### There are some rules when naming your files/directories in Linux:
+
+* A file or directory name can have 1 to 256 characters in length. 
+* Linux is case sensitive, uppercase characters are different from lowercase characters. 
+* File or directory names can include letters, numbers, and the following 3 special charachers: period ```.```, underscore ```_```, and dash ```-```. 
+* There are some other special characters you can use in the name but it is highly against, so I won't be mention them here. 
+
+### Linux provides 2 wildcard characters to represent ambiguous characters or strings in file or directory names:
+
+* The question mark ```?``` represents any single character. For example, ```ls file?.txt``` would list ```file1.txt``` and ```file2.txt``` but not ```file50.txt```. 
+* The asterisk ```*``` represents any string of zero or more characters. For example, ```ls file*.txt``` would list ```file.txt```, ```file1.txt```, ```file2.txt```, and ```file50.txt``` but not ```file01.data```. 
 
 # Creating and Editing Files 
+
+## ```touch``` - To Create Empty Files 
+
+Try ```touch new_file.txt```, and use ```ls``` to view the result. 
+
+```touch``` command can take multiple input in to create several files together. Try ```touch doc1.txt doc2.txt doc3.txt```, and use ```ls``` to view the results. 
+
+The ```touch``` command has another funtion which is to change the timestamp of a file, but we won't cover it here. 
+
+## Copy and Paste in Linux
+
+-----------------------------------------------------------
+------------------------------------------------
 
 ## ```nano``` - A Text Editor 
 
@@ -319,3 +363,6 @@ Do some research on below questions to get a better understanding of the Linux o
 * Andrew Severin - [Introduction to Unix](https://bioinformaticsworkbook.org/Appendix/Unix/unix-basics-1.html#gsc.tab=0) 
 * GeeksforGeeks - [Getting Started with Vim Editor in Linux](https://www.geeksforgeeks.org/getting-started-with-vim-editor-in-linux/) 
 * Software Carpentry - [The Unix Shell](https://swcarpentry.github.io/shell-novice/) 
+* University of Calgary - [Managing Linux Directories and Files](https://people.ucalgary.ca/~appinst/linux/fileManage.html#:~:text=A%20file%20or%20directory%20name,%2C%20and%20dash%20(%20%2D%20).) 
+* GeeksforGeeks - [touch command in Linux with Examples](https://www.geeksforgeeks.org/touch-command-in-linux-with-examples/) 
+* atatus - [Linux "ls" Command with Examples](https://www.atatus.com/blog/ls-command-in-linux-with-example/#:~:text=In%20Linux%2C%20the%20command%20%22ls,as%20well%20as%20system%20administrators.) 
