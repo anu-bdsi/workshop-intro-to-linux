@@ -1,7 +1,7 @@
 # Connecting to Dayhoff
 
 * Connecting to the ANU intranet through GlobalProtect VPN. 
-* For Windows users, open Command Prompt. For Mac users, open Terminal. 
+* Open Terminal (Windows system should have this as well, otherwise open Command Prompt). 
 * Typing in ```ssh u_id@dayhoff.rsb.anu.edu.au``` and press ```enter```. 
 * Typing in ```yes``` if you've been asked to authenticate the connection. 
 * The password is the same as your uni account password. 
@@ -9,9 +9,21 @@
 
 # Navigating through Directories 
 
+## The General Syntax of a Shell Command 
+
+Before we start to learn any command, let's talk about the interface of the Linux operating system. The interface is just a window with texts displaying. The actual place where we communicate with the computer is a line with some information at the front and a ```$``` sign, after the ```$``` sign is where we can type things in. It is something like this:
+
+![linux-interface](C:\Users\u1133824\Desktop\rsb-training\intro-to-linux\image\linux-interface.png) 
+
+A ```space``` is needed between when typing the command, option, and argument. Sometimes a command can have more than one option and more than one argument. 
+
+![shell-syntax](https://swcarpentry.github.io/shell-novice/fig/shell_command_syntax.svg) 
+
+## File Path on a Linux Machine 
+
 Because there is no graphic user interface in command line, we can imaging the directories as trees to help navigating through. In Linux, the path always start with root ```/```. 
 
-![image](https://docs.oracle.com/cd/E19253-01/806-7612/images/Files.fig154.epsi.gif) 
+![image](https://cdn-wordpress-info.futurelearn.com/info/wp-content/uploads/a2794f8f-b0c1-468d-89c6-bcf29d2d6517-1.png) 
 
 ## ```pwd``` - Path of Working Directory 
 
@@ -19,35 +31,29 @@ This command tells you where you are.
 
 When you logged into a Linux system, the default location you will be is your home directory ```~```. But there is no directory called ```~```, it is equivalent to the path to your home directory which you can get by using the command ```pwd```. 
 
-For example, ```/home/u_id```.
+The expected result would be ```/home/u_id```. 
 
 ## ```ls``` - Listing 
 
 This command lists all files and directories under your current directory. 
 
-For now, ```ls``` returns nothing because we are new users and don't have anything under our home directory. 
-
-We can also put the path to a certain directory behind ```ls``` to inspect the contents of the directory such as ```ls /home```. 
-
-## ```mkdir``` - Make Directory 
-
-This command lets you create a new directory.
-
-```mkdir new-folder``` to create a new directory called ```new-folder``` under your working directory.
-
-```mkdir /home/u_id/new-folder``` to create a new directory under ```/home/u_id``` regardless of where you are. 
+For now, ```ls``` returns nothing because we are new users and don't have anything under our home directory. We can also put the path to a certain directory behind ```ls``` to inspect the contents of the directory such as ```ls /home```. 
 
 ## ```cd``` - Change Directory 
 
 This command lets you move between directories. 
 
-```cd new-folder``` to go into the new directory you just created. 
+Let's explore the directories on Dayhoff a little bit. First, let's go to the root directory using ```cd /``` and use ```ls``` to see what directories do we have under the root directory. Next, let't go to the ```home``` directory using ```cd home``` and use ```ls``` to see what directories we have under home directory. Ideally, you can find your uni id in it. Then you can use ```cd u_id``` to go to your home directory. 
 
-```pwd``` will return your current working directory which is ```/home/u_id/new-folder```. 
+If you want to go to the last directory (or parent directory) of your current directory, you can use ```cd ..```. ```..``` means the parent directory, you can also use it in the file path. But when you use ```..``` in the file path, it would be called a relative file path because it is relative to your current directory. If you are not in this same directory anymore, the file path will no longer work. 
 
-To go back to the previous directory we can use either ```cd /home/u_id``` or ```cd ..``` command. 
+## ```mkdir``` - Make Directory 
 
-```..``` here means parent directory, and ```.``` means current directory. 
+This command lets you create a new directory.
+
+Let's create a new directory under our home directory as the working directory of this short course. I would name it intro_to_linux, you can name it whatever you want but it will be easier when following this tutorial. ```mkdir 
+
+```mkdir /home/u_id/new-folder``` to create a new directory under ```/home/u_id``` regardless of where you are. 
 
 # Creating and Editing Files 
 
@@ -222,11 +228,7 @@ Try the copy ```letters``` directory.
 
 # Other Useful Information of Linux 
 
-## The General Syntax of a Shell Command 
 
-A ```space``` is needed between when typing the command, option, and argument. Sometimes a command can have more than one option and more than one argument. 
-
-![shell-syntax](https://swcarpentry.github.io/shell-novice/fig/shell_command_syntax.svg) 
 
 ## Get Help with a Command
 
