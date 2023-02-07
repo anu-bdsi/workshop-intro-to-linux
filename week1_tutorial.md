@@ -48,12 +48,11 @@ This command lists all the things in your current directory.
 
 For now, ```ls``` returns nothing because we are new users and don't have anything in our home directory. We can also put the path to a certain directory behind ```ls``` to inspect the contents of the directory such as ```ls /```, ```ls /home```, or ```ls /usr```. 
 
-```ls``` has many useful options to inspect our files with more details, I'll list some below and we'll be practicing it during the course:
+```ls``` has many useful options to inspect our files with more details, I'll list some below and we'll practice it during the course:
 
 * ```ls -l``` list with long format - show permissions
-
------------------------------------------------------------
-------------------------------------------------
+* ```ls -a``` list all files including hidden files starting with "."
+* ```ls -lh``` show file sizes in KB/MB/GB format
 
 ## ```cd``` - Change Directory 
 
@@ -72,6 +71,7 @@ Let's create a new directory in our home directory, the new directory will be th
 ```sh
 cd ~ # go to our home directory 
 mkdir intro_to_linux # and make a new directory in your current directory 
+ls # to see the result 
 ```
 
 ### There are some rules when naming your files/directories in Linux:
@@ -92,20 +92,42 @@ mkdir intro_to_linux # and make a new directory in your current directory
 
 Try ```touch new_file.txt```, and use ```ls``` to view the result. 
 
-```touch``` command can take multiple input in to create several files together. Try ```touch doc1.txt doc2.txt doc3.txt```, and use ```ls``` to view the results. 
+```touch``` can take multiple input in to create several files together. Try ```touch doc1.txt doc2.txt doc3.txt```, and use ```ls``` to view the results. 
 
 The ```touch``` command has another funtion which is to change the timestamp of a file, but we won't cover it here. 
 
 ## Copy and Paste in Linux
 
------------------------------------------------------------
-------------------------------------------------
+The copy and paste shortcuts are not the same as Windows, in Linux we use ```right click``` to copy and paste text. In Linux, ```ctrl + c``` means to terminate the current process so we should be cautious using it. 
+
+Most of the time, we're using a terminal to connect to a server. In this case, you can still use ```ctrl + c``` in other applications (for example in the browser) to copy texts but to use ```right click``` to paste it into your terminal. Vice versa, you can also use ```right click``` to copy texts in the terminal and use ```ctrl + v``` to paste into other applications. 
+
+## Mouse does not work in Linux
+
+Mouse doesn't work as the same anymore, we need to use the arrow keys on the keyboard to move the insertion point. 
+
+If you're using a terminal on a Windows/MacOS laptop, you can still use mouse to select texts. 
 
 ## ```nano``` - A Text Editor 
 
-```nano``` is like any other text editor in your Windows or Mac laptop but to use arrows to navigate through texts. 
+```nano``` is an easy to use command line text editor for Unix and Linux operating systems. It includes all the basic functionality you'd expect from a regular text editor. 
 
-Try ```nano poem-0.txt``` and paste the following texts in and press ```ctrl + x``` and type ```yes``` and press ```enter``` to save the file. 
+To open an existing file or to create a new file, type ```nano``` and the file name behind:
+
+```sh
+nano new_file.txt 
+```
+
+This opens a new window, and you can start editing the file. 
+
+At the bottom of the window, there is a list of the most basic command shortcuts to use with the nano editor. All commands are prefixed with either ```^``` or ```M``` character. The caret symbol ```^``` represents the ```ctrl``` key. For example, the ```^J``` command means to press the ```ctrl``` and ```J``` key at the same time. The letter ```M``` represents the ```alt``` key. You can get a list of commands by typing ```ctrl + g```. 
+
+Now, try copy the following poem and paste it into the editor:
+
+* ```ctrl + c``` to copy the texts from the browser and ```right click``` to paste it into terminal. 
+* Press ```^X``` to exit the file. 
+* You'll be asked "Save modified butter?", we should press ```y``` for yes. 
+* Then you'll be asked "File name to write: new_file.txt", press ```enter``` to accept the name or input other names then press ```enter```. 
 
 ```
 I taste a liquor never brewed – 
@@ -129,15 +151,27 @@ To see the little Tippler
 Leaning against the – Sun!
 ```
 
-On the bottom of the ```nano``` interface there are notes of shortcuts to help you use the text editor. 
-
-__SIDE NOTE__: you can use right click to copy texts and another right click to paste in Terminal/Command Prompt.
-
 ## ```vim``` - Another Text Editor 
 
-```vim``` is another text editor in Linux, it has different ways to edit and save files.
+```vim``` is an advanced and highly configurable text editor built to enable efficient text editing. It supports most file types and vim editor is also known as a programmer's editor. 
 
-```vim poem-1.txt``` to create a file and go into the ```vim``` interface. Press ```i``` to start the insert mode, and copy and paste the following poem to the file. 
+There are 2 operating modes in vim editor:
+
+* Command mode: By default, command mode is on as soon as the vim editor is started. This command mode helps users to copy, paste, delete, or move text. We should press ```esc``` key to go to command mode if we're in other modes.
+* Insert mode: Whenever we try to open vim editor, it will go to command mode by default. To write the contents in the file, we must go to insert mode. Press ```i``` to go to insert mode. If we want to go back to command mode, press the ```esc``` key. 
+
+To create a new file and open the vim editor, run:
+
+```sh 
+vim poem.txt 
+```
+
+Copy and paste the following poem into the file:
+
+* Press ```i``` to go into the insert mode.
+* Right click to paste the texts into the editor.
+* Press ```esc``` key to go back to the command mode.
+* Type ```:wq``` to save and exit the file. 
 
 ```
 The readers of the Boston Evening Transcript
@@ -152,25 +186,34 @@ If the street were time and he at the end of the street,
 And I say, "Cousin Harriet, here is the Boston Evening Transcript.
 ```
 
-Press ```esc``` to exit the insert mode, then type ```:wq``` and hit ```enter``` to save the file and exit the editor. If you want to quit without saving, type ```:q``` and hit ```enter```. 
-
 # Viewing File Contents 
 
-First try 
+First, let's create a file that contains numbers from 1 to 100. Then we can practice the different ways to view a file in linux. 
 
 ```sh 
 seq 1 1 100 > numSeq.txt
-``` 
+```
 
-to create a file named ```numSeq.txt``` contains numbers from 1 to 100. 
+* ```seq``` is a command to generate a sequence of numbers. The basic syntax is ```seq FIRST INCREMENT LAST```. So ```seq 1 1 100``` means generate a sequence of numbers from 1 to 100 with increment is 1.
+* ```>``` is a shell operator that redirects the standard output of a command to a file. In here, it means to redirect the output of ```seq 1 1 100``` to a file named ```numSeq.txt```. 
 
 ## ```cat``` - Concatenate and Print Files 
 
-```cat filename``` prints out everything in the file on the screen. 
+```cat``` is a command line that concatenates and displays the contents of one or more files. It is oftened used for simple file manipulation tasks, such as displaying the contents of a file, combining multiple files into one, or creating new files. 
 
-Try print out the two poems we saved. 
+Here are a few examples of how the ```cat``` command can be used:
 
-Some files can be very long and we wouldn't want to print out everything on the screen. In this case, we can use other commands to inspect the content of the file. 
+* ```cat file.txt``` display the contents of a file.
+* ```cat file1.txt file2.txt``` concatenate two files and display the result.
+* ```cat -n file.txt``` display the contents with line numbers.
+* ```cat > newfile.txt``` create a new file by redirecting the output of cat. 
+
+__Excercise__: 
+
+1. Display the contents of ```new_file.txt``` and ```poem.txt``` separately.
+2. Concatenate the two files ```new_file.txt``` and ```poem.txt``` together, and display it. 
+3. Display the ```poem.txt``` file with line numbers. 
+4. Concatenate the two files ```new_file.txt``` and ```poem.txt``` together, and create it as a new file called ```poems.txt```. 
 
 ## ```head``` and ```tail``` - Print out the Head or Tail of the File 
 
@@ -192,29 +235,6 @@ Use ```-n``` to choose how many lines you would like to display, for example ```
 * ```q``` to quit 
 
 # Moving, Copying, Deleting, Renaming Files and Directories 
-
-## ```touch``` - To Create Empty Files 
-
-Try commands below. 
-
-```sh 
-touch AA.txt
-touch BB.txt
-touch CC.txt
-touch 1.txt
-touch 2.txt
-touch 3.txt 
-```
-
-And use ```ls``` to see what files do you have. 
-
-It can also be written in this way:
-
-```sh
-touch DD.txt EE.txt GG.txt 4.txt 5.txt 6.txt 
-```
-
-Try ```ls``` to see the result. 
 
 ## ```rmdir``` - Remove Directory 
 
@@ -366,3 +386,5 @@ Do some research on below questions to get a better understanding of the Linux o
 * University of Calgary - [Managing Linux Directories and Files](https://people.ucalgary.ca/~appinst/linux/fileManage.html#:~:text=A%20file%20or%20directory%20name,%2C%20and%20dash%20(%20%2D%20).) 
 * GeeksforGeeks - [touch command in Linux with Examples](https://www.geeksforgeeks.org/touch-command-in-linux-with-examples/) 
 * atatus - [Linux "ls" Command with Examples](https://www.atatus.com/blog/ls-command-in-linux-with-example/#:~:text=In%20Linux%2C%20the%20command%20%22ls,as%20well%20as%20system%20administrators.) 
+* Linuxize - [How to Use Nano, the Linux Command Line Text Editor](https://linuxize.com/post/how-to-use-nano-text-editor/) 
+* EDUCBA - [Vim Command in Linux](https://www.educba.com/vim-command-in-linux/) 
