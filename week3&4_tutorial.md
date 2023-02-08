@@ -10,7 +10,7 @@ As we have miniconda installed on Dayhoff, so we don't have to install it. If yo
 
 Bioconda is a distribution of bioinformatics software packages for the conda package manager. It is designed to provide a simple and convenient way to install and manage bioinformatics software on various platforms, including Linux, macOS, and Windows.
 
-To set up channels for Bioconda, you will need to add the Bioconda channel to your conda configuration. This can be done by running the following command in your command prompt or terminal:
+To set up channels for Bioconda, you will need to add the Bioconda channel to your conda configuration. This can be done by running the following command in your terminal:
 
 ```sh
 conda config --add channels defaults

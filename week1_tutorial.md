@@ -106,7 +106,7 @@ Most of the time, we're using a terminal to connect to a server. In this case, y
 
 Mouse doesn't work as the same anymore, we need to use the arrow keys on the keyboard to move the insertion point. 
 
-If you're using a terminal on a Windows/MacOS laptop, you can still use mouse to select texts. 
+If you're using a terminal on a Windows/MacOS laptop, you can still use mouse to select texts only if you want to copy it. You can't do select and delete using mouse. 
 
 ## ```nano``` - A Text Editor 
 
@@ -210,18 +210,50 @@ Here are a few examples of how the ```cat``` command can be used:
 
 __Excercise__: 
 
-1. Display the contents of ```new_file.txt``` and ```poem.txt``` separately.
+1. Display the contents of ```new_file.txt```, ```poem.txt```, and ```numSeq.txt``` separately.
 2. Concatenate the two files ```new_file.txt``` and ```poem.txt``` together, and display it. 
 3. Display the ```poem.txt``` file with line numbers. 
 4. Concatenate the two files ```new_file.txt``` and ```poem.txt``` together, and create it as a new file called ```poems.txt```. 
 
 ## ```head``` and ```tail``` - Print out the Head or Tail of the File 
 
-These two commands print out the first/last 10 lines of the file. 
+The ```head``` command is used to display the first part of a file, while the ```tail``` command is used to display the last part of a file. 
 
-Use ```-n``` to choose how many lines you would like to display, for example ```head -n 5 numSeq.txt``` to see the first 5 lines of file ```numSeq.txt```. 
+The basic syntax of the head/tail command is:
 
-## ```more``` and ```less``` - Step through a File 
+```sh 
+head [-options] [file_name] 
+tail [-options] [file_name] 
+```
+
+Let's try them on ```numSeq.txt```:
+
+```sh
+head numSeq.txt
+tail numSeq.txt
+```
+
+By default, the head/tail command displays the first/last 10 lines of a file. We can specify how many lines we want to display by using the option ```-n```. For example:
+
+```sh
+head -n 5 numSeq.txt # display the first 5 lines of the file numSeq.txt 
+tail -n 20 numSeq.txt # diaplay the last 20 lines of the file numSeq.txt 
+```
+
+## ```more``` and ```less``` - Viewing a File  
+
+```more``` command is used to view the text files, displaying one screen at a time in case the file is large. The more command also allows the user to scroll up and down through tha page. Another application of more is to use it with pipe, when the output is large, we can use more command to see output page by page. 
+
+The basic syntax of more is:
+
+```sh
+more [-options] [-num] [+/pattern] [file_name]
+```
+
+* ```-options```: any option you want to use in order to change the way that a file was displayed.
+* ```-num```: the number of lines you want to display per screen. 
+* ```+/pattern```: 
+
 
 ```more``` allows you to go through a file page by page, use ```space``` to move to the next page. Hit ```q``` to quit.
 
@@ -388,3 +420,4 @@ Do some research on below questions to get a better understanding of the Linux o
 * atatus - [Linux "ls" Command with Examples](https://www.atatus.com/blog/ls-command-in-linux-with-example/#:~:text=In%20Linux%2C%20the%20command%20%22ls,as%20well%20as%20system%20administrators.) 
 * Linuxize - [How to Use Nano, the Linux Command Line Text Editor](https://linuxize.com/post/how-to-use-nano-text-editor/) 
 * EDUCBA - [Vim Command in Linux](https://www.educba.com/vim-command-in-linux/) 
+* Baeldung - [The head and tail commands in LINUX](https://www.baeldung.com/linux/head-tail-commands) 
