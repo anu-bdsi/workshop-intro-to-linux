@@ -210,10 +210,10 @@ Here are a few examples of how the ```cat``` command can be used:
 
 __Excercise__: 
 
-1. Display the contents of ```new_file.txt```, ```poem.txt```, and ```numSeq.txt``` separately.
-2. Concatenate the two files ```new_file.txt``` and ```poem.txt``` together, and display it. 
-3. Display the ```poem.txt``` file with line numbers. 
-4. Concatenate the two files ```new_file.txt``` and ```poem.txt``` together, and create it as a new file called ```poems.txt```. 
+* Display the contents of ```new_file.txt```, ```poem.txt```, and ```numSeq.txt``` separately.
+* Concatenate the two files ```new_file.txt``` and ```poem.txt``` together, and display it. 
+* Display the ```poem.txt``` file with line numbers. 
+* Concatenate the two files ```new_file.txt``` and ```poem.txt``` together, and create it as a new file called ```poems.txt```. 
 
 ## ```head``` and ```tail``` - Print out the Head or Tail of the File 
 
@@ -240,109 +240,161 @@ head -n 5 numSeq.txt # display the first 5 lines of the file numSeq.txt
 tail -n 20 numSeq.txt # diaplay the last 20 lines of the file numSeq.txt 
 ```
 
-## ```more``` and ```less``` - Viewing a File  
+## ```more``` - Viewing a File  
 
 ```more``` command is used to view the text files, displaying one screen at a time in case the file is large. The more command also allows the user to scroll up and down through tha page. Another application of more is to use it with pipe, when the output is large, we can use more command to see output page by page. 
 
 The basic syntax of more is:
 
 ```sh
-more [-options] [-num] [+/pattern] [file_name]
+more [-options] [-num] [file_name]
 ```
 
-* ```-options```: any option you want to use in order to change the way that a file was displayed.
+* ```-options```: any option you want to use in order to change the way that a file was displayed. Use ```more --help``` to see what options does it have. 
 * ```-num```: the number of lines you want to display per screen. 
-* ```+/pattern```: 
 
+While viewing the contents, use these keys to navigate:
 
-```more``` allows you to go through a file page by page, use ```space``` to move to the next page. Hit ```q``` to quit.
+* ```enter```: to scroll down line by line.
+* ```space```: to go to the next page.
+* ```b```: to go back one page.
+* ```q```: to quit viewing. 
 
-```more``` does not allow you to go back to a previous page, but ```less``` does. 
+Let's try use it on ```numSeq.txt```, and practice the navigating keys:
 
-```less``` has more functions. 
-* Hit ```space``` or ```d``` to go down one page
-* ```u``` to go up one page
-* ```g``` plus number let you jump to a certain line
-* up and down arrows let you go up or down one line 
-* ```q``` to quit 
+```sh
+more numSeq.txt # view the file
+more -num 10 numSeq.txt # view the file but display 10 lines per screen
+more -d numSeq.txt # option -d, help user to navigate by showing keywords on the bottom of the screen 
+history | more # view the output of the command history page by page
+```
+
+* The command ```history``` is used to view the previously executed command. 
+* The pipe ```|``` is a command let's you use two or more commands, and it takes the output of the first command as the input to the next command. In the above example ```history | more```, it takes the output of command history as input to the command more. We will cover this command with more details in the future. 
+
+## ```less``` - Viewing the File 
+
+```less``` shows a file's content one screen at a time. It is useful when dealing with a large text file because it doesn't load the entire file but access it page by page, resulting in fast loading speeds. It is equipped with interactive features on navigating forward or backwardand searching strings etc. 
+
+The general syntax of less is:
+
+```sh
+less [-options] [file_name] 
+```
+
+There are many options for less, you can easily learn it on the manual page or through online resources. Here, we will focus on the interative part of less. Let's use ```numSeq.txt``` as an example:
+
+```sh
+less numSeq.txt
+```
+
+When using less to view a file, you'll go into an interface where you can press keys to go through the file. The most useful keys are as follows:
+
+* ```down arrow``` and ```enter```: display one line forward. 
+* ```up arrow```: display one line backward.
+* ```space``` and ```page down```: display one page forward.
+* ```b``` and ```page up```: display one page backward.
+* ```left arrow``` and ```right arrow```: scroll left and scroll right.
+* ```home``` and ```g```: jump to the beginning of the file. 
+* ```end``` and ```G```: jump to the end of the file. 
+* ```/string```: search forward for the specified string.
+* ```?string```: search backward for the specified string. 
+* ```n```: next match during a search.
+* ```N```: Previous match during a search.
+* ```q```: quit the viewing. 
 
 # Moving, Copying, Deleting, Renaming Files and Directories 
 
 ## ```rmdir``` - Remove Directory 
 
-Can only delete empty directory. 
+There are two Linux commands you can use to remove a directory:
 
-We have mentioned how to create new directory before, the command ```mkdir```. Please try creating a new directory and delete it. Remember to use ```ls``` to check between steps. 
+* ```rmdir```: to remove empty directories.
+* ```rm```: to remove directories including its subdirectories and files. We will cover this later. 
 
-Now, create another new directory ```deleteMe``` and create a new text file ```deleteMe.txt``` in it. And then try to delete it. What happens? __HINT__: use ```touch```, ```nano```, or ```vim``` to create a new file. 
+We have mentioned how to create a new directory before, the command ```mkdir```. 
 
-If a folder is not empty, we can use ```rm``` command to delete it. 
+__Exercise:__ 
+
+1. Please try creating a new directory and delete it, you can name it whatever you want. Remember to use ```ls``` to check between steps. 
+2. Create another new directory called ```deleteMe``` and create a new text file called ```deleteMe.txt``` in it. Try to delete the directory ```deleteMe``` with command ```rmdir```, and see what happens. 
+
+You might have this error for the second question:
+
+```
+rmdir: failed to remove 'deleteMe/': Directory not empty 
+```
+
+that is because when a directory is not empty, you can't use ```rmdir``` to remove it. So, when a directory is not empty and you want to remove this directory and everything in it, we can use ```rm -r``` command. 
 
 ## ```rm``` - Remove Files and Directories 
 
-__NOTE__: be careful deleting files in Linux because there is no Bin like Windows or Mac to restore files. 
+Be careful deleting files in Linux because there is no Recycle Bin like in Windows or MacOS to restore deleted files. 
 
-```rm filename``` to remove files. Try to remove the 2 poems we created before. 
+The syntax of ```rm``` is:
 
-```rm -r directoryName``` to remove directory with files in it. Try to remove the folder ```deleteMe```. 
+```sh
+rm [-options] [file_name] # can take multiple files in 
+rm -r [file_name] # remove directories and their contents recursively
+```
+
+__Exercise:__ 
+
+1. Delete the file ```new_file.txt``` and ```poem.txt```. 
+2. Delete the directory ```deleteMe```. 
 
 ## ```mv``` - Move Files and Rename Files 
 
-Try create two new directories called ```numbers``` and ```letters```, and move the txt files into each directory according to their names. 
+```mv``` command can move files and directories from one place to another, it also has the function for renaming a file. 
 
-You can move multiple files to a directory at once, such as:
+The basic syntax of ```mv``` are:
 
-```sh
-mv 1.txt 2.txt 3.txt numbers
+```sh 
+mv [-options] [source] [destination] # for moving files/directories
+mv [-options] [old_name] [new_name] # for renaming files/directories 
 ```
 
-To rename files, simply do: 
+__Exercise:__ 
+
+First, let's create two new directories named ```numbers``` and ```letters```, and some text files for practice: 
 
 ```sh
-mv old-filename new-filename 
+mkdir numbers letters 
+touch AA.txt BB.txt CC.txt 1.txt 2.txt 3.txt 
 ```
 
-Try to rename the file ```GG.txt``` to ```FF.txt```. 
+1. Move the txt files into related directory. For example, ```AA.txt``` to directory ```letters``` and ```1.txt``` to directory ```numbers```. 
+2. Input the sentence ```I used to be AA.txt``` into the file ```AA.txt```, and change the name of ```AA.txt``` to ```DD.txt```. Print out ```DD.txt```. 
 
-## ```cp``` - Copy
+## ```cp``` - Copy 
+
+The basic syntax of ```cp``` is:
 
 ```sh
-cp filename copied-filename 
+cp [-options] [source] [destination]
+cp -r [source] [destination] # to copy a directory recursively 
 ```
 
-Unlike Windows and Mac, Linux does not automatically give your copied file a name if there is already a file with the same name. Making sure to name the copied file correctly. 
-
-Try to copy the file ```numSeq.txt``` to a new file called ```num1-100.txt```. 
-
-To copy a directory, add the parameter ```-r```: 
+If you want to copy a file in the same directory, make sure you name the copied file differently. For example, making a copy of ```DD.txt``` and name it ```AA.txt```:
 
 ```sh
-cp -r numbers numbers-copy
+cp DD.txt AA.txt 
 ```
 
-Try the copy ```letters``` directory. 
+__Exercise:__ 
+
+1. Make a copy of ```numSeq.txt``` and name the new one ```num1-100.txt```. 
+2. Make a copy of directory ```numbers``` and name the new one ```numbers-copy```. 
+3. Copy all the files under the ```letters``` directory to the ```numbers``` directory. 
 
 # Other Useful Information of Linux 
 
-
-
 ## Get Help with a Command
 
-If there is a new command that you are not familiar with, you can always use ```--help``` option to get help. 
-
-Such as:
+If there is a new command that you are not familiar with, you can always use ```--help``` option to get help: 
 
 ```sh
 ls --help 
-```
-
-```ls``` is probably the most used command in Linux, there are some useful options allowing us to see more information about the files. Try the commands below. 
-
-```sh
-ls -l   # list with long format - show permissions. 
-ls -a	# list all files including hidden files starting with '.'.
-ls -la  # list all files with long format 
-ls -lh	# this command will show you the file sizes in human readable format.
 ```
 
 ## How to read the file information
@@ -398,12 +450,10 @@ touch note0.txt note1.txt note2.txt notebook.txt
 
 Do some research on below questions to get a better understanding of the Linux operating system. 
 
-* What is Linux?
-* What is Unix?
+* What is Linux and Unix?
 * What are the differences and relationships between Linux and Unix?
 * What are the differences and relationships between Linux and Windows/MacOS?
-* What is Shell?
-* What is Bash? 
+* What is Shell and bash?
 * What are the differences and relationships between Shell and Bash? 
 * Why people use Linux and what are the advantages? 
 * What types of computer use Linux as operating systems? 
@@ -421,3 +471,7 @@ Do some research on below questions to get a better understanding of the Linux o
 * Linuxize - [How to Use Nano, the Linux Command Line Text Editor](https://linuxize.com/post/how-to-use-nano-text-editor/) 
 * EDUCBA - [Vim Command in Linux](https://www.educba.com/vim-command-in-linux/) 
 * Baeldung - [The head and tail commands in LINUX](https://www.baeldung.com/linux/head-tail-commands) 
+* GeeksforGeeks -[more command in Linux with Examples](https://www.geeksforgeeks.org/more-command-in-linux-with-examples/) 
+* GeeksforGeeks - [history command in Linux with Examples](https://www.geeksforgeeks.org/history-command-in-linux-with-examples/) 
+* GURU99 - [Pipe, Grep and Sort Command in Linux/Unix with Examples](https://www.guru99.com/linux-pipe-grep.html#:~:text=is%20a%20Filter%3F-,What%20is%20a%20Pipe%20in%20Linux%3F,'%7C'%20denotes%20a%20pipe.) 
+* phoenixNAP - [How to Use the less Command in Linux with Examples](https://phoenixnap.com/kb/less-command-in-linux#:~:text=The%20less%20command%20is%20a,resulting%20in%20fast%20loading%20speeds.) 
