@@ -236,7 +236,6 @@ __Please Note:__ do not put ```/``` behind the folder name, otherwise it will do
 
 A loop is a powerful programming tool that enables you to execute a set of commands repeatedly. 
 
-
 ## ```if``` Statement 
 
 The syntax of ```if``` statement:
@@ -465,7 +464,6 @@ It's important to note that if you want to exit the inner loop, you should use t
 
 # Homework
 
-* Learn how to use ```if``` statement with ```break/continue```
 * Learn ```until``` loop and ```while``` loop
 
 # References

@@ -446,6 +446,54 @@ touch note0.txt note1.txt note2.txt notebook.txt
 
 * Try ```ls note?.txt``` and ```ls note*.txt```, and see what's the difference?  
 
+## Using tmux 
+
+tmux is a terminal multiplexer. It lets you switch easily between several programs in one terminal, detach them (they keep running in the background) and reattached them to a different terminal. 
+
+### Starting a tmux session 
+
+In the command line, type:
+
+```sh
+tmux new -s your_session_name 
+```
+
+This will create a new session with the name "your_session_name". 
+
+### Detaching a session 
+
+If you're done with your session you can either get rid of it by simply exiting, or you can keep the session in the background for later reuse. 
+
+To detach your current session, press ```ctrl``` and ```b``` at the same time, then release both, then press ```d```. 
+
+### Reattach to a session 
+
+To reattach to a session and continue where you left you need to figure out which session you want to attach to first. List the currently running sessions by using:
+
+```sh
+tmux ls
+```
+
+This will give you a list of running sessions, which in our example should be something like:
+
+```
+your_session_name: 1 windows (created Mon Feb 13 16:54:46 2023)
+```
+
+To connect to that session you need to start tmux again but this time tell tmux which session you want to attach to:
+
+```sh
+tmux attach -t your_session_name 
+```
+
+### Renaming your session 
+
+You could also rename your existing session by using:
+
+```sh
+tmux rename-session -t old_session_name new_session_name 
+```
+
 # Homework 
 
 Do some research on below questions to get a better understanding of the Linux operating system. 
@@ -475,3 +523,4 @@ Do some research on below questions to get a better understanding of the Linux o
 * GeeksforGeeks - [history command in Linux with Examples](https://www.geeksforgeeks.org/history-command-in-linux-with-examples/) 
 * GURU99 - [Pipe, Grep and Sort Command in Linux/Unix with Examples](https://www.guru99.com/linux-pipe-grep.html#:~:text=is%20a%20Filter%3F-,What%20is%20a%20Pipe%20in%20Linux%3F,'%7C'%20denotes%20a%20pipe.) 
 * phoenixNAP - [How to Use the less Command in Linux with Examples](https://phoenixnap.com/kb/less-command-in-linux#:~:text=The%20less%20command%20is%20a,resulting%20in%20fast%20loading%20speeds.) 
+* Ham Vocke - [A Quick and Easy Guide to tmux](https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/) 
