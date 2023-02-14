@@ -1,26 +1,86 @@
 # Counting, Sorting, and Redirecting Output 
 
-## Redirect
+## Redirections
 
-* ```cmd < file``` Use file as input
-* ```cmd > file``` Write output to file
-* ```cmd >> file``` Append output to file 
+Redirection is a feature in Linux such that when executing a command, you can change the standard input/output devices. The basic workflow of any Linux command is that it takes an input and give an output. 
+
+* The standard input (stdin) device is the keyboard.
+* The standard output (stdout) device is the screen. 
+
+With redirection, the above standard input/output can be changed. 
+
+### Output Redirection 
+
+The symbol ```>``` is used for output (stdout) redirection. 
+
+__Example:__ 
+
+```sh 
+ls -al > listings 
+```
+
+Here, the output of command ```ls -al``` is redirected to the file ```listings``` instead of the screen. You can try the command step by step to understand. First, run the command ```ls -al``` to see the result on your screen. Then, run the command ```ls -al > listings``` and use ```cat listings``` to see the contents of the file ```listings```. 
+
+__Note:__ use the correct file name while redirecting command output to a file. If there is an existing file with the same name, the redirected output will overwrite the contents in the original file. 
+
+If you don't want a file to be overwritten but want to add more content to an existing file. You can use the ```>>``` operator which means "append". 
+
+### Input Redirection 
+
+The symbol ```<``` is used for input (stdin) redirection. 
+
+__Example:__ The mail program in Linux can help you send emails from the Terminal. 
+
+You can type the contents of the email using the standard device keyboard. But if you want to use a file's content as the information, you can use the input redirect operator in the following format. 
+
+```sh 
+mail -s "Subject" to-address < file_name 
+```
+
+This would take the file's content as input and send to the recipient. 
 
 ## ```wc``` - Word Count
 
-This command will give you the number of lines, words, and characters in a file. 
+The ```wc``` command calculates a file's line, word, character, or byte count. For basic usage, all you need is a file with some text in it. For example:
 
-Try ```wc numSeq.txt```. 
+```sh
+wc numSeq.txt 
+```
 
-```wc``` has options for showing only the number of lines ```wc -l```, the number of words ```wc -w```, or the number of characters ```wc -c```. 
+The result should look like:
+
+```
+100 100 292 numSeq.txt
+```
+
+It means the file ```numSeq.txt``` has 100 lines, 100 words, and 292 characters. And the last one is the path to the file. 
+
+```wc``` also has some useful options:
+
+* ```wc -l``` only shows the number of lines. 
+* ```wc -w``` only shows the number of words. 
+* ```wc -c``` only shows the number of characters. 
 
 ## ```tr``` - Translate 
 
-This command can take any individual character and replace it with another character. 
+The ```tr``` command can translates or deletes characters from standard input (stdin) and writes the result to standard output (stdout). Use ```tr``` to perform different text transformations, including case conversion, squeezing or deleting characters, and basic text replacement. 
 
-It is a little different than other commands as it requires standard output as the input rather than a filename. To do this, we will use the ```<``` redirect symbol.
+The ```tr``` command can't read a file directly, it is often used with pipes ```|``` and redirects ```<``` to allow more complex file content processing. 
 
-Try ```tr '\n' ',' < numSeq.txt```, it means translating new line character ```\n``` to comma ```,``` taking input from file ```numSeq.txt```. 
+The basic syntax of ```tr``` is:
+
+```sh
+tr [options] str_1 str_2
+```
+
+Running ```tr``` without any options replaces each of the characters specified in ```str_1``` with the characters from ```str_2```. For example:
+
+![result](./images/wolcomo.png?raw=true) 
+
+Here, we redirect the output of command ```echo "Welcome"``` as input to ```tr e o``` to replace all character "e" with character "o". 
+
+
+
 
 ## ```|``` - Pipe Redirect
 
@@ -479,3 +539,5 @@ It's important to note that if you want to exit the inner loop, you should use t
 * GeeksforGeeks - [Bash Scripting - For Loop](https://www.geeksforgeeks.org/bash-scripting-for-loop/) 
 * OpenAI - [ChatGPT](https://chat.openai.com/chat)
 * GeeksforGeeks - [Break and Continue Keywords in Linux with Examples](https://www.geeksforgeeks.org/break-and-continue-keywords-in-linux-with-examples/) 
+* GURU99 - [Input Output Redirection in Linux/Unix Examples](https://www.guru99.com/linux-redirection.html#:~:text=Redirection%20is%20a%20feature%20in,stdout)%20device%20is%20the%20screen.) 
+* Red Hat - [3 surprising things you can do with the Linux wc command](https://www.redhat.com/sysadmin/linux-wc-command#:~:text=The%20Linux%20wc%20command%20calculates,the%20Linux%20commands%20cheat%20sheet.%20%5D) 
