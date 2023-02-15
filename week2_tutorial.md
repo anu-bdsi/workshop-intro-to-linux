@@ -39,6 +39,38 @@ mail -s "Subject" to-address < file_name
 
 This would take the file's content as input and send to the recipient. 
 
+## Piping 
+
+So far we've dealt with sending data to and from files. Now we'll take a look at a mechanism for sending data from one program to another. It's called piping and the operator we use is ```|```. What this operator does is feed the output from the program on the left as input to the program on the right. 
+
+__Example:__ list only the first 3 files in the directory. 
+
+```sh
+ls | head -n 3
+```
+
+We may pipe as many programs as we like. In the below example we have then piped the output to tail so as to get only the third file. 
+
+```sh
+ls | head -n 3 | tail -n 1
+```
+
+When having errors in a pipe, sometimes it's hard to find where the error starts. So, when building a pipe up, it is better to build it incrementally. Run the first program and make sure it provides the output you were expecting. Then add the second program and check again before adding the third and so on. 
+
+You may combine pipes with redirections too:
+
+```sh
+ls | head -n 3 | tail -n 1 > my_output 
+cat my_output 
+```
+
+In this example we will feed the output of a program into the program less so that we can view it easier. 
+
+```sh
+ls -l /etc | less
+# Full screen of output you may scroll
+```
+
 ## ```wc``` - Word Count
 
 The ```wc``` command calculates a file's line, word, character, or byte count. For basic usage, all you need is a file with some text in it. For example:
@@ -79,40 +111,91 @@ Running ```tr``` without any options replaces each of the characters specified i
 
 Here, we redirect the output of command ```echo "Welcome"``` as input to ```tr e o``` to replace all character "e" with character "o". 
 
-
-
-
-## ```|``` - Pipe Redirect
-
-It can pass the output of one command to another command.
-
-For example ```cat numSeq.txt | tr '\n' ','``` gets the same output as ```tr '\n' ',' < numSeq.txt```. 
-
-It passes the output of ```cat numSeq.txt``` as input to the command ```tr '\n' ','```. 
+There are more usages of ```tr```, please read the help manual for more. 
 
 ## ```shuf``` - Shuffle 
 
-Generate random permutations of lines of the file supplied. 
+The ```shuf``` command writes a random permutation of the input lines to standard output. This command reads either from a file or standard input in bash. 
 
-Try shuffle our file ```numSeq.txt``` then write the output to a new file called ```numSeqRandom.txt``` using the redirect sign ```>```. 
+### File shuf
 
-Try shuffle ```numSeq.txt``` another time and append the output to the file ```numSeqRandom.txt``` using redirect sign ```>>```. 
+```sh
+shuf file_name 
+```
 
-Check if our new file ```numSeqRandom.txt``` has 200 lines by using ```wc -l```. 
+This command takes the content of the file as input and shuffle it by lines, and write the output on the screen. For example, let's try shuffle our file ```numSeq.txt```:
+
+```sh
+shuf numSeq.txt 
+```
+
+It should print the randomised numbers from 1 to 100. Try shuffle another time to see if the result is same. 
+
+The option ```-n``` can randomly pick a specific number of lines from the file and shuffle it, for example:
+
+```sh
+shuf -n 10 numSeq.txt 
+```
+
+![shuf_10](./images/shuf_10_numseq.png?raw=true) 
+
+It is useful when you trying to randomly pick something from a file. 
+
+```shuf``` can also take input from the pipe, for example: 
+
+```sh
+seq 5 | shuf 
+```
+
+![shuf](./images/shuffle.png?raw=true)
+
+### List shuf 
+
+```sh
+shuf -e [arguments] 
+```
+
+When -e option is used with shuf command, it works as a list shuffle. The arguments of the command are taken as the input line for the shuf. For example:
+
+```sh
+shuf -e A B C D E 
+```
+
+![shuf_letters](./images/shuf_letters.png?raw=true) 
+
+### Range shuf 
+
+```sh
+shuf -i [low-high]
+```
+
+When -i option is used along with shuf command, it acts as a range shuf.
+
+```sh 
+shuf -i 5-10
+```
+
+![range_shuf](./images/range_shuf.png?raw=true) 
+
+__Exercise:__ 
+
+1. Try shuffle our file ```numSeq.txt``` then write the output to a new file called ```numSeqRandom.txt``` using the redirect sign ```>```. 
+2. Try shuffle ```numSeq.txt``` another time and append the output to the file ```numSeqRandom.txt``` using redirect sign ```>>```. 
+3. Check if our new file ```numSeqRandom.txt``` has 200 lines by using ```wc -l```. 
 
 ## ```sort``` - Sort a File by Lines 
 
 We can use this command to sort the shuffled ```numSeqRandom.txt``` file. 
 
-Try ```shuf numSeqRandom.txt | head```.
+Try ```sort numSeqRandom.txt | head```.
 
 Unfortunately it didn't sort numerically as we expected but alphabetically. To sort numerically, use ```-n``` option. 
 
-Now try ```shuf -n numSeqRandom.txt | head``` see what results you got. 
+Now try ```sort -n numSeqRandom.txt | head``` see what results you got. 
 
 ## ```uniq``` - Remove Duplicates of Adjacent Lines (presorted) 
 
-This command will remove duplicates only if the files are sorted first. 
+This command will remove duplicates (only if the files are sorted first). 
 
 Try below 
 
@@ -541,3 +624,4 @@ It's important to note that if you want to exit the inner loop, you should use t
 * GeeksforGeeks - [Break and Continue Keywords in Linux with Examples](https://www.geeksforgeeks.org/break-and-continue-keywords-in-linux-with-examples/) 
 * GURU99 - [Input Output Redirection in Linux/Unix Examples](https://www.guru99.com/linux-redirection.html#:~:text=Redirection%20is%20a%20feature%20in,stdout)%20device%20is%20the%20screen.) 
 * Red Hat - [3 surprising things you can do with the Linux wc command](https://www.redhat.com/sysadmin/linux-wc-command#:~:text=The%20Linux%20wc%20command%20calculates,the%20Linux%20commands%20cheat%20sheet.%20%5D) 
+* Ryans Tutorials - [Piping and Redirection](https://ryanstutorials.net/linuxtutorial/piping.php) 

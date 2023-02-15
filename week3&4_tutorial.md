@@ -4,7 +4,7 @@ It is important we use conda to build the environment for each project because d
 
 ## Install miniconda 
 
-As we have miniconda installed on Dayhoff, so we don't have to install it. If you would like to install it on your own machine, google how to do it or ask ChatGPT. 
+As we have miniconda installed on Dayhoff, so we don't have to install it. If you would like to install it on your own machine, google how to do it. 
 
 ## Set up Channels for Bioconda
 
