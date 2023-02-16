@@ -179,51 +179,100 @@ shuf -i 5-10
 
 __Exercise:__ 
 
-1. Try shuffle our file ```numSeq.txt``` then write the output to a new file called ```numSeqRandom.txt``` using the redirect sign ```>```. 
-2. Try shuffle ```numSeq.txt``` another time and append the output to the file ```numSeqRandom.txt``` using redirect sign ```>>```. 
-3. Check if our new file ```numSeqRandom.txt``` has 200 lines by using ```wc -l```. 
+1. Shuffle the file ```numSeq.txt``` then write the output to a new file called ```numSeqRandom.txt``` using the redirect sign ```>```. 
+2. Shuffle ```numSeq.txt``` another time and append the output to the file ```numSeqRandom.txt``` using redirect sign ```>>```. 
+3. Check if our new file ```numSeqRandom.txt``` has 200 lines using ```wc -l```. 
 
 ## ```sort``` - Sort a File by Lines 
 
-We can use this command to sort the shuffled ```numSeqRandom.txt``` file. 
+The ```sort``` is used to sort a file, arranging the records in a particular order. The sort command sorts contents line by line. It supports sorting alphabetically, in reverse order, by number, by month, and can also remove duplicates. 
 
-Try ```sort numSeqRandom.txt | head```.
+The sort command follows features stated below:
 
-Unfortunately it didn't sort numerically as we expected but alphabetically. To sort numerically, use ```-n``` option. 
+1. Lines starting with a number will appear before lines starting with a letter.
+2. Lines starting with an uppercase letter will appear before lines starting with the same letter in lowercase. 
 
-Now try ```sort -n numSeqRandom.txt | head``` see what results you got. 
+__Example:__
+
+```sh
+sort numSeqRandom.txt | head 
+```
+
+![sort_num_random](./images/sort_num_random.png?raw=true)
+
+We can see that the command sort the file alphabetically not numerically, to sort the file numerically we need to use the ```-n``` option.
+
+```sh
+sort -n numSeqRandom.txt | head 
+```
+
+![sort_num_n](./images/sort_num_numerical.png?raw=true) 
+
+Sort a text file that mixed with uppercase and lowercase letters. First, let's create a file named ```mixed.txt``` and input in the following words:
+
+```sh
+abc
+Abc
+best
+better
+Good
+go
+```
+
+Let's use sort command to sort this file:
+
+```sh
+sort mixed.txt 
+```
+
+![sort_mixed](./images/sort_mixed.png?raw=true) 
+
+If we want to ignore case, we can use the ```-f``` option:
+
+```sh
+sort -f mixed.txt 
+```
+
+![sort_ignore_case](./images/sort_ignore_case.png?raw=true) 
+
+__Other useful options:__
+
+* ```sort -r```: sort in reverse order 
+* ```sort -nr```: sort numerically in reverse order 
+* ```sort -c```: to check if the gived file is already sorted or not 
+* ```sort -u```: to sort and remove duplicates
 
 ## ```uniq``` - Remove Duplicates of Adjacent Lines (presorted) 
 
-This command will remove duplicates (only if the files are sorted first). 
+The uniq command filters adjacent matching lines from input, and writing to output. 
 
-Try below 
+Let's try the command below:
 
 ```sh
 wc -l numSeqRandom.txt
 uniq numSeqRandom.txt | wc -l
 ```
 
-Do we get different results or same results? Why? 
-
-Because we didn't sort the file first, so the ```uniq``` command failed to work. 
-
-Now try 
+These two commands have the same result because uniq command only works when the adjacent lines are matching. We can sort the file first and then use uniq. 
 
 ```sh
 wc -l numSeqRandom.txt
 sort -n numSeqRandom.txt | uniq | wc -l
 ```
 
-What results have we got? 
+This time, the result of the second command changed to 100 which should be the correct unique number. 
 
-```uniq -c``` can tell you the frequency of each unique line. 
+__Note:__ you can use ```sort -u``` instead if you only want to have the unique values of the file. But the command also has other useful options.
 
-Try ```sort -n numSeqRandom.txt | uniq -c | head```. 
+* ```uniq -c```: it tells you how many times a line was repeated by displaying a number as a prefix with the line. 
+* ```uniq -d```: it only prints duplicated lines. 
+* ```uniq -i```: ignore case. By default, the uniq command is case sensitive. 
+* ```uniq -u```: it allows you to print out only unique lines. 
+ 
+__Exercise:__ 
 
-## Exercise
-
-Create a new file and paste the following into it, name it as ```introToBiology.txt```. 
+* ```sort -n numSeqRandom.txt | uniq -c | head```. 
+* Create a new file and paste the following into it, name it as ```introToBiology.txt```, and find the 5 most used words in it. 
 
 ```
 Biology is the scientific study of life. It is a natural science with a broad scope 
@@ -242,43 +291,45 @@ biologists use the scientific method to make observations, pose questions, gener
 perform experiments, and form conclusions about the world around them. 
 ```
 
-What are the 5 most used words in ```introToBiology.txt```. 
-
 ```sh
 cat introToBiology.txt | tr ' ' '\n' | sort | uniq -c | sort -n | tail -n 5 
 ```
 
-Try run the above command line step by step for better understanding.
+Run the above command line step by step for better understanding.
 
 # Find and Replace 
 
 ## ```grep``` - Global Regular Expression Print 
 
-This command will find things you specified in a document. 
+The ```grep``` command is used to search text and strings in a given file. In other words, grep command searches the given file for lines containing a match to given strings or words. 
 
-```sh 
-grep "biology" introToBiology.txt
-```
+__Examples:__ 
 
-To count the frequency of the word found, use
+* Search any line that contains the word "biology" in file ```introToBiology.txt```:
 
 ```sh
-grep "biology" introToBiology.txt | wc -l
+grep 'biology' introToBiology.txt 
 ```
 
-If you would like to only print out the occurrence of the word, use
+* Perform a case-insensitive search for the word "biology" in the file:
 
 ```sh
-grep -o "biology" introToBiology.txt 
+grep -i 'biology' introToBiology.txt  
 ```
 
-If you would like to ignore the case of the text when finding matches, try
+* Print out only the occurence of the word "biology" from the file: 
 
 ```sh
-grep -i "biology" introToBiology.txt 
+grep -o 'biology' introToBiology.txt 
 ```
 
-Some other useful parameters:
+* Look for all files in the current directory and in all of its subdirectories for the word "httpd":
+
+```sh
+grep -R 'httpd' . 
+```
+
+* Some other useful options:
 
 ```sh 
 grep -v  # invert matching, select non-matching lines
@@ -288,13 +339,24 @@ grep -n  # prefix the output with line number
 
 ## ```history``` - Get the History of Recently Used Commands 
 
-This command gives you the history of the commands you have used.
+This command gives you the history of the commands you have used. It is convenient to search commands from history and copy paste to reuse. 
 
-It is convenient to search commands from history and copy paste to reuse. 
+Run the command below:
 
 ```sh
-history | grep introToBiology
-history | grep introToBiology | tail -n 10
+history
+```
+
+You'll see a list of old commands got printed on your screen, depending on how many commands you have used the list can be very long. So when you just trying to find a specific command, you can use ```history``` with ```grep```. For example, if I wanted to find the commands that I used to find the word "biology" I can use:
+
+```sh 
+history | grep 'biology'
+```
+
+If I want to see just the last 20 lines of command that I used, I can run:
+
+```sh
+history | tail -20
 ```
 
 ## ```sed``` - Stream Editor 
@@ -625,3 +687,7 @@ It's important to note that if you want to exit the inner loop, you should use t
 * GURU99 - [Input Output Redirection in Linux/Unix Examples](https://www.guru99.com/linux-redirection.html#:~:text=Redirection%20is%20a%20feature%20in,stdout)%20device%20is%20the%20screen.) 
 * Red Hat - [3 surprising things you can do with the Linux wc command](https://www.redhat.com/sysadmin/linux-wc-command#:~:text=The%20Linux%20wc%20command%20calculates,the%20Linux%20commands%20cheat%20sheet.%20%5D) 
 * Ryans Tutorials - [Piping and Redirection](https://ryanstutorials.net/linuxtutorial/piping.php) 
+* GeeksforGeeks - [shuf Command in Linux with Examples](https://www.geeksforgeeks.org/shuf-command-in-linux-with-examples/)
+* GeeksforGeeks - [SORT command in Linux/Unix with examples](https://www.geeksforgeeks.org/sort-command-linuxunix-examples/)
+* GeeksforGeeks - [uniq Command in LINUX with examples](https://www.geeksforgeeks.org/uniq-command-in-linux-with-examples/) 
+* nixCraft - [How To Use grep Command In Linux / UNIX With Practical Examples](https://www.cyberciti.biz/faq/howto-use-grep-command-in-linux-unix/) 
