@@ -47,31 +47,31 @@ Now, you can start to install software.
 * FastQC 0.11.7
 
 ```sh
-conda install -c bioconda fastqc=0.11.7=5
+conda install -c bioconda fastqc
 ```
 
 * Trimmomatic 0.38
 
 ```sh
-conda install -c bioconda trimmomatic=0.38
+conda install -c bioconda trimmomatic
 ```
 
 * BWA 0.7.17
 
 ```sh
-conda install -c bioconda bwa=0.7.17 
+conda install -c bioconda bwa
 ```
 
 * SAMtools 1.9
 
 ```sh
-conda install -c bioconda samtools=1.9
+conda install -c bioconda samtools
 ```
 
 * BCFtools 1.8
 
 ```sh
-conda install -c bioconda bcftools=1.8
+conda install -c bioconda bcftools 
 ``` 
 
 * Some other installation when error occurs
@@ -447,10 +447,10 @@ For now, we will copy the adapter sequence to our ```untrimmed_fastq``` folder t
 cp ~/.conda/pkgs/trimmomatic-0.38-1/share/trimmomatic-0.38-1/adapters/NexteraPE-PE.fa .
 ```
 
-The code we are going to run for Trimmomatic as follow, it may take a few minutes to run: 
+The code we are going to run for Trimmomatic as follow, it may take a few minutes to run:
 
 ```sh
-trimmomatic PE SRR2589044_1.fastq.gz SRR2589044_2.fastq.gz \
+trimmomatic PE -threads 2 SRR2589044_1.fastq.gz SRR2589044_2.fastq.gz \
                 SRR2589044_1.trim.fastq.gz SRR2589044_1un.trim.fastq.gz \
                 SRR2589044_2.trim.fastq.gz SRR2589044_2un.trim.fastq.gz \
                 SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15
