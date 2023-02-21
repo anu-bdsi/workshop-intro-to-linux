@@ -1,3 +1,19 @@
+# Week 3 & 4 - Variant calling workflow 
+
+## Learning objectives 
+
+At the end of this workshop, students will know how to:
+
+* Set up conda environments
+* Assessing read quality using FastQC 
+* Trimming and filtering using trimmomatic 
+* Aligning reads to reference genome using BWA 
+* Variant calling using bcftools
+* Writing a bash script of the workflow 
+* Using slurm to run jobs on the server 
+* Writing a sbatch file 
+* Parallel processing 
+
 # Use conda environment for projects 
 
 It is important we use conda to build the environment for each project because different project requires difference software with different versions. A conda environment can store all the dependent software for a project so it doesn't mixed up with others. 
@@ -44,37 +60,33 @@ Now, you can start to install software.
 
 ## Required Software
 
-* FastQC 0.11.7
+* FastQC
+* Trimmomatic
+* BWA
+* SAMtools
+* BCFtools
 
 ```sh
 conda install -c bioconda fastqc
-```
-
-* Trimmomatic 0.38
-
-```sh
 conda install -c bioconda trimmomatic
-```
-
-* BWA 0.7.17
-
-```sh
 conda install -c bioconda bwa
-```
-
-* SAMtools 1.9
-
-```sh
 conda install -c bioconda samtools
+conda install -c bioconda bcftools 
 ```
 
-* BCFtools 1.8
+## To validate the software are installed successfully 
+
+We can test if a software was successfully installed by calling the help document of the software or calling out the software:
 
 ```sh
-conda install -c bioconda bcftools 
-``` 
+fastqc -h
+trimmomatic -h 
+bwa # bwa is not set up for the -h option for printing the help document 
+samtools # samtools is not set up for the -h option for printing the help document 
+bcftools -h 
+```
 
-* Some other installation when error occurs
+## Some other installation when error occurs
 
 ```sh
 conda install -c conda-forge openjdk # when using fastqc 
@@ -134,7 +146,7 @@ To assess the quality of our sequence reads.
 * Line 1 - Always begins with an '@' and then information about the read.
 * Line 2 - The actual DNA sequence.
 * Line 3 - Always begins with a '+' and sometimes the same information as Line 1.
-* Line 4 - Has a string of characters which represent the quality scores, must have same number os characters as line 2. 
+* Line 4 - Has a string of characters which represent the quality scores, must have same number of characters as line 2. 
 
 Here are the quality value characters in left-to-right increasing order of quality. ```!``` is the lowest quality and ```~``` is the highest. 
 
@@ -150,15 +162,16 @@ We can view the first complete read in one of the files our dataset by using ```
 head -n 4 SRR2584863_1.fastq
 ``` 
 
-__Exercise:__ What is the last read in the ```SRR2584863_1.fastq``` file? How confident are you in this read?
+The output will look like this:
 
-Now, let's validate if the ```fastqc``` tool has been successfully installed. 
-
-```sh
-fastqc -h 
+```
+@SRR2584863.1 HWI-ST957:244:H73TDADXX:1:1101:4712:2181/1
+TTCACATCCTGACCATTCAGTTGAGCAAAATAGTTCTTCAGTGCCTGTTTAACCGAGTCACGCAGGGGTTTTTGGGTTACCTGATCCTGAGAGTTAACGGTAGAAACGGTCAGTACGTCAGAATTTACGCGTTGTTCGAACATAGTTCTG
++
+CCCFFFFFGHHHHJIJJJJIJJJIIJJJJIIIJJGFIIIJEDDFEGGJIFHHJIJJDECCGGEGIIJFHFFFACD:BBBDDACCCCAA@@CA@C>C3>@5(8&>C:9?8+89<4(:83825C(:A#########################
 ```
 
-If you get the help manual it means the ```fastqc``` has been successfully installed, if you get an error message it means it has not been installed. 
+__Exercise:__ What is the last read in the ```SRR2584863_1.fastq``` file? How confident are you in this read?
 
 ## Assessing Quality using FastQC 
 

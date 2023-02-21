@@ -1,3 +1,15 @@
+# Week 2 - Basic Linux commands 
+
+## Learning Objectives
+
+At the end of this workshop, students will know how to:
+
+* Piping and redirecting standard input and output 
+* Counting, sorting, and shuffling texts and file contents 
+* Finding and replacing texts 
+* Downloading and transfering data 
+* Using loops and statements
+
 # Counting, Sorting, and Redirecting Output 
 
 ## Redirections

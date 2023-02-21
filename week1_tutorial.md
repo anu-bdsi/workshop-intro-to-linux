@@ -1,3 +1,19 @@
+# Week 1 - Basic Linux commands 
+
+## Learning objectives 
+
+At the end of this workshop, students will know how to:
+
+* Connecting to a remote server
+* Navigating through directories 
+* Creating and editing files 
+* Viewing file contents 
+* Moving, copying, deleting, and renaming files and directories
+* Getting help with a command 
+* Linux file paths and structures 
+* Using shortcuts in Linux 
+* Using tmux to keep running your sessions in the background 
+
 # Connecting to Dayhoff
 
 * Connecting to the ANU intranet through GlobalProtect VPN. 
@@ -149,41 +165,6 @@ Till Seraphs swing their snowy Hats –
 And Saints – to windows run – 
 To see the little Tippler
 Leaning against the – Sun!
-```
-
-## ```vim``` - Another Text Editor 
-
-```vim``` is an advanced and highly configurable text editor built to enable efficient text editing. It supports most file types and vim editor is also known as a programmer's editor. 
-
-There are 2 operating modes in vim editor:
-
-* Command mode: By default, command mode is on as soon as the vim editor is started. This command mode helps users to copy, paste, delete, or move text. We should press ```esc``` key to go to command mode if we're in other modes.
-* Insert mode: Whenever we try to open vim editor, it will go to command mode by default. To write the contents in the file, we must go to insert mode. Press ```i``` to go to insert mode. If we want to go back to command mode, press the ```esc``` key. 
-
-To create a new file and open the vim editor, run:
-
-```sh 
-vim poem.txt 
-```
-
-Copy and paste the following poem into the file:
-
-* Press ```i``` to go into the insert mode.
-* Right click to paste the texts into the editor.
-* Press ```esc``` key to go back to the command mode.
-* Type ```:wq``` to save and exit the file. 
-
-```
-The readers of the Boston Evening Transcript
-Sway in the wind like a field of ripe corn.
-
-When evening quickens faintly in the street,
-Wakening the appetites of life in some
-And to others bringing the Boston Evening Transcript,
-I mount the steps and ring the bell, turning
-Wearily, as one would turn to nod good-bye to Rochefoucauld,
-If the street were time and he at the end of the street,
-And I say, "Cousin Harriet, here is the Boston Evening Transcript.
 ```
 
 # Viewing File Contents 

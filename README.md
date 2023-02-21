@@ -15,14 +15,41 @@ Slatyer Room (Rm N2011) - Robertson Building #46
 
 This course is also available online via [Zoom](https://anu.zoom.us/j/83492102360?pwd=akdBdXI2SCtkdGg1S09ZY0NYTTQxQT09). 
 
-# Course Outline 
+# Course Contents 
 
-## Week 1 
+## Week 1 - Basic Linux commands 
 
+* Connecting to a remote server
+* Navigating through directories 
+* Creating and editing files 
+* Viewing file contents 
+* Moving, copying, deleting, and renaming files and directories
+* Getting help with a command 
+* Linux file paths and structures 
+* Using shortcuts in Linux 
+* Using tmux to keep running your sessions in the background 
 
+## Week 2 - Basic Linux commands 
 
-## Week 2 
+* Piping and redirecting standard input and output 
+* Counting, sorting, and shuffling texts and file contents 
+* Finding and replacing texts 
+* Downloading and transfering data 
+* Using loops and statements
 
-## Week 3 
+## Week 3 - Variant calling workflow 
 
-## Week 4 
+* Set up conda environment
+* Assessing read quality using FastQC 
+* Quality control 
+* Trimming and filtering using trimmomatic 
+* Aligning reads to reference genome using BWA 
+* Variant calling using bcftools
+
+## Week 4 - Automating a variant calling workflow 
+
+* Writing a bash script about analysing quality with FastQC
+* Writing a bash script about the rest of the workflow 
+* Using slurm to run jobs on the server 
+* Writing a sbatch file 
+* Parallel processing 
