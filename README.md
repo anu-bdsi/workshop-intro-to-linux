@@ -1,6 +1,6 @@
 # Introduction to Linux - March 2023
 
-This short course is aiming to 
+The purpose of this short course is to teach researchers how to use the Linux operating system, thereby enhancing their ability to utilize various types of bioinformatics tools and support their research efforts. 
 
 # Schedule 
 
@@ -48,8 +48,7 @@ This course is also available online via [Zoom](https://anu.zoom.us/j/8349210236
 
 ## Week 4 - Automating a variant calling workflow 
 
-* Writing a bash script about analysing quality with FastQC
-* Writing a bash script about the rest of the workflow 
+* Writing a bash script about the workflow 
 * Using slurm to run jobs on the server 
 * Writing a sbatch file 
 * Parallel processing 
