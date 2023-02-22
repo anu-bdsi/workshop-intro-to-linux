@@ -28,7 +28,7 @@ conda activate intro-to-linux
 
 Make sure you have the environment name at the beginning of your command line, then proceed to the install software part. 
 
-![conda_env](./images/conda_environment.png) 
+![conda_env](./images/conda_environment.png?raw=true) 
 
 ## Install the needed software 
 

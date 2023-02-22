@@ -16,28 +16,42 @@ At the end of this workshop, students will know how to:
 
 # Connecting to Dayhoff
 
-* Connecting to the ANU intranet through GlobalProtect VPN. 
-* Open Terminal (Windows system should have this as well, otherwise open Command Prompt). 
+First, connecting to the ANU intranet through GlobalProtect VPN. 
+
+## If you are using a MacOS or WSL 
+
+* Open Terminal or Command Prompt. 
 * Typing in ```ssh u_id@dayhoff.rsb.anu.edu.au``` and press ```enter```. 
 * Typing in ```yes``` if you've been asked to authenticate the connection. 
-* The password is the same as your uni account password. 
-* If you successfully logged into Dayhoff, you will see a welcome message. 
+* The password is the same as your uni account password. Be aware that the Linux doesn't show dots when you typing the password.
 
-# Navigating through Directories 
+## If you are using putty 
+
+Fill the information like the image below, and click open. 
+
+![putty](images/putty_login.png?raw=true)
+
+Fill the password, the password is the same as your uni account password. Be aware that the Linux doesn't show dots when you typing the password. 
+
+# The command line 
+
+After you successfully connected to dayhoff, you will see a welcome message is printed on the screen:
+
+![welcome](images/dayhoff_welcome.png?raw=true) 
 
 ## The General Syntax of a Shell Command 
 
-Before we start to learn any command, let's talk about the interface of the Linux operating system. The interface is just a window with texts displaying. The actual place where we communicate with the computer is a line with some information at the front and a ```$``` sign, after the ```$``` sign is where we can type things in. It is something like this:
+Before we start learning any command, let's talk about the interface of the Linux operating system. The interface is just a window with texts displaying. The actual place where we communicate with the computer is a line with some information at the front and a ```$``` sign, after the ```$``` sign is where we can type things in. It is something like this:
 
-![linux-interface](https://ubuntucommunity.s3.dualstack.us-east-2.amazonaws.com/original/2X/b/ba76cbf3dc8dc2cc94d26dd61c7aad3cedcd5102.png)
+![linux-interface](images/command_line.png?raw=true) 
 
-The texts before the ```@``` sign is usually the user name, and behind the ```@``` is the server name. The texts after the ```:``` sign and before the ```$``` sign is the directory you are in. In the above image, it is ```~``` which means the home directory of the user. We will talk about it later in the course as well. 
+The texts before the ```@``` sign is usually the user name, and behind the ```@``` is the server name. The texts after the ```:``` sign and before the ```$``` sign is the directory you are in. In the above image, it is ```~``` which means the home directory of the user. 
 
 When we type a command, there are some rules to follow. Please see the following image for what a standard command looks like:
 
 ![shell-syntax](https://swcarpentry.github.io/shell-novice/fig/shell_command_syntax.svg)
 
-* The ```$``` is called prompt.
+* The ```$``` sign is called prompt.
 * Following the prompt the first thing we should type in is a command, here this command ```ls``` means to list all the files/directories. 
 * After the command, sometimes an option/flag follows it to add some other functions for the command, here ```-F``` option means to modify the output of command ```ls``` by adding some symbols after the file/directory names to show what type of the file is. It might be confusing, but don't worry, as we go along with the course, you'll understand more. 
 * The last thing is called an argument, it means the thing/place where we want our command to perform on. 
@@ -49,6 +63,8 @@ Options and arguments are optional, for a command it is not necessary to have an
 Because there is no graphic user interface in command line, we can imagine the directories as trees to help navigating through. In Linux, the path always start with root ```/```. 
 
 ![image](https://cdn-wordpress-info.futurelearn.com/info/wp-content/uploads/a2794f8f-b0c1-468d-89c6-bcf29d2d6517-1.png) 
+
+# Navigating through directories 
 
 ## ```pwd``` - Path of Working Directory 
 
@@ -68,7 +84,7 @@ For now, ```ls``` returns nothing because we are new users and don't have anythi
 
 * ```ls -l``` list with long format - show permissions
 * ```ls -a``` list all files including hidden files starting with "."
-* ```ls -lh``` show file sizes in KB/MB/GB format
+* ```ls -lh``` show file sizes in human readable format
 
 ## ```cd``` - Change Directory 
 
@@ -77,6 +93,10 @@ This command lets you move between directories.
 Let's explore the directories on Dayhoff a little bit. First, let's go to the root directory using ```cd /``` and use ```ls``` to see what directories do we have under the root directory. Next, let't go to the ```home``` directory using ```cd home``` and use ```ls``` to see what directories we have under home directory. Ideally, you can find your uni id in it. Then you can use ```cd u_id``` to go to your home directory. 
 
 If you want to go to the last directory (or parent directory) of your current directory, you can use ```cd ..```. ```..``` means the parent directory, you can also use it in the file path. But when you use ```..``` in the file path, it would be called a relative file path because it is relative to your current directory. If you are not in this same directory anymore, the file path will no longer work. 
+
+### Practice: 
+
+In 5mins, explore Dayhoff a little bit, go to different directories and see what files are in it. Use different options of ```ls``` to inspect the files. And then go back to your home directory. 
 
 ## ```mkdir``` - Make Directory 
 
@@ -96,11 +116,6 @@ ls # to see the result
 * Linux is case sensitive, uppercase characters are different from lowercase characters. 
 * File or directory names can include letters, numbers, and the following 3 special charachers: period ```.```, underscore ```_```, and dash ```-```. 
 * There are some other special characters you can use in the name but it is highly against, so I won't be mention them here. 
-
-### Linux provides 2 wildcard characters to represent ambiguous characters or strings in file or directory names:
-
-* The question mark ```?``` represents any single character. For example, ```ls file?.txt``` would list ```file1.txt``` and ```file2.txt``` but not ```file50.txt```. 
-* The asterisk ```*``` represents any string of zero or more characters. For example, ```ls file*.txt``` would list ```file.txt```, ```file1.txt```, ```file2.txt```, and ```file50.txt``` but not ```file01.data```. 
 
 # Creating and Editing Files 
 
@@ -319,7 +334,7 @@ rm [-options] [file_name] # can take multiple files in
 rm -r [file_name] # remove directories and their contents recursively
 ```
 
-__Exercise:__ 
+### Exercise:
 
 1. Delete the file ```new_file.txt``` and ```poem.txt```. 
 2. Delete the directory ```deleteMe```. 
@@ -412,20 +427,10 @@ For example, now we're in the folder ```/home/mary```. The absolute path to ```r
 
 ## Wild Card
 
-```*``` is a wild card, it matches zero or more characters. 
+Linux provides 2 wildcard characters to represent ambiguous characters or strings in file or directory names. 
 
-Let's create some empty files first.
-
-```sh
-touch note0.txt note1.txt note2.txt notebook.txt 
-```
-
-* ```ls *.txt``` lists every file ends with ```.txt```. 
-* ```ls note*``` lists every file starts with ```note```.
-
-```?``` is also a wild card, it matches one character. 
-
-* Try ```ls note?.txt``` and ```ls note*.txt```, and see what's the difference?  
+* The question mark ```?``` represents any single character. For example, ```ls file?.txt``` would list ```file1.txt``` and ```file2.txt``` but not ```file50.txt```. 
+* The asterisk ```*``` represents any string of zero or more characters. For example, ```ls file*.txt``` would list ```file.txt```, ```file1.txt```, ```file2.txt```, and ```file50.txt``` but not ```file01.data```. 
 
 ## Using tmux 
 
