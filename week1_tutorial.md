@@ -94,7 +94,7 @@ Let's explore the directories on Dayhoff a little bit. First, let's go to the ro
 
 If you want to go to the last directory (or parent directory) of your current directory, you can use ```cd ..```. ```..``` means the parent directory, you can also use it in the file path. But when you use ```..``` in the file path, it would be called a relative file path because it is relative to your current directory. If you are not in this same directory anymore, the file path will no longer work. 
 
-### Practice: 
+__Exercise:__ 
 
 In 5mins, explore Dayhoff a little bit, go to different directories and see what files are in it. Use different options of ```ls``` to inspect the files. And then go back to your home directory. 
 
@@ -268,7 +268,7 @@ history | more # view the output of the command history page by page
 * The command ```history``` is used to view the previously executed command. 
 * The pipe ```|``` is a command let's you use two or more commands, and it takes the output of the first command as the input to the next command. In the above example ```history | more```, it takes the output of command history as input to the command more. We will cover this command with more details in the future. 
 
-## ```less``` - Viewing the File 
+## ```less``` - Viewing a File 
 
 ```less``` shows a file's content one screen at a time. It is useful when dealing with a large text file because it doesn't load the entire file but access it page by page, resulting in fast loading speeds. It is equipped with interactive features on navigating forward or backwardand searching strings etc. 
 
@@ -334,7 +334,7 @@ rm [-options] [file_name] # can take multiple files in
 rm -r [file_name] # remove directories and their contents recursively
 ```
 
-### Exercise:
+__Exercise:__  
 
 1. Delete the file ```new_file.txt``` and ```poem.txt```. 
 2. Delete the directory ```deleteMe```. 
@@ -485,11 +485,9 @@ tmux rename-session -t old_session_name new_session_name
 Do some research on below questions to get a better understanding of the Linux operating system. 
 
 * What is Linux and Unix?
-* What are the differences and relationships between Linux and Unix?
-* What are the differences and relationships between Linux and Windows/MacOS?
+* What are the differences between Linux and Windows/MacOS?
 * What is Shell and bash?
-* What are the differences and relationships between Shell and Bash? 
-* Why people use Linux and what are the advantages? 
+* What are the differences between Shell and Bash? 
 * What types of computer use Linux as operating systems? 
 * What are the popular Linux distributions on the market? 
 * Why do we need to learn Linux as a biologist? 
