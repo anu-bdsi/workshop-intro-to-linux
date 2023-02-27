@@ -60,3 +60,7 @@ This course is also available online via [Zoom](https://anu.zoom.us/j/8349210236
 * Using slurm to run jobs on the server 
 * Writing a sbatch file 
 * Parallel processing 
+
+# Contact 
+
+Any enquiries please contact Jiajia Li at jiajia.li1@anu.edu.au 
