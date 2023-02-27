@@ -25,6 +25,10 @@ First, connecting to the ANU intranet through GlobalProtect VPN.
 * Typing in ```yes``` if you've been asked to authenticate the connection. 
 * The password is the same as your uni account password. Be aware that the Linux doesn't show dots when you typing the password.
 
+## If you are using a ANU managed Windows laptop 
+
+You can try open Command Prompt and do the same as the above instructions for MacOS and WSL users. It is not confirmed but I suspect that the ANU laptops have ssh pre-installed, so we can use ssh directly from Command Prompt. 
+
 ## If you are using putty 
 
 Fill the information like the image below, and click open. 
