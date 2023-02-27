@@ -94,9 +94,11 @@ For now, ```ls``` returns nothing because we are new users and don't have anythi
 
 This command lets you move between directories. 
 
-Let's explore the directories on Dayhoff a little bit. First, let's go to the root directory using ```cd /``` and use ```ls``` to see what directories do we have under the root directory. Next, let't go to the ```home``` directory using ```cd home``` and use ```ls``` to see what directories we have under home directory. Ideally, you can find your uni id in it. Then you can use ```cd u_id``` to go to your home directory. 
+Let's explore the directories on Dayhoff a little bit: 
 
-If you want to go to the last directory (or parent directory) of your current directory, you can use ```cd ..```. ```..``` means the parent directory, you can also use it in the file path. But when you use ```..``` in the file path, it would be called a relative file path because it is relative to your current directory. If you are not in this same directory anymore, the file path will no longer work. 
+* First, let's move one level up using ```cd ..```, ```..``` here means parent directory. Use ```pwd``` to see where are you now and use ```ls``` to what files are there under this directory. 
+* Let's move up one more level using ```cd ..```, and use ```pwd``` and ```ls``` to see where are you and what files are there. 
+* Let's move up one more level again and do the same. 
 
 __Exercise:__ 
 
@@ -109,8 +111,8 @@ This command lets you create a new directory.
 Let's create a new directory in our home directory, the new directory will be the main directory we're working in for this course. Let's name it as ```intro_to_linux```. 
 
 ```sh
-cd ~ # go to our home directory 
-mkdir intro_to_linux # and make a new directory in your current directory 
+cd ~ # go to your home directory 
+mkdir intro_to_linux # make a new directory in your current directory 
 ls # to see the result 
 ```
 
