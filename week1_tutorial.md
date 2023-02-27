@@ -121,17 +121,25 @@ ls # to see the result
 * A file or directory name can have 1 to 256 characters in length. 
 * Linux is case sensitive, uppercase characters are different from lowercase characters. 
 * File or directory names can include letters, numbers, and the following 3 special charachers: period ```.```, underscore ```_```, and dash ```-```. 
-* There are some other special characters you can use in the name but it is highly against, so I won't be mention them here. 
+* There are some other special characters you can use in the name but it is highly against. 
 
 # Creating and Editing Files 
 
 ## ```touch``` - To Create Empty Files 
 
-Try ```touch new_file.txt```, and use ```ls``` to view the result. 
+This command lets you create an empty file. 
 
-```touch``` can take multiple input in to create several files together. Try ```touch doc1.txt doc2.txt doc3.txt```, and use ```ls``` to view the results. 
+```sh
+touch new_file.txt # create an empty file called new_file.txt 
+ls # to view the result 
+```
 
-The ```touch``` command has another funtion which is to change the timestamp of a file, but we won't cover it here. 
+```touch``` can take multiple input in to create several files together. 
+
+```sh
+touch doc1.txt doc2.txt doc3.txt # create 3 empty files doc1.txt, doc2.txt, and doc3.txt
+ls # view the results 
+```
 
 ## Copy and Paste in Linux
 
