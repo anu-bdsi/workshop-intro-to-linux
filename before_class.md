@@ -6,7 +6,7 @@ You need to download the GlobalProtect VPN.
 
 If you don't have administrator rights, you need to download the GlobalProtect VPN, Putty, and WinSCP Portable. 
 
-If you have administrator rights, you need to download the GlobalProtect VPN and Windows Subsystem for Linux (WSL). You won't need Putty and WinSCP Portable. 
+If you have administrator rights, you need to download the GlobalProtect VPN and ubuntu Windows Subsystem for Linux (WSL). You won't need Putty and WinSCP Portable. 
 
 # Software 
 
