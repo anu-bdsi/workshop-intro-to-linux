@@ -14,7 +14,7 @@ At the end of this workshop, students will know how to:
 
 ## Redirections
 
-Redirection is a feature in Linux such that when executing a command, you can change the standard input/output devices. The basic workflow of any Linux command is that it takes an input and give an output. 
+Redirection is a feature in Linux such that when executing a command, you can change the standard input/output devices. The basic workflow of any Linux command is that it takes an input and gives an output. 
 
 * The standard input (stdin) device is the keyboard.
 * The standard output (stdout) device is the screen. 
