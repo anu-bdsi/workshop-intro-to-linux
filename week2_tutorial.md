@@ -21,7 +21,7 @@ Redirection is a feature in Linux such that when executing a command, you can ch
 
 With redirection, the above standard input/output can be changed. 
 
-### Output Redirection 
+## Output Redirection 
 
 The symbol ```>``` is used for output (stdout) redirection. 
 
@@ -37,7 +37,7 @@ __Note:__ use the correct file name while redirecting command output to a file. 
 
 If you don't want a file to be overwritten but want to add more content to an existing file. You can use the ```>>``` operator which means "append". 
 
-### Input Redirection 
+## Input Redirection 
 
 The symbol ```<``` is used for input (stdin) redirection. 
 
