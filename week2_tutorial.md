@@ -10,6 +10,14 @@ At the end of this workshop, students will know how to:
 * Downloading and transfering data 
 * Using loops and statements
 
+# Start a tmux session
+
+Start a new tmux session and for the rest of the course we will use this session. 
+
+```sh
+tmux new -s session_name 
+```
+
 # Counting, Sorting, and Redirecting Output 
 
 ## Redirections
@@ -160,34 +168,6 @@ seq 5 | shuf
 ```
 
 ![shuf](./images/shuffle.png?raw=true)
-
-### List shuf 
-
-```sh
-shuf -e [arguments] 
-```
-
-When -e option is used with shuf command, it works as a list shuffle. The arguments of the command are taken as the input line for the shuf. For example:
-
-```sh
-shuf -e A B C D E 
-```
-
-![shuf_letters](./images/shuf_letters.png?raw=true) 
-
-### Range shuf 
-
-```sh
-shuf -i [low-high]
-```
-
-When -i option is used along with shuf command, it acts as a range shuf.
-
-```sh 
-shuf -i 5-10
-```
-
-![range_shuf](./images/range_shuf.png?raw=true) 
 
 __Exercise:__ 
 

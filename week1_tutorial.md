@@ -479,7 +479,7 @@ tmux is a terminal multiplexer. It lets you switch easily between several progra
 In the command line, type:
 
 ```sh
-tmux new -s your_session_name 
+tmux new -s session_name 
 ```
 
 This will create a new session with the name "your_session_name". 
@@ -490,13 +490,15 @@ If you're done with your session you can either get rid of it by simply exiting,
 
 To detach your current session, press ```ctrl``` and ```b``` at the same time, then release both, then press ```d```. 
 
-### Reattach to a session 
-
-To reattach to a session and continue where you left you need to figure out which session you want to attach to first. List the currently running sessions by using:
+### Listing the sessions you have 
 
 ```sh
 tmux ls
 ```
+
+### Reattach to a session 
+
+To reattach to a session and continue where you left you need to figure out which session you want to attach to first. List the currently running sessions by using:
 
 This will give you a list of running sessions, which in our example should be something like:
 
@@ -516,6 +518,12 @@ You could also rename your existing session by using:
 
 ```sh
 tmux rename-session -t old_session_name new_session_name 
+```
+
+### Deleting your session 
+
+```sh 
+tmux kill-session -t session_name 
 ```
 
 # Homework 
