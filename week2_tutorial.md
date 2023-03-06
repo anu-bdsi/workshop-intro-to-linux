@@ -446,7 +446,6 @@ You can downloan files from the internet using ```wget``` and http/https/ftp add
 For example, try
 
 ```sh
-wget https://www.gutenberg.org/cache/epub/1513/pg1513.txt # ebook Romeo and Juliet 
 wget https://zenodo.org/record/3736457/files/1_control_psbA3_A_2019_minq7.fastq # a sample fastq file 
 ```
 
@@ -458,7 +457,7 @@ On your local machine, open Terminal or Command Prompt. Use the code below to do
 
 ```sh
 cd Downloads 
-scp u1122333@dayhoff.rsb.anu.edu.au:~/intro-to-linux/romeo-juliet.txt . 
+scp u_id@dayhoff.rsb.anu.edu.au:~/intro-to-linux/romeo-juliet.txt . 
 ```
 
 If you don't know the hostname of your remote server, you can use ```hostname``` command to find out. 
@@ -470,8 +469,7 @@ If you don't know the hostname of your remote server, you can use ```hostname```
 Open your Terminal and try 
 
 ```sh
-cd Downloads 
-rsync -a ssh u1122333@dayhoff.rsb.anu.edu.au:~/intro-to-linux .
+rsync -a ssh u_id@dayhoff.rsb.anu.edu.au:~/intro-to-linux .
 ```
 
 __Please Note:__ do not put ```/``` behind the folder name, otherwise it will download everything in it without the main folder.
