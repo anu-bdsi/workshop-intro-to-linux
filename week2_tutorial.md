@@ -318,12 +318,6 @@ grep 'biology' introToBiology.txt
 grep -i 'biology' introToBiology.txt  
 ```
 
-* Look for all files in the current directory and in all of its subdirectories for the word "httpd":
-
-```sh
-grep -R 'httpd' . 
-```
-
 * Some other useful options:
 
 ```sh 
@@ -456,7 +450,7 @@ You can transfer files from remote machine to local machine using ```scp```.
 On your local machine, open Terminal or Command Prompt. Use the code below to download file from Dayhoff to your local machine.
 
 ```sh
-cd Downloads 
+cd path_to_directory 
 scp u_id@dayhoff.rsb.anu.edu.au:~/intro-to-linux/romeo-juliet.txt . 
 ```
 
@@ -473,6 +467,10 @@ rsync -a ssh u_id@dayhoff.rsb.anu.edu.au:~/intro-to-linux .
 ```
 
 __Please Note:__ do not put ```/``` behind the folder name, otherwise it will download everything in it without the main folder.
+
+__Exercise:__
+
+How many reads does the file ```1_control_psbA3_A_2019_minq7.fastq``` has? 
 
 # Loops and Statements 
 
