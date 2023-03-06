@@ -36,7 +36,7 @@ The symbol ```>``` is used for output (stdout) redirection.
 __Example:__ 
 
 ```sh 
-ls -al > listings 
+ls -al > listings.txt 
 ```
 
 Here, the output of command ```ls -al``` is redirected to the file ```listings``` instead of the screen. You can try the command step by step to understand. First, run the command ```ls -al``` to see the result on your screen. Then, run the command ```ls -al > listings``` and use ```cat listings``` to see the contents of the file ```listings```. 
@@ -45,25 +45,56 @@ __Note:__ use the correct file name while redirecting command output to a file. 
 
 If you don't want a file to be overwritten but want to add more content to an existing file. You can use the ```>>``` operator which means "append". 
 
+```sh
+ls >> listings.txt 
+```
+
 ## Input Redirection 
 
 The symbol ```<``` is used for input (stdin) redirection. 
 
-__Example:__ The mail program in Linux can help you send emails from the Terminal. 
+__Example:__ 
 
-You can type the contents of the email using the standard device keyboard. But if you want to use a file's content as the information, you can use the input redirect operator in the following format. 
+The mail program in Linux can help you send emails from the Terminal. You can type the contents of the email using the standard device keyboard. But if you want to use a file's content as the information, you can use the input redirect operator in the following format. 
 
-```sh 
-mail -s "Subject" to-address < file_name 
+First, let's create a txt file and input the email content in. 
+
+```sh
+nano email.txt 
 ```
 
-This would take the file's content as input and send to the recipient. 
+Copy and paste the following in:
+
+```
+Dear [Name],
+
+I hope this email finds you well. I wanted to touch base with you and see how things are going. It's been a while since we last spoke, and I wanted to catch up.
+
+On my end, things have been pretty busy. Work has been keeping me occupied, but I'm enjoying the challenges and learning a lot in the process. Outside of work, I've been trying to keep up with my hobbies, which include hiking and reading.
+
+What about you? How have things been going? I'd love to hear about what you've been up to lately.
+
+If you have some free time, I was also wondering if you would be interested in grabbing coffee or lunch sometime soon. It would be great to catch up in person and hear more about what's been going on in your life.
+
+Looking forward to hearing back from you soon.
+
+Best regards,
+[Your Name] 
+```
+
+Then we can redirect the content of the file ```email.txt``` as input to command ```mail```. 
+
+```sh 
+mail -s "Subject" email_address < email.txt 
+```
 
 ## Piping 
 
 So far we've dealt with sending data to and from files. Now we'll take a look at a mechanism for sending data from one program to another. It's called piping and the operator we use is ```|```. What this operator does is feed the output from the program on the left as input to the program on the right. 
 
-__Example:__ list only the first 3 files in the directory. 
+__Example:__ 
+
+List only the first 3 files in the directory.  
 
 ```sh
 ls | head -n 3
