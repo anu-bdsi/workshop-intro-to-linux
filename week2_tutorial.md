@@ -148,8 +148,6 @@ It means the file ```numSeq.txt``` has 100 lines, 100 words, and 292 characters.
 
 The ```shuf``` command writes a random permutation of the input lines to standard output. This command reads either from a file or standard input in bash. 
 
-### File shuf
-
 ```sh
 shuf file_name 
 ```
@@ -478,7 +476,7 @@ rsync -a ssh u1122333@dayhoff.rsb.anu.edu.au:~/intro-to-linux .
 
 __Please Note:__ do not put ```/``` behind the folder name, otherwise it will download everything in it without the main folder.
 
-# Statements and Loops
+# Loops and Statements 
 
 A loop is a powerful programming tool that enables you to execute a set of commands repeatedly. 
 
@@ -493,9 +491,11 @@ then
 fi 
 ```
 
-__EXAMPLE__: The following script will prompt you to input a number and then it checks whether the given number is even. 
+__Example:__
 
-Please create a new file called ```if.sh``` and input the script.
+The following script will prompt you to input a number and then it checks whether the given number is even. 
+
+Please create a new file called ```if.sh``` and input the following codes: 
 
 ```sh
 echo -n "Enter Number: "
@@ -507,9 +507,15 @@ then
 fi 
 ```
 
+Save and exit the file, run the following command to execute the script:
+
+```sh
+bash if.sh 
+```
+
 ## ```if``` ... ```else``` statement 
 
-The syntax of the ```if``` ... ```else``` statement
+The syntax of a ```if``` ... ```else``` statement: 
 
 ```sh
 if a-condition 
@@ -520,7 +526,11 @@ else
 fi
 ```
 
-__EXAMPLE__: Let's extend the last example to check if the given number is even or odd. 
+__Example:__
+
+Let's extend the last example to check if the given number is even or odd. 
+
+Create a new file named ```if_else.sh``` and input the following codes and save it, run the script by using ```bash if_else.sh```. 
 
 ```sh
 echo -n "Enter Number: "
@@ -550,7 +560,9 @@ else
 fi
 ```
 
-__EXAMPLE__: We can augment the last example to add the addition to check for zero. 
+__Example:__ 
+
+We can extend the last example to add the addition to check for zero. 
 
 ```sh
 echo -n "Enter Number: "
@@ -637,80 +649,10 @@ do
 done 
 ```
 
-## ```break``` and ```continue``` Keywords
-
-Both "break" and "continue" are used to transfer control of the program to another part of the program. It is used within loops to alter the flow of the loop and terminate the loop or skip the current iteration. 
-
-### ```break``` 
-
-The break statement is used to terminate the loop and can be used within a while, for, until, and select loops. 
-
-```sh
-for i in {1..5}
-do 
-    if (( $i == 3))
-    then
-        break
-    fi 
-    echo $i 
-done 
-```
-
-It can be seen that when the value of i is 3, the loop execution is terminated and hence i is only printed up to 2.
-
-### ```continue``` 
-
-Continue is a command which is used to skip the remaining command inside the loop for the current iteration in for, while, and until loop. 
-
-```sh
-for i in {1..5}
-do 
-    if (( $i == 3))
-    then 
-        continue
-    fi 
-    echo $i
-done 
-```
-
-__Please note:__ if you use break and continue in a nested loop (a loop inside a loop), it will only skip the innermost loop.
-
-For example:
-
-```sh
-for i in {1..3}
-do 
-    for j in {1..3}
-    do 
-        if (( $j == 2 ))
-        then
-            continue 
-        fi 
-        echo $i, $j
-    done
-done 
-```
-
-The output would be:
-
-```
-1 1
-1 3
-2 1
-2 3
-3 1
-3 3
-```
-
-As you can see, when ```j``` is equal to 2, the ```continue``` command is executed, and the current iteration of the inner loop is skipped. However, the outer loop still continues to execute and the next iteration of the outer loop starts.
-
-It means that the ```continue``` command only skips the current iteration of the innermost loop, but the other loops (outer loops) continue to execute.
-
-It's important to note that if you want to exit the inner loop, you should use the ```break``` command instead of ```continue```. If you want to exit all the loops, you should use the ```break``` command in all the loops.
-
 # Homework
 
-* Learn ```until``` loop and ```while``` loop
+* Learn ```until``` loop and ```while``` loop. 
+* Learn ```break``` and ```continue``` keywords. 
 
 # References
 
@@ -725,7 +667,7 @@ It's important to note that if you want to exit the inner loop, you should use t
 * GeeksforGeeks - [Bash Scripting - For Loop](https://www.geeksforgeeks.org/bash-scripting-for-loop/) 
 * OpenAI - [ChatGPT](https://chat.openai.com/chat)
 * GeeksforGeeks - [Break and Continue Keywords in Linux with Examples](https://www.geeksforgeeks.org/break-and-continue-keywords-in-linux-with-examples/) 
-* GURU99 - [Input Output Redirection in Linux/Unix Examples](https://www.guru99.com/linux-redirection.html#:~:text=Redirection%20is%20a%20feature%20in,stdout)%20device%20is%20the%20screen.) 
+* GURU99 - [Input Output Redirection in Linux/Unix Examples](https://www.guru99.com/linux-redirection.html) 
 * Red Hat - [3 surprising things you can do with the Linux wc command](https://www.redhat.com/sysadmin/linux-wc-command#:~:text=The%20Linux%20wc%20command%20calculates,the%20Linux%20commands%20cheat%20sheet.%20%5D) 
 * Ryans Tutorials - [Piping and Redirection](https://ryanstutorials.net/linuxtutorial/piping.php) 
 * GeeksforGeeks - [shuf Command in Linux with Examples](https://www.geeksforgeeks.org/shuf-command-in-linux-with-examples/)
