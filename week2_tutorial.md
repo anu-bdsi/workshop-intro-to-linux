@@ -113,26 +113,6 @@ It means the file ```numSeq.txt``` has 100 lines, 100 words, and 292 characters.
 * ```wc -w``` only shows the number of words. 
 * ```wc -c``` only shows the number of characters. 
 
-## ```tr``` - Translate 
-
-The ```tr``` command can translates or deletes characters from standard input (stdin) and writes the result to standard output (stdout). Use ```tr``` to perform different text transformations, including case conversion, squeezing or deleting characters, and basic text replacement. 
-
-The ```tr``` command can't read a file directly, it is often used with pipes ```|``` and redirects ```<``` to allow more complex file content processing. 
-
-The basic syntax of ```tr``` is:
-
-```sh
-tr [options] str_1 str_2
-```
-
-Running ```tr``` without any options replaces each of the characters specified in ```str_1``` with the characters from ```str_2```. For example:
-
-![result](./images/wolcomo.png?raw=true) 
-
-Here, we redirect the output of command ```echo "Welcome"``` as input to ```tr e o``` to replace all character "e" with character "o". 
-
-There are more usages of ```tr```, please read the help manual for more. 
-
 ## ```shuf``` - Shuffle 
 
 The ```shuf``` command writes a random permutation of the input lines to standard output. This command reads either from a file or standard input in bash. 
@@ -350,6 +330,50 @@ If I want to see just the last 20 lines of command that I used, I can run:
 ```sh
 history | tail -20
 ```
+
+## ```tr``` - Translate 
+
+The ```tr``` command can translates or deletes characters from standard input (stdin) and writes the result to standard output (stdout). Use ```tr``` to perform different text transformations, including case conversion, squeezing or deleting characters, and basic text replacement. 
+
+The ```tr``` command can't read a file directly, it is often used with pipes ```|``` and redirects ```<``` to allow more complex file content processing. 
+
+The basic syntax of ```tr``` is:
+
+```sh
+tr [options] set_1 set_2 
+```
+
+Running ```tr``` without any options replaces each of the characters specified in ```set_1``` with the characters from ```set_2```. 
+
+Example: 
+
+```sh
+echo "Welcome" | tr e o 
+```
+
+Output: 
+
+```
+Wolcomo
+```
+
+Here, we redirect the output of command ```echo "Welcome"``` as input to ```tr e o``` to replace all character "e" with character "o". 
+
+Example:
+
+```sh
+cat numSeq.txt | tr '\n' ' '
+```
+
+Output:
+
+```
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100
+```
+
+Here, ```\n``` means the character for a newline. 
+
+There are more usages of ```tr```, please read the help manual for more. 
 
 ## ```sed``` - Stream Editor 
 
