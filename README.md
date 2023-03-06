@@ -16,10 +16,10 @@ Slatyer Room (Rm N2011) - Robertson Building #46
 For each workshop, the class schedule is:
 
 * 1.30-2.20pm (50min) Teaching 
-* 2.20-2.40pm (20min) Break and discussion 
-* 2.40-3.30pm (50min) Teaching 
-* 3.30-3.50pm (20min) Break and discussion 
-* 3.50-4.00pm (10min) Wrap up
+* 2.20-2.30pm (10min) Break
+* 2.30-3.20pm (50min) Teaching 
+* 3.20-3.30pm (10min) Break
+* 3.30-4.00pm (30min) Teaching 
 
 This course is also available online via [Zoom](https://anu.zoom.us/j/83492102360?pwd=akdBdXI2SCtkdGg1S09ZY0NYTTQxQT09). 
 
