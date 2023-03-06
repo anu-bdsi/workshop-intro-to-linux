@@ -320,12 +320,6 @@ grep 'biology' introToBiology.txt
 grep -i 'biology' introToBiology.txt  
 ```
 
-* Print out only the occurence of the word "biology" from the file: 
-
-```sh
-grep -o 'biology' introToBiology.txt 
-```
-
 * Look for all files in the current directory and in all of its subdirectories for the word "httpd":
 
 ```sh
@@ -376,7 +370,7 @@ tr [options] set_1 set_2
 
 Running ```tr``` without any options replaces each of the characters specified in ```set_1``` with the characters from ```set_2```. 
 
-Example: 
+__Example:__
 
 ```sh
 echo "Welcome" | tr e o 
@@ -390,7 +384,7 @@ Wolcomo
 
 Here, we redirect the output of command ```echo "Welcome"``` as input to ```tr e o``` to replace all character "e" with character "o". 
 
-Example:
+__Example:__
 
 ```sh
 cat numSeq.txt | tr '\n' ' '
@@ -408,9 +402,9 @@ There are more usages of ```tr```, please read the help manual for more.
 
 ## ```sed``` - Stream Editor 
 
-This command can perform functions on file like searching, find and replace, insertion or deletion. The most common use of SED command in UNIX is for substitution or for find and replace. By using SED you can edit files without opening them, which is much quicker than first opening that file in VI Editor and then changing it. SED command supports regular expression which allows it to perform complex pattern matching.
+This command can perform functions on file like searching, find and replace, insertion or deletion. The most common use of sed command in UNIX is for substitution or for find and replace. By using sed you can edit files without opening them, which is much quicker than first opening that file in editor and then changing it. The sed command supports regular expression which allows it to perform complex pattern matching.
 
-First, let's create a file for better practice, copy and paste the following to a new file named ```unix-linux.txt```
+First, let's create a file for better practice, copy and paste the following to a new file named ```unix-linux.txt```. 
 
 ```
 unix is great os. unix is opensource. unix is free os.
