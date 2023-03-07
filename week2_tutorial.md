@@ -15,7 +15,13 @@ At the end of this workshop, students will know how to:
 Start a new tmux session and for the rest of the course we will use this session. 
 
 ```sh
-tmux new -s session_name 
+tmux new -s intro_to_linux 
+```
+
+To log back on to a existing tmux session, use:
+
+```sh
+tmux attach -t session_name 
 ```
 
 # Counting, Sorting, and Redirecting Output 
