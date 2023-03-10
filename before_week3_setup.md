@@ -4,7 +4,7 @@ We'll explain more details on building a conda environment in the workshop. For 
 
 ## Set up conda channels 
 
-Run the following commands line by line: 
+Connect to Dayhoff, and run the following commands: 
 
 ```sh
 conda config --add channels defaults
