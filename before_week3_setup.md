@@ -61,5 +61,5 @@ Run the following commands line by line:
 ```sh
 mkdir -p ~/intro_to_linux/data/untrimmed_fastq
 cd ~/intro_to_linux/data/untrimmed_fastq
-cp /home/u1133824/intro_to_linux/data/untrimmed_fastq/*.gz .
+cp /home/u1133824/data/*.gz .
 ```
