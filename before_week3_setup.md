@@ -42,6 +42,18 @@ conda install -c bioconda samtools
 conda install -c bioconda bcftools 
 ```
 
+## To validate the software are installed successfully 
+
+We can test if a software was successfully installed by calling the help document of the software or calling out the software:
+
+```sh
+fastqc -h
+trimmomatic -h 
+bwa # bwa is not set up for the -h option for printing the help document 
+samtools # samtools is not set up for the -h option for printing the help document 
+bcftools -h 
+```
+
 # Copy the data files to your own directory 
 
 Run the following commands line by line: 
@@ -49,5 +61,5 @@ Run the following commands line by line:
 ```sh
 mkdir -p ~/intro_to_linux/data/untrimmed_fastq
 cd ~/intro_to_linux/data/untrimmed_fastq
-cp /home/u1133824/intro_to_linux/data/untrimmed_fastq/*.gz . 
+cp /home/u1133824/intro_to_linux/data/untrimmed_fastq/*.gz .
 ```

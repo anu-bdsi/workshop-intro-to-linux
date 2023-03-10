@@ -127,8 +127,8 @@ The data are paired-end, so we have two files for each sample. The files are big
 
 ```sh 
 mkdir -p ~/intro_to_linux/data/untrimmed_fastq/
-cd ~/intro_to_linux/data/untrimmed_fastq
-cp /mnt/data/dayhoff/home/u1133824/intro_to_linux/data/untrimmed_fastq/*.gz . 
+cd ~/intro_to_linux/data/untrimmed_fastq/ 
+cp /home/u1133824/intro_to_linux/data/untrimmed_fastq/*.gz .
 ```
 
 The data comes in a compressed format, which is why there is a ```.gz``` at the end of the file names. This makes it faster to transfer, and allows it to take up less space on our computer. Let’s unzip one of the files so that we can look at the fastq format. 
