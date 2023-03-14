@@ -2,16 +2,6 @@
 
 We'll explain more details on building a conda environment in the workshop. For now, follow instructions below to build the environment. 
 
-## Set up conda channels 
-
-Connect to Dayhoff, and run the following commands: 
-
-```sh
-conda config --add channels defaults
-conda config --add channels bioconda
-conda config --add channels conda-forge
-```
-
 ## Create the conda environment
 
 ```sh
