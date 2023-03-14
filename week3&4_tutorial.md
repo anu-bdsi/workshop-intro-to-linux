@@ -216,7 +216,7 @@ To transfer files from remote computers to local computers, we can use ```scp```
 First let's create a new directory on our local computer to store the HTML files. Open a new terminal on your local computer, and then run the code below:
 
 ```sh
-mkdir -p /mnt/c/Users/u1122333/Desktop/fastqc_html
+mkdir -p /mnt/c/Users/u_id/Desktop/fastqc_html
 ```
 
 Now we can download the HTML files from the remote computer using ```scp```.
@@ -228,7 +228,7 @@ scp u_id@dayhoff.rsb.anu.edu.au:~/intro_to_linux/results/fastqc_untrimmed_reads/
 __Note:__ if you're using a MacOS machine, it is likely that a ```no matches found``` will be displayed. The reason for this is that the wildcard ```*``` is not correctly interpreted. To fix this problem the wildcard needs to be escaped with a ```\```:
 
 ```sh
-scp u1122333@dayhoff.rsb.anu.edu.au:~/intro_to_linux/results/fastqc_untrimmed_reads/\*.html /mnt/c/Users/u1122333/Desktop/fastqc_html 
+scp u_id@dayhoff.rsb.anu.edu.au:~/intro_to_linux/results/fastqc_untrimmed_reads/\*.html /mnt/c/Users/u_id/Desktop/fastqc_html 
 ```
 
 Alternatively, you can also change the shell to bash by running ```chsh -s /bin/bash```. 
