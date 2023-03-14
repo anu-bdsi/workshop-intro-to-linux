@@ -22,20 +22,6 @@ It is important we use conda to build the environment for each project because d
 
 As we have miniconda installed on Dayhoff, so we don't have to install it. If you would like to install it on your own machine, google how to do it. 
 
-## Set up Channels for Bioconda
-
-Bioconda is a distribution of bioinformatics software packages for the conda package manager. It is designed to provide a simple and convenient way to install and manage bioinformatics software on various platforms, including Linux, macOS, and Windows.
-
-To set up channels for Bioconda, you will need to add the Bioconda channel to your conda configuration. This can be done by running the following command in your terminal:
-
-```sh
-conda config --add channels defaults
-conda config --add channels bioconda
-conda config --add channels conda-forge
-```
-
-This will add the Bioconda channel as well as the conda-forge channel to your conda configuration. Once this is done, you should be able to install packages from the Bioconda channel using the conda install command. 
-
 ## Create a conda environment for your project
 
 Use the following code to create a new conda environment for your first genomics project.
@@ -199,48 +185,10 @@ We will now assess the quality of the reads that we downloaded. First, make sure
 cd ~/intro_to_linux/data/untrimmed_fastq/
 ```
 
-__Excercise:__ How big are the files? (using ```ls```) 
-
-FastQC can accept multiple file names as input, and on both zipped and unzipped files, so we can use the ```*.fastq*``` wildcard to run FastQC on all of the FASTQ files in this directory.
+Let's try this:
 
 ```sh
-fastqc *.fastq* 
-```
-
-You will see an automatically updating output message telling you the progress of the analysis. It will start like this:
-
-```
-Started analysis of SRR2584863_1.fastq
-Approx 5% complete for SRR2584863_1.fastq
-Approx 10% complete for SRR2584863_1.fastq
-Approx 15% complete for SRR2584863_1.fastq
-Approx 20% complete for SRR2584863_1.fastq
-Approx 25% complete for SRR2584863_1.fastq
-Approx 30% complete for SRR2584863_1.fastq
-Approx 35% complete for SRR2584863_1.fastq
-Approx 40% complete for SRR2584863_1.fastq
-Approx 45% complete for SRR2584863_1.fastq
-```
-
-In total, it should take about five minutes for FastQC to run on all six of our FASTQ files. When the analysis completes, your prompt will return. So your screen will look something like this:
-
-```
-Approx 80% complete for SRR2589044_2.fastq.gz
-Approx 85% complete for SRR2589044_2.fastq.gz
-Approx 90% complete for SRR2589044_2.fastq.gz
-Approx 95% complete for SRR2589044_2.fastq.gz
-Analysis complete for SRR2589044_2.fastq.gz
-```
-
-The FastQC program has created several new files within our ```data/untrimmed_fastq/``` directory. Using ```ls``` to have a look. The result will look like this: 
-
-```
-SRR2584863_1.fastq        SRR2584866_1_fastqc.html  SRR2589044_1_fastqc.html
-SRR2584863_1_fastqc.html  SRR2584866_1_fastqc.zip   SRR2589044_1_fastqc.zip
-SRR2584863_1_fastqc.zip   SRR2584866_1.fastq.gz     SRR2589044_1.fastq.gz
-SRR2584863_2_fastqc.html  SRR2584866_2_fastqc.html  SRR2589044_2_fastqc.html
-SRR2584863_2_fastqc.zip   SRR2584866_2_fastqc.zip   SRR2589044_2_fastqc.zip
-SRR2584863_2.fastq.gz     SRR2584866_2.fastq.gz     SRR2589044_2.fastq.gz
+fastqc SRR2584863_1.fastq
 ```
 
 For each input FASTQ file, FastQC has created a ```.zip``` file and a ```.html``` file. The ```.zip``` file extension indicates that this is actually a compressed set of multiple output files. We will be working with these output files soon. The ```.html``` file is a stable webpage displaying the summary report for each of our samples.
@@ -274,7 +222,7 @@ mkdir -p /mnt/c/Users/u1122333/Desktop/fastqc_html
 Now we can download the HTML files from the remote computer using ```scp```.
 
 ```sh
-scp u1122333@dayhoff.rsb.anu.edu.au:~/intro_to_linux/results/fastqc_untrimmed_reads/*.html /mnt/c/Users/u1122333/Desktop/fastqc_html 
+scp u_id@dayhoff.rsb.anu.edu.au:~/intro_to_linux/results/fastqc_untrimmed_reads/*.html /mnt/c/Users/u_id/Desktop/fastqc_html 
 ```
 
 __Note:__ if you're using a MacOS machine, it is likely that a ```no matches found``` will be displayed. The reason for this is that the wildcard ```*``` is not correctly interpreted. To fix this problem the wildcard needs to be escaped with a ```\```:
@@ -457,10 +405,12 @@ Our data are pair-ended data, we can see it from the name of our data. In the re
 For now, we will copy the adapter sequence to our ```untrimmed_fastq``` folder to use it. 
 
 ```sh
-cp ~/.conda/pkgs/trimmomatic-0.38-1/share/trimmomatic-0.38-1/adapters/NexteraPE-PE.fa .
+cp ~/.conda/pkgs/trimmomatic-0.39-hdfd78af_2/share/trimmomatic-0.39-2/adapters/NexteraPE-PE.fa .
 ```
 
-The code we are going to run for Trimmomatic as follow, it may take a few minutes to run:
+__Please Note:__ the file path might be different depend on the Trimmomatic version you've downloaded. You can go to the ```~/.conda/pkgs/``` directory to check out. 
+
+The code we are going to run for Trimmomatic as follows, it may take a few minutes to run:
 
 ```sh
 trimmomatic PE -threads 2 SRR2589044_1.fastq.gz SRR2589044_2.fastq.gz \
