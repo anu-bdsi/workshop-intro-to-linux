@@ -12,20 +12,41 @@ In this lesson, we will use two shell scripts for the variant calling workflow. 
 
 Within the Bash shell, you can create variables at any time. To create a variable, you can use the assignment operator ```=``` to assign values to a name. Such as ```lucky_number=5```, you assigned ```5``` to the name ```lucky_number```. To check the current defination of a variable, you can use ```echo $lucky_number```. 
 
-## Analysing quality with FastQC 
+### A simple shell script
 
-First, let's create a new direcotory ```scripts``` to store our scripts, and a file ```read_qc.sh``` for the FastQC analysis. 
+Let's create our first shell script ```lucky_number.sh```, and input the following codes in. 
+
+```sh
+#!/bin/bash 
+
+lucky_number=5
+
+echo "My lucky number is $lucky_number"
+
+sleep 3 
+
+wait 
+```
+
+After you save the file, run ```bash lucky_number.sh``` in your command line, and see the results. 
+
+The first line of command ```#!/bin/bash``` is called a she-bang or script header, it tells the system which program should be used to interpret the codes that and where does this program located. For examples, if the she-bang is ```#!/usr/bin/env python3``` it means use Python3 to interpret the codes containing in this file. And ```#!/usr/bin/env Rscript``` is for R. 
+
+## Quality control with FastQC 
+
+We're going to write a script for running FastQC on our FASTQ files and move all the result files to the ```results``` folder, like the same we did before. 
+
+First, let's create a new directory called ```scripts```, this directory can be used to store all of our scripts in the future. 
 
 ```sh
 mkdir -p ~/intro_to_linux/scripts 
 cd ~/intro_to_linux/scripts 
-touch read_qc.sh 
 ```
 
-We can use ```nano``` to open our file and edit it. 
+Then, let's create a shell script called ```run_fastqc.sh```.
 
 ```sh
-nano read_qc.sh
+nano run_fastqc.sh
 ```
 
 After you're in the ```nano``` interface, input the following code into your script:
