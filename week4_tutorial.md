@@ -24,99 +24,70 @@ lucky_number=5
 echo "My lucky number is $lucky_number"
 
 sleep 3 
-
-wait 
 ```
 
 After you save the file, run ```bash lucky_number.sh``` in your command line, and see the results. 
 
-The first line of command ```#!/bin/bash``` is called a she-bang or script header, it tells the system which program should be used to interpret the codes that and where does this program located. For examples, if the she-bang is ```#!/usr/bin/env python3``` it means use Python3 to interpret the codes containing in this file. And ```#!/usr/bin/env Rscript``` is for R. 
+The first line of command ```#!/bin/bash``` is called a she-bang or script header, it tells the system which program should be used to interpret the codes that and where does this program located. For examples, if the she-bang is ```#!/usr/bin/env python3``` it means use Python3 to interpret the codes containing in this file. And ```#!/usr/bin/env Rscript``` is to use R. 
 
-## Quality control with FastQC 
+## Writing a shell script for variant calling 
 
-We're going to write a script for running FastQC on our FASTQ files and move all the result files to the ```results``` folder, like the same we did before. 
-
-First, let's create a new directory called ```scripts```, this directory can be used to store all of our scripts in the future. 
+First, we need to create a new directory to store all of our scripts. 
 
 ```sh
 mkdir -p ~/intro_to_linux/scripts 
 cd ~/intro_to_linux/scripts 
 ```
 
-Then, let's create a shell script called ```run_fastqc.sh```.
-
-```sh
-nano run_fastqc.sh
-```
-
-After you're in the ```nano``` interface, input the following code into your script:
-
-```sh
-#!/bin/bash
-
-set -e 
-cd ~/intro_to_linux/data/untrimmed_fastq 
-
-echo "Running FastQC ..." 
-fastqc *.fastq* 
-
-mkdir -p ~/intro_to_linux/results/fastqc_untrimmed_reads 
-
-echo "Saving FastQC results ..." 
-mv *.zip ~/intro_to_linux/results/fastqc_untrimmed_reads 
-mv *.html ~/intro_to_linux/results/fastqc_untrimmed_reads 
-
-cd ~/intro_to_linux/results/fastqc_untrimmed_reads 
-
-echo "Unzipping ..."
-for file in *.zip
-do
-    unzip $file 
-done 
-
-echo "Saving summary ..."
-cat */summary.txt > ~/intro_to_linux/docs/fastqc_summaries.txt 
-```
-
-Save and exit ```nano```. 
-
-Now, we can run our script file by:
-
-```sh 
-bash read_qc.sh 
-```
-
-In the process of running, FastQC will ask if you want to replace some files. That's because we have run the FastQC before, so we have the results already. Go ahead and press ```A``` + ```enter``` each time it occurs. 
-
-## Automating the rest of our variant calling workflow 
-
-Create a new file called ```variant_calling.sh```:
-
-```sh
-nano variant_calling.sh 
-```
-
-and input the following codes:
+Create a new file called ```variant_calling.sh```, and input the following codes:
 
 ```sh
 #!/bin/bash 
+#SBATCH --job-name=variant_calling 
+#SBATCH --output=/mnt/data/dayhoff/home/u_id/intro_to_linux/variant_calling.out
+#SBATCH --error=/mnt/data/dayhoff/home/u_id/intro_to_linux/variant_calling.err
+#SBATCH --partition=Standard
+#SBATCH --exclude=wright,fisher
+#SBATCH --time=120
+#SBATCH --mem=5G
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=2
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=email_address
+#SBATCH --mail-type=ALL
 
 set -e
-cd ~/intro_to_linux/results
+
+mkdir -p ~/intro_to_linux/data/trimmed_fastq
+outdir=~/intro_to_linux/data/trimmed_fastq
+
+cd ~/intro_to_linux/data/untrimmed_fastq
+
+for infile in *_1.fastq.gz 
+do 
+    echo "Trimming file $infile"
+    base=$(basename ${infile} _1.fastq.gz)
+    trimmomatic PE -threads 2 $infile ${base}_2.fastq.gz \
+                    ${outdir}/${base}_1.trim.fastq.gz ${outdir}/${base}_1un.trim.fastq.gz \
+                    ${outdir}/${base}_2.trim.fastq.gz ${outdir}/${base}_2un.trim.fastq.gz \
+                    SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15
+done 
 
 genome=~/intro_to_linux/data/ref_genome/ecoli_rel606.fasta 
-bwa index $genome 
 
-mkdir -p sam bam bcf vcf 
+#bwa index $genome 
 
-for fq1 in ~/intro_to_linux/data/trimmed_fastq_small/*_1.trim.sub.fastq 
+cd ~/intro_to_linux/results
+#mkdir -p sam bam bcf vcf 
+
+for fq1 in ${outdir}/*_1.trim.fastq.gz
 do 
     echo "Working with file $fq1"
-    base=$(basename $fq1 _1.trim.sub.fastq) 
-    echo "base name is $base" 
+    base=$(basename $fq1 _1.trim.fastq.gz) 
 
-    fq1=~/intro_to_linux/data/trimmed_fastq_small/${base}_1.trim.sub.fastq 
-    fq2=~/intro_to_linux/data/trimmed_fastq_small/${base}_2.trim.sub.fastq 
+    fq1=~/intro_to_linux/data/trimmed_fastq/${base}_1.trim.fastq.gz
+    fq2=~/intro_to_linux/data/trimmed_fastq/${base}_2.trim.fastq.gz
     sam=~/intro_to_linux/results/sam/${base}.aligned.sam
     bam=~/intro_to_linux/results/bam/${base}.aligned.bam
     sorted_bam=~/intro_to_linux/results/bam/${base}.aligned.sorted.bam 
@@ -124,21 +95,29 @@ do
     variants=~/intro_to_linux/results/vcf/${base}_variants.vcf 
     final_variants=~/intro_to_linux/results/vcf/${base}_final_variants.vcf 
 
-    bwa mem $genome $fq1 $fq2 > $sam
+    bwa mem -t 2 $genome $fq1 $fq2 > $sam
     samtools view -S -b $sam > $bam 
     samtools sort -o $sorted_bam $bam 
     samtools index $sorted_bam 
     bcftools mpileup -O b -o $raw_bcf -f $genome $sorted_bam 
     bcftools call --ploidy 1 -m -v -o $variants $raw_bcf 
     vcfutils.pl varFilter $variants > $final_variants 
-done 
+done
 ```
 
 Save and exit, now you can run the workflow by:
 
 ```sh
-bash variant_calling.sh 
+sbatch variant_calling.sh 
 ```
+
+After running the code above, you'll see the following texts:
+
+```
+Submitted batch job <job_id> 
+```
+
+You can run ```squeue``` to check all the running jobs on Dayhoff. 
 
 __Exercise:__ The samples we just did variant calling on are part of the long-term evolution. The ```SRR2589044``` sample was from generation 5000, ```SRR2584863``` was from generation 15000, and ```SRR2584866``` was from generation 50000. How did the number of mutations change in the sample over time? 
 
@@ -162,7 +141,7 @@ There are three nodes on Dayhoff: ```dayhoff```, ```wright```, and ```fisher```.
 
 If you run ```pwd``` in your home directory, you'll probably see something like ```/home/UID```. But in reality, that's only the path from your home node. For cluster-wide shared data namespace, we have to add ```/mnt/data/(server)``` before the path we get from ```pwd```. 
 
-## Writing a ```sbatch``` file
+## A sample sbatch file 
 
 A few things to remember when submitting a SLURM job on the cluster:
 
@@ -182,7 +161,7 @@ A example of what a ```sbatch``` script looks like:
 #SBATCH --partition=Standard
 #SBATCH --exclude=wright,fisher 
 #SBATCH --time=120:00:00    # 5 days then stop job if not complete
-#SBATCH --mem-per-cpu=7000  # 7GB per cpu (rather than per node)
+#SBATCH --mem-per-cpu=7G  # 7GB per cpu (rather than per node)
 #SBATCH --nodes=2	    # use 2 nodes
 #SBATCH --ntasks=Y	    # don't let more than Y tasks run at once
 #SBATCH --mem=230G	    # reserve 230GB RAM per node (rather than per cpu)
@@ -191,12 +170,11 @@ A example of what a ```sbatch``` script looks like:
 #SBATCH --mail-user uxxxxxxx@anu.edu.au # mail user on job state changes
 #SBATCH --mail-type TIME_LIMIT,FAIL		# state changes
 
-srun my_script_1.sh & # each srun means one task 
-srun -Nx -ny --exclusive my_script_A.sh -input a & # -N means --nodes, -n means --ntasks 
-srun -Nx -ny --exclusive my_script_A.sh -input b &
+srun --nodes=dayhoff --ntasks=1 --exclusive my_script_A.sh &
+srun --nodes=dayhoff --ntasks=1 --exclusive my_script_A.sh &
 ..
 ..
-srun -Nx -ny --exclusive my_script_B.sh &
+srun --nodes=dayhoff --ntasks=1 --exclusive my_script_B.sh &
 wait
 ```
 
@@ -210,18 +188,17 @@ In the variant calling workflow, we used 3 different samples, we can write a scr
 
 Remember in the step of aligning reads to referece genome we only used the subset data, now let's try align the full-sized data to the reference genome using parallel processing. 
 
-Create a file named ```run_bwa.sh``` in the directory ```scripts```, and input the following codes. 
+Create a file named ```bwa_parallel.sh``` in the directory ```scripts```, and input the following codes. 
 
 ```sh
 #!/bin/bash
-
 #SBATCH --job-name=alignment
 #SBATCH --output=/mnt/data/dayhoff/home/u_id/intro_to_linux/alignment.out
 #SBATCH --error=/mnt/data/dayhoff/home/u_id/intro_to_linux/alignment.err
 #SBATCH --partition=Standard
 #SBATCH --exclude=wright,fisher
 #SBATCH --time=5:00:00
-#SBATCH --mem-per-cpu=1000
+#SBATCH --mem=6G
 #SBATCH --nodes=1
 #SBATCH --ntasks=3
 #SBATCH --cpus-per-task=2
@@ -229,30 +206,28 @@ Create a file named ```run_bwa.sh``` in the directory ```scripts```, and input t
 #SBATCH --mail-user=email_address
 #SBATCH --mail-type=ALL
 
-source /opt/conda/bin/activate intro-to-linux 
+set -e
 
-srun --exclusive --ntasks=1 bwa mem -t 2 \
-            /mnt/data/dayhoff/home/u_id/intro_to_linux/data/ref_genome/ecoli_rel606.fasta \
-            /mnt/data/dayhoff/home/u_id/intro_to_linux/data/trimmed_fastq/SRR2584863_1.trim.fastq \
-            /mnt/data/dayhoff/home/u_id/intro_to_linux/data/trimmed_fastq/SRR2584863_2.trim.fastq \
-            > /mnt/data/dayhoff/home/u_id/intro_to_linux/results/sam/SRR2584863.full.aligned.sam &
+indir=~/intro_to_linux/data/trimmed_fastq
+outdir=~/intro_to_linux/results
+genome=~/intro_to_linux/data/ref_genome/ecoli_rel606.fasta
 
-srun --exclusive --ntasks=1 bwa mem -t 2 \
-            /mnt/data/dayhoff/home/u_id/intro_to_linux/data/ref_genome/ecoli_rel606.fasta \
-            /mnt/data/dayhoff/home/u_id/intro_to_linux/data/trimmed_fastq/SRR2584866_1.trim.fastq \
-            /mnt/data/dayhoff/home/u_id/intro_to_linux/data/trimmed_fastq/SRR2584866_2.trim.fastq \
-            > /mnt/data/dayhoff/home/u_id/intro_to_linux/results/sam/SRR2584866.full.aligned.sam &
+srun --exclusive --ntasks=1 --mem=2G bwa mem -t 2 ${genome} \
+            ${indir}/SRR2584863_1.trim.fastq.gz ${indir}/SRR2584863_2.trim.fastq.gz \
+            > ${outdir}/sam/SRR2584863.full.aligned.sam &
 
-srun --exclusive --ntasks=1 bwa mem -t 2 \
-            /mnt/data/dayhoff/home/u_id/intro_to_linux/data/ref_genome/ecoli_rel606.fasta \
-            /mnt/data/dayhoff/home/u_id/intro_to_linux/data/trimmed_fastq/SRR2589044_1.trim.fastq \
-            /mnt/data/dayhoff/home/u_id/intro_to_linux/data/trimmed_fastq/SRR2589044_2.trim.fastq \
-            > /mnt/data/dayhoff/home/u_id/intro_to_linux/results/sam/SRR2589044.full.aligned.sam &
+srun --exclusive --ntasks=1 --mem=2G bwa mem -t 2 ${genome} \
+            ${indir}/SRR2584866_1.trim.fastq.gz ${indir}/SRR2584866_2.trim.fastq.gz \
+            > ${outdir}/sam/SRR2584866.full.aligned.sam &
+
+srun --exclusive --ntasks=1 --mem=2G bwa mem -t 2 ${genome} \
+            ${indir}/SRR2589044_1.trim.fastq.gz ${indir}/SRR2589044_2.trim.fastq.gz \
+            > ${outdir}/sam/SRR2589044.full.aligned.sam &
 
 wait
 ```
 
-Save ane exit, run ```sbatch run_bwa.sh``` to submit the job. You'll see a job ID prompted on your screen. It means the job has been submitted. Then, you can run ```squeue``` to check your job status. 
+Save ane exit, run ```sbatch run_bwa.sh``` to submit the job. You'll see a job ID prompted on your screen. Then, you can run ```squeue``` to check your job status. 
 
 Another useful command to check how much resources have been used for your job is:
 
