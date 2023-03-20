@@ -296,6 +296,7 @@ Then you can see the variants result.
 
 # References 
 
+* Data Carpentry - [Data Wrangling and Processing for Genomics](https://datacarpentry.org/wrangling-genomics/)
 * slurm workload manager - [Documentation](https://slurm.schedmd.com/documentation.html) 
 * RSB IT Infrastructure Wiki - [RSB bioinformatics server user guide](https://infrawiki.rsb.anu.edu.au/doku.php?id=rsb_it:infrastructure:userdoco:studentservers#running_workloads_and_processes_on_the_servers)
 * RONIN - [A simple slurm guide for beginners](https://blog.ronin.cloud/slurm-intro/)
