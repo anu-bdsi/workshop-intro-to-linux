@@ -39,7 +39,7 @@ mkdir -p ~/intro_to_linux/scripts
 cd ~/intro_to_linux/scripts 
 ```
 
-Create a new file called ```variant_calling.sh```, and input the following codes:
+Create a new file called ```variant_calling.sh```, and input the following codes, change the path and emaill address accordingly for the SBATCH headings: 
 
 ```sh
 #!/bin/bash 
@@ -111,15 +111,17 @@ Save and exit, now you can run the workflow by:
 sbatch variant_calling.sh 
 ```
 
-After running the code above, you'll see the following texts:
+After running the sbatch command, you'll see a job ID popped up on your screen. Wait for a few seconds, and you can run ```squeue``` to check if your job is running. 
 
-```
-Submitted batch job <job_id> 
-```
+__Questions:__ 
 
-You can run ```squeue``` to check all the running jobs on Dayhoff. 
+* What is ```set -e```?
+* Why do we need to add ```/mnt/data/(server)/```?
+* What is cluster, node, core, and CPU?
 
-__Exercise:__ The samples we just did variant calling on are part of the long-term evolution. The ```SRR2589044``` sample was from generation 5000, ```SRR2584863``` was from generation 15000, and ```SRR2584866``` was from generation 50000. How did the number of mutations change in the sample over time? 
+__Exercise:__ 
+
+The samples we just did variant calling on are part of the long-term evolution. The ```SRR2589044``` sample was from generation 5000, ```SRR2584863``` was from generation 15000, and ```SRR2584866``` was from generation 50000. How did the number of mutations change in the sample over time? 
 
 ```sh
 for file in ~/intro_to_linux/results/vcf/*_final_variants.vcf 
@@ -164,17 +166,17 @@ A example of what a ```sbatch``` script looks like:
 #SBATCH --mem-per-cpu=7G  # 7GB per cpu (rather than per node)
 #SBATCH --nodes=2	    # use 2 nodes
 #SBATCH --ntasks=Y	    # don't let more than Y tasks run at once
-#SBATCH --mem=230G	    # reserve 230GB RAM per node (rather than per cpu)
+#SBATCH --mem=100G	    # reserve 230GB RAM per node (rather than per cpu)
 #SBATCH --cpus-per-task=15  # reserve 15 cpus/threads per task
 #SBATCH --ntasks-per-node=Z # only allow z tasks per node
 #SBATCH --mail-user uxxxxxxx@anu.edu.au # mail user on job state changes
 #SBATCH --mail-type TIME_LIMIT,FAIL		# state changes
 
-srun --nodes=dayhoff --ntasks=1 --exclusive my_script_A.sh &
-srun --nodes=dayhoff --ntasks=1 --exclusive my_script_A.sh &
+srun --ntasks=1 --mem=2G --exclusive my_script_A.sh &
+srun --ntasks=1 --mem=2G --exclusive my_script_A.sh &
 ..
 ..
-srun --nodes=dayhoff --ntasks=1 --exclusive my_script_B.sh &
+srun --ntasks=1 --mem=2G --exclusive my_script_B.sh &
 wait
 ```
 
@@ -182,23 +184,19 @@ It has more options you can use to reserve the resources and manage the job, for
 
 ## Parallel Processing 
 
-In the sbatch script above, each srun means a task and it will run parallel with each other. 
+In the sbatch script above, each srun means a task and it will run parallel with each other. In the variant calling workflow, we used 3 different samples, we can write a script to make the 3 samples run in parallel to save some time. 
 
-In the variant calling workflow, we used 3 different samples, we can write a script to make the 3 samples run in parallel to save some time. 
-
-Remember in the step of aligning reads to referece genome we only used the subset data, now let's try align the full-sized data to the reference genome using parallel processing. 
-
-Create a file named ```bwa_parallel.sh``` in the directory ```scripts```, and input the following codes. 
+Create a file named ```bwa_parallel.sh``` in the directory ```scripts```, and input the following codes, change the path and email address accordingly: 
 
 ```sh
 #!/bin/bash
-#SBATCH --job-name=alignment
-#SBATCH --output=/mnt/data/dayhoff/home/u_id/intro_to_linux/alignment.out
-#SBATCH --error=/mnt/data/dayhoff/home/u_id/intro_to_linux/alignment.err
+#SBATCH --job-name=bwa_p
+#SBATCH --output=/mnt/data/dayhoff/home/u_id/intro_to_linux/bwa_p.out
+#SBATCH --error=/mnt/data/dayhoff/home/u_id/intro_to_linux/bwa_p.err
 #SBATCH --partition=Standard
 #SBATCH --exclude=wright,fisher
-#SBATCH --time=5:00:00
-#SBATCH --mem=6G
+#SBATCH --time=60
+#SBATCH --mem=2G
 #SBATCH --nodes=1
 #SBATCH --ntasks=3
 #SBATCH --cpus-per-task=2
@@ -212,28 +210,71 @@ indir=~/intro_to_linux/data/trimmed_fastq
 outdir=~/intro_to_linux/results
 genome=~/intro_to_linux/data/ref_genome/ecoli_rel606.fasta
 
-srun --exclusive --ntasks=1 --mem=2G bwa mem -t 2 ${genome} \
+srun --ntasks=1 --mem=500M bwa mem -t 2 $genome \
             ${indir}/SRR2584863_1.trim.fastq.gz ${indir}/SRR2584863_2.trim.fastq.gz \
             > ${outdir}/sam/SRR2584863.full.aligned.sam &
 
-srun --exclusive --ntasks=1 --mem=2G bwa mem -t 2 ${genome} \
+srun --ntasks=1 --mem=500M bwa mem -t 2 $genome \
             ${indir}/SRR2584866_1.trim.fastq.gz ${indir}/SRR2584866_2.trim.fastq.gz \
             > ${outdir}/sam/SRR2584866.full.aligned.sam &
 
-srun --exclusive --ntasks=1 --mem=2G bwa mem -t 2 ${genome} \
+srun --ntasks=1 --mem=500M bwa mem -t 2 $genome \
             ${indir}/SRR2589044_1.trim.fastq.gz ${indir}/SRR2589044_2.trim.fastq.gz \
             > ${outdir}/sam/SRR2589044.full.aligned.sam &
 
 wait
 ```
 
-Save ane exit, run ```sbatch run_bwa.sh``` to submit the job. You'll see a job ID prompted on your screen. Then, you can run ```squeue``` to check your job status. 
+Save ane exit, run ```sbatch bwa_parallel.sh``` to submit the job. You'll see a job ID prompted on your screen. Then, you can run ```squeue``` to check your job status. 
 
 Another useful command to check how much resources have been used for your job is:
 
 ```sh
 sacct --format=JobID,JobName,State,Start,End,CPUTime,MaxRSS,NodeList,ExitCode --jobs=JOB_ID 
 ```
+
+## Non-parallel processing 
+
+To compare parallel processing with non-parallel processing, we can write another script to submit the same job and compare the time they used to run the same workload. 
+
+Create a new script called ```bwa_single.sh``` and input the following code, change the path and email address accordingly: 
+
+```sh
+#!/bin/bash
+#SBATCH --job-name=bwa_s
+#SBATCH --output=/mnt/data/dayhoff/home/u_id/intro_to_linux/bwa_s.out
+#SBATCH --error=/mnt/data/dayhoff/home/u_id/intro_to_linux/bwa_s.err
+#SBATCH --partition=Standard
+#SBATCH --exclude=wright,fisher
+#SBATCH --time=60
+#SBATCH --mem=2G
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=2
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=email_address
+#SBATCH --mail-type=ALL
+
+set -e
+
+indir=~/intro_to_linux/data/trimmed_fastq
+genome=~/intro_to_linux/data/ref_genome/ecoli_rel606.fasta
+
+for fq1 in ${indir}/*_1.trim.fastq.gz 
+do 
+    base=$(basename $fq1 _1.trim.fastq.gz) 
+
+    fq1=~/intro_to_linux/data/trimmed_fastq/${base}_1.trim.fastq.gz
+    fq2=~/intro_to_linux/data/trimmed_fastq/${base}_2.trim.fastq.gz
+    sam=~/intro_to_linux/results/sam/${base}.aligned.sam
+
+    bwa mem -t 2 $genome $fq1 $fq2 > $sam & 
+done
+
+wait
+```
+
+Using sbatch to submit the job and compare the result with parallel processing. 
 
 # References 
 
