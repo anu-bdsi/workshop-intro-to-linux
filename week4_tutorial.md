@@ -268,8 +268,8 @@ do
     fq2=~/intro_to_linux/data/trimmed_fastq/${base}_2.trim.fastq.gz
     sam=~/intro_to_linux/results/sam/${base}.aligned.sam
 
-    bwa mem -t 2 $genome $fq1 $fq2 > $sam & 
-done
+    bwa mem -t 2 $genome $fq1 $fq2 > $sam 
+done 
 
 wait
 ```

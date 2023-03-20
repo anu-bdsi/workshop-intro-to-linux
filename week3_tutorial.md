@@ -1,4 +1,4 @@
-# Week 3 & 4 - Variant calling workflow 
+# Week 3 - Variant calling workflow 
 
 ## Learning objectives 
 
