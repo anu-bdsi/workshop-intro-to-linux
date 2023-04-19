@@ -34,7 +34,7 @@ The first line of command ```#!/bin/bash``` is called a she-bang or script heade
 
 ```sh
 #!/bin/bash 
-#SBATCH --job-name=variant_calling 
+#SBATCH --job-name=job_name
 #SBATCH --output=/mnt/data/dayhoff/home/u_id/.../job_name.out
 #SBATCH --error=/mnt/data/dayhoff/home/u_id/.../job_name.err
 #SBATCH --partition=Standard
