@@ -30,6 +30,31 @@ After you save the file, run ```bash lucky_number.sh``` in your command line, an
 
 The first line of command ```#!/bin/bash``` is called a she-bang or script header, it tells the system which program should be used to interpret the codes that and where does this program located. For examples, if the she-bang is ```#!/usr/bin/env python3``` it means use Python3 to interpret the codes containing in this file. And ```#!/usr/bin/env Rscript``` is to use R. 
 
+## Script for submitting jobs in SLURM 
+
+```sh
+#!/bin/bash 
+#SBATCH --job-name=variant_calling 
+#SBATCH --output=/mnt/data/dayhoff/home/u_id/.../job_name.out
+#SBATCH --error=/mnt/data/dayhoff/home/u_id/.../job_name.err
+#SBATCH --partition=Standard
+#SBATCH --time=2:00:00
+#SBATCH --mem=5G
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=2
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=email_address
+#SBATCH --mail-type=ALL
+
+# path to your home directory 
+HOME_DIR=/mnt/data/dayhoff/home/u_id
+
+# activate conda environment
+# /opt/conda/bin/activate is the source file for the function `conda activate`
+source /opt/conda/bin/activate $HOME_DIR/.conda/envs/env_name 
+```
+
 ## Writing a shell script for variant calling 
 
 First, we need to create a new directory to store all of our scripts. 
